@@ -1,0 +1,20 @@
+{
+  "name": "efsr14908-bodega-norte",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "build:visualstudio": "vite build --mode visualstudio",
+    "build:github": "vite build --mode github",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "@vitejs/plugin-react": "latest",
+    "vite": "latest",
+    "react": "latest",
+    "react-dom": "latest"
+  },
+  "devDependencies": {}
+}

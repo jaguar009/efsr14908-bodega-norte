@@ -1,0 +1,14 @@
+<mxfile host="app.diagrams.net" modified="2026-09-14T18:00:00.000Z" agent="Bodega Norte" version="24.7.17">
+  <diagram id="bodega-architecture" name="Arquitectura">
+    <mxGraphModel grid="1" gridSize="10" page="1" pageScale="1" pageWidth="1169" pageHeight="827">
+      <root>
+        <mxCell id="0"/><mxCell id="1" parent="0"/>
+        <mxCell id="presentation" value="Presentación&#xa;React + Vite&#xa;Inicio · Ventas · Inventario · Reportes" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e8f4ff;strokeColor=#87b6da;fontSize=16;fontStyle=1;" vertex="1" parent="1"><mxGeometry x="60" y="220" width="270" height="130" as="geometry"/></mxCell>
+        <mxCell id="logic" value="Lógica de negocio&#xa;Carrito · cobro&#xa;stock mínimo · indicadores" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f0f9e7;strokeColor=#a7d982;fontSize=16;fontStyle=1;" vertex="1" parent="1"><mxGeometry x="440" y="220" width="270" height="130" as="geometry"/></mxCell>
+        <mxCell id="data" value="Persistencia&#xa;LocalStorage v1&#xa;API futura · SQL Server" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#dce6ef;fontSize=16;fontStyle=1;" vertex="1" parent="1"><mxGeometry x="820" y="220" width="270" height="130" as="geometry"/></mxCell>
+        <mxCell id="e1" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;endArrow=classic;strokeColor=#8aa5bd;strokeWidth=2;" edge="1" parent="1" source="presentation" target="logic"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e2" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;endArrow=classic;strokeColor=#8aa5bd;strokeWidth=2;" edge="1" parent="1" source="logic" target="data"><mxGeometry relative="1" as="geometry"/></mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

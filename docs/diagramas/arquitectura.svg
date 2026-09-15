@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1100" height="520" viewBox="0 0 1100 520">
+  <style>text{font-family:Arial,sans-serif;fill:#10294b} .title{font-size:26px;font-weight:700}.label{font-size:18px;font-weight:700}.body{font-size:14px;fill:#506984}.box{fill:#fff;stroke:#dce6ef;stroke-width:2}.accent{fill:#e8f4ff;stroke:#87b6da}.green{fill:#f0f9e7;stroke:#a7d982}.line{stroke:#8aa5bd;stroke-width:3;fill:none;marker-end:url(#arrow)} </style>
+  <defs><marker id="arrow" markerWidth="10" markerHeight="10" refX="7" refY="3" orient="auto"><path d="M0,0 L0,6 L8,3 z" fill="#8aa5bd"/></marker></defs>
+  <rect width="1100" height="520" fill="#f6f8fb"/>
+  <text x="55" y="58" class="title">Arquitectura de tres capas Bodega Norte</text>
+  <text x="55" y="86" class="body">Flujo de presentación, lógica de negocio y persistencia.</text>
+  <rect x="65" y="145" rx="16" width="280" height="230" class="box accent"/><text x="95" y="190" class="label">Presentación</text><text x="95" y="230" class="body">React + Vite</text><text x="95" y="258" class="body">Inicio · Ventas</text><text x="95" y="286" class="body">Inventario · Reportes</text><text x="95" y="314" class="body">Responsive + SVG</text>
+  <rect x="410" y="145" rx="16" width="280" height="230" class="box green"/><text x="440" y="190" class="label">Lógica de negocio</text><text x="440" y="230" class="body">Carrito y cobro</text><text x="440" y="258" class="body">Regla de stock mínimo</text><text x="440" y="286" class="body">Indicadores y reportes</text><text x="440" y="314" class="body">Validaciones de flujo</text>
+  <rect x="755" y="145" rx="16" width="280" height="230" class="box"/><text x="785" y="190" class="label">Persistencia</text><text x="785" y="230" class="body">Demo: LocalStorage v1</text><text x="785" y="258" class="body">Futuro: API REST</text><text x="785" y="286" class="body">SQL Server</text><text x="785" y="314" class="body">Respaldo CSV</text>
+  <path d="M345 260 H400" class="line"/><path d="M690 260 H745" class="line"/>
+  <text x="65" y="440" class="body">Integración principal: producto → carrito → venta → descuento de stock → reportes.</text>
+</svg>

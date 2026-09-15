@@ -1,0 +1,10 @@
+node_modules/
+dist/
+output/
+.env.local
+*.log
+backend/**/bin/
+backend/**/obj/
+backend/**/wwwroot/
+.vs/
+.playwright-cli/

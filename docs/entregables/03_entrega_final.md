@@ -6,10 +6,11 @@ Bodega Norte es una aplicación web para digitalizar inventario y ventas de una 
 
 ## Componentes entregados
 
-- Aplicación React + Vite en `src/`.
+- Aplicación React + Vite en `src/`, servida como View por ASP.NET Core MVC.
+- Controladores MVC, servicio de negocio, modelos y repositorio en `backend/BodegaNorte.Api/`.
 - Datos semilla para una demostración reproducible.
-- Persistencia local versionada.
-- Esquema SQL Server de referencia en `database/schema.sql`.
+- Persistencia local versionada para demo y SQL Server LocalDB para el modo MVC.
+- Esquema SQL Server ejecutable en `database/schema.sql`.
 - Arquitectura y modelo de datos en SVG.
 - Plan de pruebas y evidencias documentales.
 - Guía de instalación y manual de usuario.
@@ -31,7 +32,7 @@ El flujo principal validado es:
 
 1. La digitalización del catálogo y el registro de ventas reduce la dependencia de cálculos y anotaciones manuales.
 2. El descuento automático de existencias conecta la venta con la reposición y hace visible el riesgo de quiebre de stock.
-3. La estructura modular permite continuar con una API, SQL Server y autenticación sin rediseñar el flujo principal.
+3. La arquitectura MVC estricta separa vista, controladores y modelo, y permite mantener el flujo principal mientras se agregan autenticación, auditoría y nuevos módulos.
 
 ## Recomendaciones
 
@@ -44,7 +45,8 @@ El flujo principal validado es:
 - **Stock mínimo:** cantidad de referencia que activa una alerta de reposición.
 - **Punto de venta:** módulo donde se seleccionan productos y se registra el cobro.
 - **CRUD:** crear, consultar, actualizar y eliminar registros.
-- **LocalStorage:** almacenamiento local del navegador para la demo.
+- **MVC:** patrón que separa vista, controlador y modelo.
+- **LocalStorage:** almacenamiento local del navegador para el modo demo.
 - **API:** interfaz que permite que la aplicación se comunique con un servicio.
 - **Sprint:** periodo corto de trabajo dentro de Scrum.
 

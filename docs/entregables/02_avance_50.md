@@ -23,15 +23,17 @@ Para la semana 10, el proyecto debe demostrar al menos 50 % de avance y una sust
 - **Ventas:** catálogo, búsqueda, categorías, carrito y cobro.
 - **Inventario:** filtro, estados, edición y eliminación.
 - **Productos:** catálogo, margen y formulario CRUD.
-- **Persistencia:** datos semilla y guardado versionado en `localStorage`.
+- **Persistencia:** modo demo con `localStorage` y modo MVC con SQL Server local.
 
 ## Arquitectura
 
-La propuesta utiliza una arquitectura de tres capas:
+La implementación utiliza estrictamente MVC, presentado en tres capas:
 
-1. **Presentación:** React + CSS responsive.
-2. **Lógica de aplicación:** estado de productos, carrito, ventas, validaciones y cálculo de indicadores.
-3. **Persistencia:** `localStorage` para la demo y esquema SQL Server preparado para una API futura.
+1. **View / Vista:** React + CSS responsive y `Views/Home/Index.cshtml` como vista host.
+2. **Controller / Controlador:** `HomeController`, `ProductsController`, `SalesController` y `HealthController`; `BodegaService` concentra las reglas de negocio.
+3. **Model / Modelo:** contratos en `Models/Contracts.cs`, `BodegaRepository` y SQL Server LocalDB para entidades y transacciones.
+
+En el modo MVC, la vista nunca consulta SQL directamente: envía la operación al controlador y recibe el modelo serializado como respuesta JSON.
 
 El diagrama se encuentra en `docs/diagramas/arquitectura.svg` y el modelo de datos en `docs/diagramas/modelo_datos.svg`.
 
@@ -62,7 +64,7 @@ Se validan casos de catálogo, stock bajo, carrito, cobro, persistencia, exporta
 2. Se ejecuta `npm run build` antes de integrar una funcionalidad.
 3. Se revisan errores de consola y el flujo principal en navegador.
 4. El equipo conserva un checklist de pruebas antes de cada entrega.
-5. El despliegue futuro puede ejecutar `npm ci`, `npm run build` y publicar `dist/`.
+5. El despliegue web ejecuta `pnpm run build:github`; la ejecución local con Visual Studio usa `pnpm run build:visualstudio` y publica la vista dentro de `wwwroot`.
 
 ## Integración demostrable
 

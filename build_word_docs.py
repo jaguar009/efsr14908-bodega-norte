@@ -285,7 +285,7 @@ def doc_01():
     d = Document(); cover(d, "Informe de proyecto – Entregable 1", "Entregable 1: capítulos I y II / diagnóstico y propuesta inicial")
     h(d, "1. Resumen ejecutivo")
     para(d, "Bodega Norte es una propuesta de sistema web para registrar productos, controlar existencias y gestionar ventas en una bodega minorista. El proyecto responde a la necesidad de contar con información confiable y oportuna para reducir errores de registro, quiebres de stock y tiempos de atención.")
-    para(d, "La primera entrega define el problema, el contexto, los objetivos, la justificación, los beneficiarios, el alcance y la viabilidad. El producto se plantea como un MVP demostrable, escalable hacia SQL Server, integración con Watson Assistant y despliegue institucional.")
+    para(d, "La primera entrega define el problema, el contexto, los objetivos, la justificación, los beneficiarios, el alcance y la viabilidad. El producto se plantea como un MVP demostrable con arquitectura MVC estricta, SQL Server local, integración futura con Watson Assistant y despliegue institucional.")
     h(d, "2. Introducción")
     para(d, "La gestión manual o dispersa de inventario dificulta saber cuánto producto queda, qué artículos requieren reposición y cuáles son las ventas del periodo. En una bodega, estas decisiones deben tomarse con rapidez y con información simple de interpretar.")
     para(d, "El proyecto se desarrollará aplicando principios ágiles y entregas incrementales. El alcance inicial comprende catálogo de productos, entradas y salidas, venta rápida, alertas de stock bajo, reportes y una interfaz conversacional preparada para Watson Assistant.")
@@ -293,7 +293,7 @@ def doc_01():
     table(d, ["Variable", "Situación observada", "Implicancia para el proyecto"], [
         ("Social", "La atención es directa y los clientes esperan rapidez.", "La venta debe registrarse en pocos pasos y mostrar un resumen claro."),
         ("Económica", "La pérdida por vencimiento, merma o falta de reposición afecta el margen.", "Se requieren alertas, control de cantidades y reportes de ventas."),
-        ("Tecnológica", "La operación puede apoyarse en una aplicación web de bajo costo.", "Se propone una interfaz responsiva y una base preparada para SQL Server."),
+        ("Tecnológica", "La operación puede apoyarse en una aplicación web de bajo costo.", "Se propone una interfaz responsiva con backend MVC y SQL Server LocalDB."),
         ("Ambiental", "El control de vencimientos y mermas reduce desperdicios.", "El registro de productos y movimientos debe permitir decisiones de reposición."),
         ("Político-legal", "La información de ventas debe manejarse con responsabilidad y trazabilidad.", "Se deben separar roles, proteger credenciales y documentar futuras integraciones."),
     ], [2.5, 6, 7])
@@ -338,7 +338,7 @@ def doc_01():
     table(d, ["Riesgo", "Probabilidad / impacto", "Respuesta"], [
         ("Datos de productos incompletos", "Media / Media", "Usar plantilla de carga y validaciones de campos obligatorios."),
         ("Cambios en requisitos", "Media / Alta", "Priorizar historias y registrar acuerdos en cada revisión."),
-        ("Pérdida de información local", "Baja / Alta", "Exportar respaldos CSV y preparar persistencia SQL Server."),
+        ("Pérdida de información local", "Baja / Alta", "Usar SQL Server en modo MVC y exportar respaldos CSV del modo demo."),
         ("Credenciales de integración expuestas", "Baja / Alta", "Usar variables de entorno y no versionar secretos."),
         ("Tiempo limitado para completar todo", "Media / Alta", "Entregar por hitos: inicial, 50% y final."),
     ])
@@ -348,7 +348,7 @@ def doc_01():
         ("Responsable de Bodega Norte", "Validar flujo de venta, catálogo y reportes."),
         ("Usuario de caja", "Operar el registro de productos y ventas."),
     ])
-    para(d, "Viabilidad: la propuesta es técnica y económicamente viable como MVP, porque utiliza una interfaz web y puede operar con datos de demostración. Para una puesta en producción se deberá incorporar backend, base de datos SQL Server, autenticación, copias de seguridad y pruebas de aceptación con usuarios.")
+    para(d, "Viabilidad: la propuesta es técnica y económicamente viable como MVP, porque utiliza una interfaz web y cuenta con un backend MVC conectado a SQL Server LocalDB. Para una puesta en producción se deberán incorporar autenticación, copias de seguridad, auditoría y pruebas de aceptación con usuarios.")
     h(d, "10. Productos y entregables previstos")
     table(d, ["Producto", "Evidencia / formato"], [
         ("Aplicación web", "Código fuente editable y demo funcional."),
@@ -371,7 +371,7 @@ def doc_02():
         ("Ventas", "Flujo de venta validado con actualización de stock.", "Caso IT-02 y mensaje de venta registrada."),
         ("Inventario", "Listado, búsqueda y filtro por stock bajo.", "Tabla de inventario y filtro Bajo."),
         ("Reportes", "Resumen de ventas y productos con bajo stock.", "Módulo Reportes."),
-        ("Persistencia", "LocalStorage en el demo; esquema SQL Server preparado.", "database/schema.sql y manual técnico."),
+        ("Persistencia", "LocalStorage en demo; MVC con SQL Server local implementado.", "backend/BodegaNorte.Api/ y database/schema.sql."),
         ("Asistente", "Contrato de Watson Assistant documentado; demo offline disponible.", "Documento de integración y manual técnico."),
     ])
     h(d, "2. Historias de usuario priorizadas")
@@ -384,7 +384,7 @@ def doc_02():
         ("US-06", "Como usuario, quiero consultar al asistente.", "La intención stock_bajo devuelve una respuesta útil.", "Contrato listo"),
     ])
     h(d, "3. Diseño funcional y técnico")
-    para(d, "La solución se organiza en una capa de presentación React, un estado local para el demo y una capa de datos preparada para migrar a SQL Server. La navegación principal se mantiene visible en escritorio y se convierte en un menú en pantallas pequeñas.")
+    para(d, "La solución implementa estrictamente MVC en tres capas: React y Views/Home/Index.cshtml forman la View; los Controllers reciben las solicitudes y BodegaService aplica las reglas; Models/Contracts.cs y BodegaRepository representan y persisten el modelo en SQL Server LocalDB. El modo demo mantiene LocalStorage solo para ejecutar la interfaz sin servidor.")
     table(d, ["Módulo", "Responsabilidad", "Regla clave"], [
         ("Dashboard", "Indicadores y actividad reciente.", "Los valores se calculan a partir de ventas y productos."),
         ("Ventas", "Carrito y confirmación de operación.", "No se permite superar el stock disponible."),
@@ -417,7 +417,7 @@ def doc_02():
         "No incorporar secretos: mantener credenciales en variables de entorno y usar .env.example como referencia.",
     ])
     h(d, "7. Riesgos y acciones pendientes")
-    bullets(d, ["Conectar el MVP a un backend y SQL Server para operación multiusuario.", "Completar pruebas de aceptación con datos reales autorizados por la organización.", "Validar el mapa de intents y entidades con un asistente Watson configurado.", "Completar nombres, firmas, ubicación, integrantes y fecha en la portada."])
+    bullets(d, ["Completar pruebas de aceptación con datos reales autorizados por la organización.", "Validar el mapa de intents y entidades con un asistente Watson configurado.", "Completar nombres, firmas, ubicación, integrantes y fecha en la portada.", "Configurar autenticación, roles y auditoría antes de una puesta en producción."])
     h(d, "8. Evidencias visuales")
     image(d, "docs/evidencias/EVID_visual_escritorio.png", "Evidencia E-01: interfaz responsive en escritorio", 6.5)
     image(d, "docs/evidencias/EVID_visual_movil.png", "Evidencia E-02: interfaz responsive en móvil", 3.2)
@@ -427,7 +427,7 @@ def doc_02():
 def doc_03():
     d = Document(); cover(d, "Informe final de proyecto – Entregable 3", "Entrega final: producto, componentes, recursos, pruebas y defensa")
     h(d, "1. Resumen")
-    para(d, "El proyecto Bodega Norte entrega un sistema de inventario y ventas orientado a una bodega minorista. El producto permite visualizar indicadores, gestionar productos, revisar existencias, registrar ventas, identificar stock bajo y consultar reportes. La solución se presenta como MVP funcional y documentado, con una ruta de evolución hacia SQL Server, autenticación institucional y Watson Assistant.")
+    para(d, "El proyecto Bodega Norte entrega un sistema de inventario y ventas orientado a una bodega minorista. El producto permite visualizar indicadores, gestionar productos, revisar existencias, registrar ventas, identificar stock bajo y consultar reportes. La solución se presenta como MVP funcional y documentado, con arquitectura MVC estricta, ejecución local sobre SQL Server y una ruta de evolución hacia autenticación institucional y Watson Assistant.")
     h(d, "2. Introducción")
     para(d, "La solución fue construida para responder a un problema operativo concreto: la dificultad de mantener información actualizada sobre productos, existencias y ventas. El desarrollo se organizó por entregables y con una lógica iterativa, priorizando las funciones que permiten demostrar el flujo principal de negocio.")
     h(d, "3. Objetivos y cumplimiento")
@@ -443,15 +443,16 @@ def doc_03():
     bullets(d, ["Dashboard: KPIs, gráfico de ventas, actividad reciente y alerta de stock.", "Nueva venta: búsqueda, carrito, cantidades, total y método de pago.", "Inventario: tabla de productos, búsqueda y filtro de stock bajo.", "Productos: alta y consulta del catálogo.", "Proveedores: vista de referencia para futuras compras.", "Reportes: ventas, categorías, movimientos y exportación.", "Configuración: preferencias del sistema y datos base.", "Asistente de bodega: consulta offline demostrativa y contrato Watson documentado."])
     h(d, "4.2 Componentes y recursos entregados", 2)
     table(d, ["Componente", "Ubicación / formato", "Uso"], [
-        ("Aplicación", "src/main.jsx y src/styles.css", "Interfaz y lógica del MVP."),
-        ("Esquema de datos", "database/schema.sql", "Modelo base para SQL Server."),
+        ("Aplicación", "src/main.jsx y src/styles.css", "View React del MVP."),
+        ("Backend MVC", "backend/BodegaNorte.Api/", "Controllers, Models, Services, Data y Views."),
+        ("Esquema de datos", "database/schema.sql", "Modelo ejecutable para SQL Server LocalDB."),
         ("Diagramas", "docs/diagramas/", "Arquitectura y modelo de datos."),
         ("Prueba Java", "integration/JavaInventoryIntegrationTest.java", "Verifica venta y actualización de stock."),
         ("Evidencias", "docs/evidencias/", "Capturas desktop y móvil."),
         ("Documentación Word", "docs/word/", "Informes y manuales editables."),
     ])
     h(d, "5. Diseño, validación y pruebas")
-    para(d, "La arquitectura separa presentación, estado y persistencia. En el MVP, los datos se guardan en localStorage para facilitar la demostración; el esquema SQL Server, las relaciones y los procedimientos previstos se documentan como base de una siguiente iteración.")
+    para(d, "La arquitectura aplica MVC estrictamente. La View React solicita operaciones a los Controllers; BodegaService valida el caso de uso; Models/Contracts.cs define los datos y BodegaRepository ejecuta las consultas y transacciones en SQL Server LocalDB. El modo demo usa localStorage únicamente como alternativa de ejecución sin servidor.")
     table(d, ["Prueba", "Resultado", "Evidencia"], [
         ("Registro de venta", "Aprobada", "Venta #1049 registrada; stock de Leche Gloria 1L de 3 a 2 y Gaseosa Inca Kola de 24 a 23."),
         ("Filtro stock bajo", "Aprobada", "Filtro Bajo muestra cinco productos."),
@@ -463,7 +464,7 @@ def doc_03():
     h(d, "6. Recursos y operación")
     bullets(d, ["Guía de instalación para ejecutar la aplicación en un entorno local.", "Manual de usuario para dashboard, productos, ventas, inventario y reportes.", "Manual técnico con estructura, reglas, persistencia y ruta de evolución.", "Matriz de pruebas y guion para la sustentación.", "Contrato de integración para Watson Assistant, sin almacenar credenciales reales."])
     h(d, "7. Conclusiones")
-    numbered(d, ["El MVP demuestra un flujo completo de inventario y ventas con actualización del stock y reportes operativos.", "La organización por entregables permite evidenciar diagnóstico, diseño, construcción, pruebas y documentación.", "La base técnica queda preparada para migrar de almacenamiento local a una arquitectura multiusuario con SQL Server."])
+    numbered(d, ["El MVP demuestra un flujo completo de inventario y ventas con actualización del stock y reportes operativos.", "La organización por entregables permite evidenciar diagnóstico, diseño, construcción, pruebas y documentación.", "La arquitectura MVC estricta separa vista, controladores y modelo, y permite mantener el flujo principal mientras se agregan autenticación, auditoría y nuevos módulos."])
     h(d, "8. Recomendaciones")
     numbered(d, ["Implementar autenticación y control de roles antes de una puesta en producción.", "Realizar pruebas de aceptación con usuarios de la bodega y datos autorizados.", "Configurar respaldos, auditoría de movimientos y la integración Watson en un ambiente seguro."])
     h(d, "9. Glosario")
@@ -473,7 +474,7 @@ def doc_03():
         ("Scrum", "Marco ágil para organizar trabajo iterativo."),
         ("Historia de usuario", "Necesidad expresada desde la perspectiva del usuario."),
         ("Watson Assistant", "Servicio conversacional de IBM considerado para una integración posterior."),
-        ("SQL Server", "Motor de base de datos previsto para persistencia multiusuario."),
+        ("SQL Server", "Motor de base de datos utilizado por el modelo MVC local."),
     ])
     h(d, "10. Bibliografía y fuentes internas")
     bullets(d, ["Anexo 4 – Informe de Proyecto para ETI, Plan Nivel 2 para EFSRT III, IV y V.", "Plan de Implementación de EFSRT – ETI 2024.", "Sílabo del curso: EFSRT III (código 14908), periodo 2026.", "Material de clase y anuncio de cronograma publicado por la docente.", "Documentación técnica del proyecto incluida en la carpeta entregable."])
@@ -549,26 +550,29 @@ def doc_05():
 def doc_06():
     d = Document(); cover(d, "Guía de instalación y puesta en marcha", "Documento operativo para el entorno local")
     h(d, "1. Alcance")
-    para(d, "La guía permite ejecutar el MVP de Bodega Norte en un equipo de desarrollo. La aplicación se entrega como frontend demostrativo y utiliza persistencia local del navegador. El esquema SQL Server se incluye como base de una instalación multiusuario posterior.")
+    para(d, "La guía permite ejecutar el MVP de Bodega Norte en un equipo de desarrollo. La solución incluye una View React alojada por ASP.NET Core MVC, controladores, modelos, reglas de negocio y repositorio SQL Server. También conserva un modo demo con persistencia local del navegador.")
     h(d, "2. Requisitos")
-    bullets(d, ["Windows, macOS o Linux con terminal.", "Node.js 20 o superior y pnpm.", "Navegador actualizado: Chrome, Edge o Firefox.", "Java 17 o superior solo para ejecutar la prueba de integración opcional.", "SQL Server solo si se implementa la persistencia de la siguiente fase."])
+    bullets(d, ["Windows con Visual Studio, desarrollo ASP.NET y SDK de .NET 8.", "Node.js 20 o superior y pnpm.", "Navegador actualizado: Chrome, Edge o Firefox.", "SQL Server LocalDB o una instancia SQL Server accesible.", "Java 17 o superior solo para ejecutar la prueba de integración opcional."])
     h(d, "3. Instalación del frontend")
     numbered(d, ["Copie o clone la carpeta del proyecto en el equipo.", "Abra una terminal en la carpeta EFSR14908_Bodega_Norte.", "Ejecute pnpm install para instalar las dependencias.", "Ejecute pnpm run dev para iniciar el servidor local.", "Abra la URL indicada por Vite, normalmente http://localhost:5173/."])
     h(d, "4. Construcción de producción")
     para(d, "Para validar que la aplicación puede compilarse, ejecute:")
     p = d.add_paragraph(); r = p.add_run("pnpm run build"); r.font.name = "Consolas"; r.font.size = Pt(10); r.font.color.rgb = RGBColor.from_string(BLUE)
-    para(d, "El comando debe finalizar sin errores y crear la carpeta dist.")
+    para(d, "El comando debe finalizar sin errores y crear la carpeta dist. Para preparar la aplicación MVC en Visual Studio, use pnpm run build:visualstudio; los archivos compilados se generan en backend/BodegaNorte.Api/wwwroot.")
+    h(d, "4.1. Ejecución en Visual Studio")
+    numbered(d, ["Ejecute database/schema.sql y database/seed.sql en (localdb)\\MSSQLLocalDB.", "Ajuste la cadena BodegaNorte en backend/BodegaNorte.Api/appsettings.Development.json si usa otra instancia.", "Abra backend/BodegaNorte.sln en Visual Studio.", "Seleccione BodegaNorte.Api y presione F5.", "Verifique /api/health y pruebe la consulta de productos y el registro de una venta."])
     h(d, "5. Datos y persistencia")
-    para(d, "La demo guarda productos y ventas en localStorage con las claves bodega-norte:v1:products y bodega-norte:v1:sales. Estos datos pertenecen al navegador y equipo donde se ejecuta la demo; no son un respaldo productivo.")
+    para(d, "El modo demo guarda productos y ventas en localStorage con las claves bodega-norte:v1:products y bodega-norte:v1:sales. En el modo MVC, los controladores envían las operaciones a BodegaService y BodegaRepository las guarda en SQL Server dentro de transacciones.")
     table(d, ["Fase", "Persistencia", "Acción requerida"], [
         ("MVP demostrativo", "localStorage", "Usar Exportar CSV para respaldar."),
-        ("Piloto", "SQL Server local o institucional", "Ejecutar database/schema.sql y crear API segura."),
+        ("MVC local", "SQL Server LocalDB", "Ejecutar schema.sql, seed.sql y abrir la solución en Visual Studio."),
         ("Producción", "SQL Server administrado", "Autenticación, roles, auditoría, copias y monitoreo."),
     ])
     h(d, "6. Configuración ambiental")
     para(d, "Copie .env.example como .env solo si se agregan servicios externos. Nunca coloque claves reales en el repositorio ni en las capturas de la entrega.")
     table(d, ["Variable sugerida", "Uso"], [
-        ("VITE_API_BASE_URL", "URL del backend futuro."),
+        ("VITE_API_MODE", "Usar sql para activar la View conectada a MVC; demo activa LocalStorage."),
+        ("VITE_API_BASE_URL", "Ruta base de los controladores MVC; por defecto /api."),
         ("WATSON_ASSISTANT_ID", "Identificador del asistente."),
         ("WATSON_APIKEY", "Clave privada; usar solo en servidor."),
         ("WATSON_SERVICE_URL", "Endpoint del servicio conversacional."),
@@ -588,18 +592,23 @@ def doc_06():
 def doc_07():
     d = Document(); cover(d, "Manual técnico", "Arquitectura, componentes y evolución de Bodega Norte")
     h(d, "1. Arquitectura actual")
-    para(d, "El sistema se entrega como SPA construida con React y Vite. La aplicación concentra la presentación y las reglas del MVP en el cliente, con almacenamiento local para facilitar una demostración autónoma. La arquitectura está preparada para extraer la persistencia y las integraciones hacia servicios backend.")
-    table(d, ["Capa", "Implementación", "Responsabilidad"], [
-        ("Presentación", "React + CSS", "Vistas, componentes, navegación responsive y estados visuales."),
-        ("Dominio", "Funciones del frontend", "Cálculo de totales, validación, stock, reportes y filtros."),
-        ("Persistencia demo", "localStorage", "Conservar productos y ventas del navegador."),
-        ("Persistencia futura", "SQL Server", "Modelo relacional multiusuario mediante API segura."),
-        ("Integración futura", "Watson Assistant", "Consultas conversacionales de inventario y ventas."),
+    para(d, "El sistema se entrega con una arquitectura MVC estricta de tres capas. La View React se aloja en Views/Home/Index.cshtml; los Controllers reciben las solicitudes; el Model reúne contratos, reglas de negocio y persistencia SQL Server. El modo demo usa localStorage únicamente como alternativa sin servidor.")
+    table(d, ["Capa MVC", "Implementación", "Responsabilidad"], [
+        ("View / Vista", "React + Vite + Views/Home/Index.cshtml", "Presentar módulos, formularios, navegación responsive y estados visuales."),
+        ("Controller / Controlador", "Controllers/ + BodegaService.cs", "Recibir solicitudes, validar casos de uso y devolver vistas o JSON."),
+        ("Model / Modelo", "Models/Contracts.cs + Data/BodegaRepository.cs", "Representar entidades, ejecutar consultas y persistir transacciones en SQL Server."),
+        ("Demo alternativa", "localStorage", "Permitir una demostración sin servidor, sin formar parte del modo MVC."),
+        ("Integración posterior", "Watson Assistant", "Consultas conversacionales mediante un controlador seguro."),
     ])
     h(d, "2. Estructura del proyecto")
     table(d, ["Ruta", "Contenido"], [
-        ("src/main.jsx", "Composición de la aplicación, vistas y lógica del MVP."),
+        ("src/main.jsx", "View React: composición visual, interacción y navegación."),
         ("src/styles.css", "Sistema visual, layout, responsive y estados."),
+        ("backend/BodegaNorte.Api/Controllers/", "Controllers MVC para Home, productos, ventas y health."),
+        ("backend/BodegaNorte.Api/Models/", "Contratos de entrada y salida del Model."),
+        ("backend/BodegaNorte.Api/Services/", "Reglas de negocio de Bodega Norte."),
+        ("backend/BodegaNorte.Api/Data/", "Repositorio y transacciones SQL Server."),
+        ("backend/BodegaNorte.Api/Views/", "Vista host MVC para la aplicación React."),
         ("database/schema.sql", "Tablas, relaciones, índices y procedimientos previstos."),
         ("integration/", "Prueba de integración Java y guía asociada."),
         ("docs/diagramas/", "Arquitectura draw.io y modelo de datos SVG."),
@@ -615,8 +624,8 @@ def doc_07():
     ])
     h(d, "4. Reglas de negocio")
     bullets(d, ["Una venta no debe superar el stock disponible.", "El total de una venta es la suma de cantidad por precio unitario.", "Stock bajo cuando stock actual es menor o igual a stock mínimo.", "El registro de una venta descuenta unidades y guarda el método de pago.", "Los datos de entrada deben validarse antes de persistir.", "Las claves de Watson deben permanecer fuera del cliente y del repositorio."])
-    h(d, "5. Migración a SQL Server")
-    numbered(d, ["Crear la base según database/schema.sql.", "Implementar API con endpoints autenticados para productos, ventas, stock y reportes.", "Mover las operaciones de cálculo de stock al servidor dentro de una transacción.", "Agregar índices para búsqueda por nombre, categoría y fecha.", "Implementar auditoría de movimientos y control de concurrencia.", "Cambiar el frontend para consumir VITE_API_BASE_URL y manejar estados de carga y error."])
+    h(d, "5. Ejecución y evolución MVC")
+    numbered(d, ["Crear la base según database/schema.sql y database/seed.sql.", "Ejecutar pnpm run build:visualstudio para generar la View React en wwwroot.", "Abrir backend/BodegaNorte.sln y ejecutar BodegaNorte.Api desde Visual Studio.", "Mantener las reglas de stock y el registro de venta en BodegaService/Repository dentro de una transacción.", "Agregar autenticación, roles, auditoría y control de concurrencia en Controllers y Services.", "Extender los Models y Controllers para nuevos módulos sin mezclar SQL con la View."])
     h(d, "6. Integración Watson Assistant")
     para(d, "La integración documentada separa intents, entidades, respuestas y contrato de backend. El navegador no debe llamar directamente al servicio con una API key; el backend debe autenticar, filtrar la consulta y devolver solo información permitida para el usuario.")
     h(d, "7. Calidad y seguridad")
@@ -673,10 +682,10 @@ def doc_09():
     h(d, "3. Guion de demostración")
     numbered(d, ["Mostrar el Dashboard y explicar los cuatro indicadores principales.", "Abrir Inventario y aplicar el filtro Bajo para mostrar las alertas.", "Abrir Nueva venta, seleccionar Leche Gloria 1L y Gaseosa Inca Kola, elegir Yape y registrar la venta.", "Volver al inventario para mostrar que el stock se actualizó.", "Abrir Reportes y explicar el resumen y la exportación CSV.", "Abrir Asistente de bodega y consultar Stock bajo; aclarar que la conexión Watson queda preparada para la siguiente fase."])
     h(d, "4. Mensajes clave")
-    bullets(d, ["El sistema resuelve un problema operativo concreto y medible.", "El flujo principal de negocio está implementado y probado.", "La interfaz es responsive y permite una operación rápida.", "El MVP es demostrable, pero la puesta en producción requiere backend, autenticación y base de datos.", "La documentación permite mantener y ampliar el proyecto."])
+    bullets(d, ["El sistema resuelve un problema operativo concreto y medible.", "El flujo principal de negocio está implementado y probado.", "La interfaz es responsive y permite una operación rápida.", "La arquitectura MVC estricta separa View, Controller y Model; la puesta en producción requiere autenticación, roles, auditoría y respaldo.", "La documentación permite mantener y ampliar el proyecto."])
     h(d, "5. Preguntas previsibles")
     table(d, ["Pregunta", "Respuesta sugerida"], [
-        ("¿Por qué localStorage?", "Permite demostrar el flujo sin depender de un servidor; SQL Server queda preparado para la fase multiusuario."),
+        ("¿Por qué localStorage?", "Es una alternativa demo sin servidor; la ejecución solicitada en Visual Studio usa MVC estricto y SQL Server LocalDB."),
         ("¿Cómo se evita vender sin stock?", "La cantidad se valida contra el stock disponible antes de confirmar."),
         ("¿Qué hace el asistente?", "La demo responde consultas de stock; el contrato Watson define la integración segura futura."),
         ("¿Cómo se respalda la información?", "Actualmente mediante exportación CSV; en producción se usarán copias de SQL Server."),

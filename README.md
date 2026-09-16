@@ -4,7 +4,7 @@ Sistema web de inventario y ventas para una bodega, desarrollado como proyecto d
 
 ## Qué resuelve
 
-Bodega Norte centraliza el catálogo de productos, las existencias, las ventas de mostrador, los proveedores y los reportes operativos. El flujo principal es seleccionar productos, cobrar una venta y descontar automáticamente el stock. La información se conserva en el navegador mediante `localStorage`, por lo que el prototipo es ejecutable sin configurar un servidor.
+Bodega Norte centraliza el catálogo de productos, las existencias, las ventas de mostrador, los proveedores y los reportes operativos. El flujo principal es seleccionar productos, cobrar una venta y descontar automáticamente el stock. El proyecto incluye un modo demo con `localStorage` y un modo MVC estricto con ASP.NET Core y SQL Server local.
 
 ## Funcionalidades implementadas
 
@@ -37,7 +37,9 @@ Este modo usa datos de demostración en el navegador y es el que se publica en G
 
 ## Ejecución con Visual Studio y SQL Server local
 
-La solución `backend/BodegaNorte.sln` contiene una API ASP.NET Core 8 que sirve la interfaz React y consulta SQL Server. Para prepararla:
+La solución `backend/BodegaNorte.sln` contiene una aplicación ASP.NET Core 8 organizada estrictamente con MVC. React se utiliza como vista visual; los `Controllers` reciben las solicitudes, `BodegaService` concentra las reglas de negocio, los `Models` representan los datos y `BodegaRepository` encapsula el acceso a SQL Server.
+
+Para ejecutar el modo MVC con Visual Studio y SQL Server local:
 
 1. Crea la base `BodegaNorte` en LocalDB o SQL Server.
 2. Ejecuta `database/schema.sql` y después `database/seed.sql`.
@@ -46,7 +48,7 @@ La solución `backend/BodegaNorte.sln` contiene una API ASP.NET Core 8 que sirve
 5. Abre `backend/BodegaNorte.sln` en Visual Studio y presiona **F5** sobre `BodegaNorte.Api`.
 6. Comprueba `http://localhost:5248/api/health` y abre la página que inicia Visual Studio.
 
-La interfaz identifica este modo como **SQL Server local** y las operaciones de productos y ventas se guardan mediante la API.
+La interfaz identifica este modo como **SQL Server local** y las operaciones de productos y ventas se guardan mediante los controladores MVC y el repositorio SQL Server.
 
 ## Publicación en GitHub Pages
 
@@ -73,10 +75,14 @@ EFSR14908_Bodega_Norte/
 │  ├─ seed.sql                  Datos iniciales de demostración
 │  └─ README.md                 Pasos de configuración local
 ├─ backend/BodegaNorte.sln      Solución para Visual Studio
-│  └─ BodegaNorte.Api/          API ASP.NET Core 8
+│  └─ BodegaNorte.Api/          Aplicación ASP.NET Core 8 MVC
+│     ├─ Controllers/           Controladores MVC y endpoints JSON
+│     ├─ Models/                Modelos y contratos de entrada/salida
+│     ├─ Services/              Reglas de negocio de Bodega Norte
+│     ├─ Data/                  Repositorio y consultas SQL Server
+│     └─ Views/                 Vista host MVC para la aplicación React
 ├─ docs/
 │  ├─ entregables/              Informes separados por hito
-│  ├─ word/                     Informes y documentación editables en Word
 │  ├─ word/                     Informes y documentación editables en Word
 │  ├─ diagramas/                Arquitectura y modelo de datos
 │  ├─ manual_usuario.md         Recurso para el usuario final
@@ -91,4 +97,4 @@ EFSR14908_Bodega_Norte/
 
 ## Decisiones técnicas y alcance
 
-La interfaz se implementa con React + Vite para tener una aplicación navegable y demostrable en el navegador. Se incluye un esquema SQL Server de referencia y un adaptador documentado para Watson Assistant, sin incrustar credenciales. La persistencia local permite ejecutar la demo de forma inmediata; para producción se reemplaza por API + SQL Server manteniendo las mismas entidades y flujos.
+La interfaz se implementa con React + Vite y se aloja en `Views/Home/Index.cshtml`. En el modo MVC, `HomeController`, `ProductsController` y `SalesController` atienden las rutas; `BodegaService` valida las operaciones y `Data/BodegaRepository.cs` ejecuta las transacciones contra SQL Server. El modo demo conserva `localStorage` para una demostración sin servidor, pero la implementación de Visual Studio usa MVC + SQL Server sin cambiar las entidades ni los flujos.

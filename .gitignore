@@ -8,3 +8,4 @@ backend/**/obj/
 backend/**/wwwroot/
 .vs/
 .playwright-cli/
+tmp/

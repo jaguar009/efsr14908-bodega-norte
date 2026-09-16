@@ -7,5 +7,12 @@ export default defineConfig(({ mode }) => ({
   build: {
     outDir: mode === 'visualstudio' ? 'backend/BodegaNorte.Api/wwwroot' : 'dist',
     emptyOutDir: true,
+    rollupOptions: {
+      output: {
+        entryFileNames: 'assets/app.js',
+        chunkFileNames: 'assets/[name].js',
+        assetFileNames: (assetInfo) => assetInfo.name?.endsWith('.css') ? 'assets/app.css' : 'assets/[name][extname]',
+      },
+    },
   },
 }));

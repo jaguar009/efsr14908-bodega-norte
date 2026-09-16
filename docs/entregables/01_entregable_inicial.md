@@ -18,7 +18,7 @@ Bodega Norte es una aplicación web orientada a una pequeña bodega que necesita
 
 Las bodegas atienden muchas operaciones pequeñas durante el día: reciben productos, consultan precios, venden por unidad, verifican existencias y realizan pedidos a proveedores. Cuando estas actividades se registran solo en cuadernos o archivos dispersos, el encargado puede desconocer el stock real, vender productos agotados o comprar sin priorizar las alertas más importantes.
 
-El proyecto plantea una aplicación web de n capas que representa el proceso de negocio de la bodega. El usuario podrá consultar productos, registrar una venta, descontar cantidades automáticamente, visualizar indicadores y exportar información para tomar decisiones de reposición.
+El proyecto plantea una aplicación web con arquitectura MVC estricta que representa el proceso de negocio de la bodega. El usuario podrá consultar productos, registrar una venta, descontar cantidades automáticamente, visualizar indicadores y exportar información para tomar decisiones de reposición.
 
 ## Diagnóstico SEPTE
 
@@ -111,7 +111,7 @@ La solución es aplicable porque concentra en un solo flujo las actividades que 
 |---|---|---|
 | Datos de prueba incompletos | Medio | Usar catálogo semilla y validar casos extremos |
 | Confusión entre stock mínimo y stock actual | Alto | Etiquetas claras y pruebas de venta con alerta |
-| Pérdida de datos del navegador | Medio | Exportación CSV y futura migración a SQL Server |
+| Pérdida de datos del navegador | Medio | Usar SQL Server en modo MVC y exportar CSV en modo demo |
 | Alcance demasiado amplio | Alto | Priorizar inventario, ventas, reportes y recursos |
 | Credenciales de servicios externos | Alto | No incrustar claves; usar variables de entorno |
 

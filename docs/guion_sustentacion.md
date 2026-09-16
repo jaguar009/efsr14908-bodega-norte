@@ -20,7 +20,7 @@
 
 ## 4. Diseño técnico
 
-“La interfaz está construida con React y Vite. La demo guarda datos en LocalStorage para ejecutarse sin servidor. Se dejó un esquema SQL Server para una etapa de despliegue con API y un contrato de integración para Watson Assistant sin exponer credenciales.”
+"La solución aplica MVC estrictamente: React y Views/Home/Index.cshtml forman la vista, los controladores ASP.NET Core reciben las operaciones, BodegaService aplica las reglas y BodegaRepository persiste el modelo en SQL Server LocalDB. También existe un modo demo con LocalStorage para ejecutar la interfaz sin servidor."
 
 ## 5. Validación y cierre
 

@@ -1,7 +1,10 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import { createRoot } from 'react-dom/client';
+import { HashRouter, Navigate, Route, Routes, useLocation, useNavigate } from 'react-router-dom';
 import './styles.css';
-import { inventoryApi, isSqlServerMode } from './api';
+import { inventoryApi, isSupabaseMode } from './api';
+import { AuthPage, AuthProvider, ProtectedRoute, useAuth } from './auth';
+import { isSupabaseConfigured } from './supabase';
 
 const initialProducts = [
   { id: 'P-001', name: 'Leche Gloria 1L', category: 'Lácteos', stock: 3, minStock: 10, cost: 3.25, price: 4.5, supplier: 'Distribuidora Central', unit: 'unidad', updated: 'Hoy, 08:42' },
@@ -19,12 +22,12 @@ const initialProducts = [
 ];
 
 const initialSales = [
-  { id: '#1048', time: '10:24', customer: 'Venta mostrador', items: 3, total: 37.5, method: 'Yape' },
-  { id: '#1047', time: '09:56', customer: 'Venta mostrador', items: 5, total: 62.3, method: 'Efectivo' },
-  { id: '#1046', time: '09:12', customer: 'Venta mostrador', items: 2, total: 18.0, method: 'Efectivo' },
-  { id: '#1045', time: '08:47', customer: 'Venta mostrador', items: 4, total: 51.9, method: 'Plin' },
+  { id: '#1048', time: '10:24', customer: 'Venta mostrador', items: 7, total: 32.0, method: 'Yape' },
+  { id: '#1047', time: '09:56', customer: 'Venta mostrador', items: 6, total: 46.1, method: 'Efectivo' },
+  { id: '#1046', time: '09:12', customer: 'Venta mostrador', items: 3, total: 19.5, method: 'Efectivo' },
+  { id: '#1045', time: '08:47', customer: 'Venta mostrador', items: 5, total: 37.5, method: 'Plin' },
   { id: '#1044', time: '08:21', customer: 'Venta mostrador', items: 1, total: 7.5, method: 'Efectivo' },
-  { id: '#1043', time: '07:58', customer: 'Venta mostrador', items: 6, total: 83.2, method: 'Tarjeta' },
+  { id: '#1043', time: '07:58', customer: 'Venta mostrador', items: 7, total: 66.1, method: 'Tarjeta' },
 ];
 
 const suppliers = [
@@ -88,9 +91,13 @@ const readStored = (key, fallback) => {
 };
 
 function App() {
-  const [page, setPage] = useState('dashboard');
-  const [products, setProducts] = useState(() => readStored('products', initialProducts));
-  const [sales, setSales] = useState(() => readStored('sales', initialSales));
+  const location = useLocation();
+  const navigate = useNavigate();
+  const { user, signOut, enabled: authEnabled } = useAuth();
+  const requestedPage = location.pathname.split('/')[2] || 'dashboard';
+  const page = navItems.some((item) => item.id === requestedPage) ? requestedPage : 'dashboard';
+  const [products, setProducts] = useState(() => isSupabaseMode ? [] : readStored('products', initialProducts));
+  const [sales, setSales] = useState(() => isSupabaseMode ? [] : readStored('sales', initialSales));
   const [query, setQuery] = useState('');
   const [cart, setCart] = useState([]);
   const [modal, setModal] = useState(null);
@@ -105,7 +112,7 @@ function App() {
   };
 
   useEffect(() => {
-    if (!isSqlServerMode) return undefined;
+    if (!isSupabaseMode) return undefined;
     let active = true;
     Promise.all([inventoryApi.getProducts(), inventoryApi.getSales()])
       .then(([remoteProducts, remoteSales]) => {
@@ -113,12 +120,12 @@ function App() {
         setProducts(remoteProducts);
         setSales(remoteSales);
       })
-      .catch((error) => showToast(`No se pudo conectar con SQL Server: ${error.message}`));
+      .catch((error) => showToast(`No se pudo conectar con Supabase: ${error.message}`));
     return () => { active = false; };
   }, []);
 
-  useEffect(() => { window.localStorage.setItem('bodega-norte:v1:products', JSON.stringify(products)); }, [products]);
-  useEffect(() => { window.localStorage.setItem('bodega-norte:v1:sales', JSON.stringify(sales)); }, [sales]);
+  useEffect(() => { if (!isSupabaseMode) window.localStorage.setItem('bodega-norte:v1:products', JSON.stringify(products)); }, [products]);
+  useEffect(() => { if (!isSupabaseMode) window.localStorage.setItem('bodega-norte:v1:sales', JSON.stringify(sales)); }, [sales]);
 
   const lowStock = useMemo(() => products.filter((product) => product.stock <= product.minStock), [products]);
   const stockTotal = useMemo(() => products.reduce((sum, product) => sum + product.stock, 0), [products]);
@@ -144,7 +151,7 @@ function App() {
   const completeSale = async (method) => {
     if (!cart.length) return;
     const saleItems = cart.map((line) => ({ productId: line.id, quantity: line.quantity }));
-    if (isSqlServerMode) {
+    if (isSupabaseMode) {
       try {
         const result = await inventoryApi.createSale({ paymentMethod: method, items: saleItems });
         setSales((current) => [result.sale, ...current]);
@@ -163,12 +170,12 @@ function App() {
     }
     setCart([]);
     setModal(null);
-    showToast(isSqlServerMode ? 'Venta registrada en SQL Server.' : 'Venta registrada correctamente.');
+    showToast(isSupabaseMode ? 'Venta registrada en Supabase.' : 'Venta registrada correctamente.');
   };
 
   const saveProduct = async (product) => {
     const normalized = { ...product, stock: Number(product.stock), minStock: Number(product.minStock), cost: Number(product.cost), price: Number(product.price), updated: 'Ahora' };
-    if (isSqlServerMode) {
+    if (isSupabaseMode) {
       try {
         const saved = await inventoryApi.saveProduct(normalized);
         setProducts((current) => current.some((item) => item.id === saved.id) ? current.map((item) => item.id === saved.id ? saved : item) : [saved, ...current]);
@@ -180,7 +187,7 @@ function App() {
       setProducts((current) => current.some((item) => item.id === normalized.id) ? current.map((item) => item.id === normalized.id ? normalized : item) : [normalized, ...current]);
     }
     setModal(null);
-    showToast(isSqlServerMode ? 'Producto guardado en SQL Server.' : 'Producto guardado correctamente.');
+    showToast(isSupabaseMode ? 'Producto guardado en Supabase.' : 'Producto guardado correctamente.');
   };
 
   const exportReport = () => {
@@ -198,7 +205,7 @@ function App() {
   };
 
   const deleteProduct = async (id) => {
-    if (isSqlServerMode) {
+    if (isSupabaseMode) {
       try {
         await inventoryApi.deleteProduct(id);
       } catch (error) {
@@ -207,13 +214,22 @@ function App() {
       }
     }
     setProducts((current) => current.filter((product) => product.id !== id));
-    showToast(isSqlServerMode ? 'Producto eliminado de SQL Server.' : 'Producto eliminado.');
+    showToast(isSupabaseMode ? 'Producto eliminado de Supabase.' : 'Producto eliminado.');
   };
 
   const go = (target) => {
-    setPage(target);
+    navigate(target === 'dashboard' ? '/app' : `/app/${target}`);
     setMobileNav(false);
     setQuery('');
+  };
+
+  const handleSignOut = async () => {
+    try {
+      await signOut();
+      navigate('/login');
+    } catch {
+      showToast('No se pudo cerrar la sesión. Inténtalo nuevamente.');
+    }
   };
 
   return (
@@ -231,14 +247,14 @@ function App() {
           <strong>Buen trabajo hoy</strong>
           <span>Revisa tus productos con stock bajo antes de cerrar.</span>
         </div>
-        <div className="sidebar-footer"><span className="status-dot"></span><span>{isSqlServerMode ? 'SQL Server local' : 'Demo local'}</span></div>
+        <div className="sidebar-footer"><span className="status-dot"></span><span>{isSupabaseMode ? 'Supabase PostgreSQL' : 'Demo local'}</span></div>
       </aside>
 
       <main className="main">
         <header className="topbar">
           <button className="mobile-menu" onClick={() => setMobileNav(!mobileNav)} aria-label="Abrir menú"><Icon name="menu" /></button>
           <div className="search-shell"><Icon name="search" size={20} /><input value={query} onChange={(e) => setQuery(e.target.value)} placeholder="Buscar productos, códigos o clientes..." aria-label="Buscar" />{query && <button className="clear-search" onClick={() => setQuery('')}><Icon name="close" size={16} /></button>}</div>
-          <div className="topbar-actions"><button className="assistant-button" onClick={() => setAssistantOpen(true)}><Icon name="help" size={18} /><span>Asistente</span></button><button className="icon-button" aria-label="Notificaciones" onClick={() => showToast('No tienes nuevas notificaciones.')}><Icon name="bell" size={21} /><span className="notification-dot"></span></button><button className="profile"><span className="avatar">A</span><span className="profile-copy"><strong>Ana</strong><small>Cajera</small></span><Icon name="chevron" size={16} /></button></div>
+          <div className="topbar-actions"><button className="assistant-button" onClick={() => setAssistantOpen(true)}><Icon name="help" size={18} /><span>Asistente</span></button><button className="icon-button" aria-label="Notificaciones" onClick={() => showToast('No tienes nuevas notificaciones.')}><Icon name="bell" size={21} /><span className="notification-dot"></span></button><div className="signed-in-user"><span className="avatar">{(user?.email?.[0] || 'A').toUpperCase()}</span><span className="profile-copy"><strong>{user?.email?.split('@')[0] || 'Ana'}</strong><small>{user ? 'Sesión activa' : 'Cajera demo'}</small></span></div>{authEnabled && <button className="logout-button" onClick={handleSignOut}>Cerrar sesión</button>}</div>
         </header>
 
         <div className="content">
@@ -323,7 +339,21 @@ function AssistantModal({ products, sales, onClose }) {
     return 'Puedo responder sobre stock bajo, ventas, productos y exportación. Prueba con una de las sugerencias.';
   };
   const submit = (value = question) => { if (!value.trim()) return; setMessages([...messages, { role: 'user', text: value }, { role: 'assistant', text: answer(value) }]); setQuestion(''); };
-  return <div className="modal-backdrop"><div className="modal assistant-modal"><div className="modal-header"><div><div className="page-eyebrow">Ayuda operativa</div><h2>Asistente de bodega</h2><p>Respuestas rápidas para operar Bodega Norte.</p></div><button className="close-button" onClick={onClose}><Icon name="close" /></button></div><div className="assistant-body"><div className="assistant-messages">{messages.map((message, index) => <div className={message.role === 'assistant' ? 'assistant-message' : 'assistant-message user'} key={`${message.role}-${index}`}><span className="assistant-bubble-icon"><Icon name={message.role === 'assistant' ? 'help' : 'user'} size={15} /></span><p>{message.text}</p></div>)}</div><div className="assistant-suggestions"><button onClick={() => submit('¿Qué productos tienen stock bajo?')}>Stock bajo</button><button onClick={() => submit('¿Cuánto llevamos vendido?')}>Ventas de hoy</button><button onClick={() => submit('¿Cómo exporto el inventario?')}>Exportar</button></div><div className="assistant-input"><input value={question} onChange={(e) => setQuestion(e.target.value)} onKeyDown={(e) => e.key === 'Enter' && submit()} placeholder="Escribe una pregunta..." aria-label="Pregunta al asistente" /><button className="button primary" onClick={() => submit()}>Enviar</button></div><small className="assistant-note">{isSqlServerMode ? 'Modo SQL Server local; la integración Watson se conecta mediante el backend.' : 'Demo local preparada para conectar con Watson Assistant mediante el contrato de integración.'}</small></div></div></div>;
+  return <div className="modal-backdrop"><div className="modal assistant-modal"><div className="modal-header"><div><div className="page-eyebrow">Ayuda operativa</div><h2>Asistente de bodega</h2><p>Respuestas rápidas para operar Bodega Norte.</p></div><button className="close-button" onClick={onClose}><Icon name="close" /></button></div><div className="assistant-body"><div className="assistant-messages">{messages.map((message, index) => <div className={message.role === 'assistant' ? 'assistant-message' : 'assistant-message user'} key={`${message.role}-${index}`}><span className="assistant-bubble-icon"><Icon name={message.role === 'assistant' ? 'help' : 'user'} size={15} /></span><p>{message.text}</p></div>)}</div><div className="assistant-suggestions"><button onClick={() => submit('¿Qué productos tienen stock bajo?')}>Stock bajo</button><button onClick={() => submit('¿Cuánto llevamos vendido?')}>Ventas de hoy</button><button onClick={() => submit('¿Cómo exporto el inventario?')}>Exportar</button></div><div className="assistant-input"><input value={question} onChange={(e) => setQuestion(e.target.value)} onKeyDown={(e) => e.key === 'Enter' && submit()} placeholder="Escribe una pregunta..." aria-label="Pregunta al asistente" /><button className="button primary" onClick={() => submit()}>Enviar</button></div><small className="assistant-note">{isSupabaseMode ? 'Modo Supabase PostgreSQL; Watson sigue pendiente de configuración.' : 'Demo local preparada para conectar con Watson Assistant mediante el contrato de integración.'}</small></div></div></div>;
 }
 
-createRoot(document.getElementById('root')).render(<App />);
+function AppRoutes() {
+  const authRequired = isSupabaseMode || isSupabaseConfigured;
+
+  return (
+    <Routes>
+      <Route path="/login" element={<AuthPage mode="login" />} />
+      <Route path="/signup" element={<AuthPage mode="signup" />} />
+      <Route path="/app/*" element={<ProtectedRoute required={authRequired}><App /></ProtectedRoute>} />
+      <Route path="/" element={<Navigate to="/app" replace />} />
+      <Route path="*" element={<Navigate to="/app" replace />} />
+    </Routes>
+  );
+}
+
+createRoot(document.getElementById('root')).render(<HashRouter><AuthProvider><AppRoutes /></AuthProvider></HashRouter>);

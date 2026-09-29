@@ -8,8 +8,13 @@ namespace BodegaNorte.Api.Controllers;
 public sealed class HealthController : ControllerBase
 {
     private readonly BodegaService _service;
+    private readonly ILogger<HealthController> _logger;
 
-    public HealthController(BodegaService service) => _service = service;
+    public HealthController(BodegaService service, ILogger<HealthController> logger)
+    {
+        _service = service;
+        _logger = logger;
+    }
 
     [HttpGet]
     public async Task<IActionResult> Get(CancellationToken cancellationToken)
@@ -17,11 +22,12 @@ public sealed class HealthController : ControllerBase
         try
         {
             await _service.TestConnectionAsync(cancellationToken);
-            return Ok(new { status = "ok", database = "sql-server-local", architecture = "mvc-strict", layers = new[] { "View", "Controller", "Model" } });
+            return Ok(new { status = "ok", database = "supabase-postgresql", architecture = "mvc", layers = new[] { "View", "Controller", "Model" } });
         }
         catch (Exception error)
         {
-            return Problem(title: "No se pudo conectar con SQL Server local.", detail: error.Message, statusCode: StatusCodes.Status503ServiceUnavailable);
+            _logger.LogError(error, "Falló la conexión del backend con Supabase PostgreSQL.");
+            return Problem(title: "No se pudo conectar con Supabase PostgreSQL.", statusCode: StatusCodes.Status503ServiceUnavailable);
         }
     }
 }

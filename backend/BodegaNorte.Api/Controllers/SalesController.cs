@@ -1,10 +1,12 @@
 using BodegaNorte.Api.Models;
 using BodegaNorte.Api.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BodegaNorte.Api.Controllers;
 
 [ApiController]
+[Authorize]
 [Route("api/sales")]
 public sealed class SalesController : ControllerBase
 {

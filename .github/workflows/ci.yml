@@ -1,0 +1,52 @@
+name: Validación de Bodega Norte
+
+on:
+  push:
+    branches: [master, main]
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  build-and-check:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Descargar código
+        uses: actions/checkout@v4
+
+      - name: Configurar Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Activar pnpm
+        run: |
+          corepack enable
+          corepack prepare pnpm@11.19.0 --activate
+
+      - name: Instalar dependencias de la interfaz
+        run: pnpm install --frozen-lockfile
+
+      - name: Compilar modos de demostración y Visual Studio
+        run: |
+          pnpm test
+          pnpm run build:github
+          pnpm run build:visualstudio
+
+      - name: Configurar .NET 8
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 8.0.x
+
+      - name: Compilar backend
+        run: dotnet build backend/BodegaNorte.sln --configuration Release
+
+      - name: Configurar Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 17
+
+      - name: Compilar la prueba HTTP de integración
+        run: javac -encoding UTF-8 integration/JavaInventoryIntegrationTest.java

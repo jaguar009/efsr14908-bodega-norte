@@ -5,6 +5,7 @@ COPY package.json pnpm-lock.yaml ./
 RUN pnpm install --frozen-lockfile
 COPY index.html vite.config.js ./
 COPY src ./src
+COPY public/favicon.svg ./public/favicon.svg
 COPY .env.visualstudio ./.env.visualstudio
 RUN pnpm run build:visualstudio
 

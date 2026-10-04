@@ -8,14 +8,15 @@
     "build": "vite build",
     "build:visualstudio": "vite build --mode visualstudio",
     "build:github": "vite build --mode github",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "test": "node --test tests/*.test.js"
   },
   "dependencies": {
     "@supabase/supabase-js": "2.117.2",
-    "@vitejs/plugin-react": "latest",
-    "react": "latest",
-    "react-dom": "latest",
+    "@vitejs/plugin-react": "6.1.1",
+    "react": "19.3.0",
+    "react-dom": "19.3.0",
     "react-router-dom": "7.18.4",
-    "vite": "latest"
+    "vite": "8.3.1"
   }
 }

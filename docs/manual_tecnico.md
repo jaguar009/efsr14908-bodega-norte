@@ -1,53 +1,61 @@
-# Manual técnico
+# Manual técnico — Bodega Norte
 
-## Tecnologías
+## Arquitectura
 
-- React para la vista visual y composición de la interfaz.
-- Vite para desarrollo y compilación.
-- ASP.NET Core 8 MVC para controladores, vista host y configuración del servidor.
-- CSS nativo con variables de diseño y media queries.
-- SVG inline para iconografía consistente.
-- Microsoft.Data.SqlClient para acceso a SQL Server local.
-- LocalStorage versionado únicamente para el modo demo.
+ASP.NET Core 8 MVC: React es la View; Controllers reciben las solicitudes; Contracts y BodegaService definen los datos y reglas; BodegaRepository accede a PostgreSQL mediante Npgsql. HomeController resuelve los archivos con hash del manifiesto de Vite. GitHub Pages sirve la interfaz estática y necesita el backend externo para compartir datos.
 
-## Componentes principales
+La demostración usa `src/demoApi.js` y `bodega-norte:v2:data` en localStorage. Migra registros antiguos sin inventar fechas o costos. Es un entorno local con datos ficticios; no certifica una operación remota.
 
-- `App`: shell, navegación, estado y composición de páginas.
-- `Dashboard`: indicadores, gráfico, actividad y alertas.
-- `Sales`: catálogo, categorías, carrito y cobro.
-- `Inventory`: filtros, estados y acciones CRUD.
-- `Products`: catálogo comercial y margen.
-- `Suppliers`: proveedores y resumen de abastecimiento.
-- `Reports`: indicadores y exportación CSV.
-- `Settings`: datos de la bodega y preferencias.
-- `ProductModal` y `CheckoutModal`: flujos de edición y confirmación.
+## Autenticación y permisos
 
-## Reglas de negocio
+El navegador usa la URL y clave publishable de Supabase. Envía el token de sesión en Authorization: Bearer. El servidor valida la sesión con Supabase Auth y consulta members en cada solicitud. No confía en roles de user_metadata. BootstrapAdminEmail solo habilita automáticamente un correo confirmado coincidente. Los demás usuarios requieren habilitación del administrador.
 
-1. Un producto está en stock bajo cuando `stock <= minStock`.
-2. Una venta no permite agregar más unidades que el stock disponible.
-3. Confirmar una venta agrega el registro y descuenta las cantidades.
-4. El margen estimado se calcula como `1 - costo / precio`.
-5. El inventario exportado incluye código, producto, categoría, stock, mínimo, precio y proveedor.
+| Operación | Cajero | Administrador |
+|---|---|---|
+| Consultas de catálogo, ventas, configuración y movimientos | Sí | Sí |
+| Registrar venta | Sí | Sí |
+| CRUD catálogo/proveedores, ajustes, anulación | No | Sí |
+| Configuración, roles, auditoría, respaldo | No | Sí |
 
-## Arquitectura MVC estricta
+El esquema privado bodega_norte contiene categories, suppliers, products, sales, sale_items, members, settings, stock_movements y audit_log. RLS está activado y se revocaron permisos de anon/authenticated. El acceso SQL del backend requiere una credencial privada; el cliente no consulta estas tablas mediante Data API. La advertencia informativa RLS sin políticas corresponde a esta decisión de acceso exclusivo por servidor.
 
-El modo de ejecución con Visual Studio sigue MVC de forma explícita:
+## Consistencia
 
-- **View:** `Views/Home/Index.cshtml` aloja los archivos compilados de React; los componentes React presentan Dashboard, Ventas, Inventario y Reportes.
-- **Controller:** `Controllers/HomeController.cs`, `ProductsController.cs`, `SalesController.cs` y `HealthController.cs` reciben las solicitudes y devuelven vistas o respuestas JSON.
-- **Model:** `Models/Contracts.cs` define los contratos de entrada y salida; `Services/BodegaService.cs` aplica las reglas del negocio y `Data/BodegaRepository.cs` representa y persiste la información en SQL Server.
+- Códigos UUID; crear y editar son operaciones separadas.
+- Edición y ajuste requieren expectedVersion. El ajuste exige motivo y rechaza saldo negativo.
+- POST /api/sales requiere requestId UUID y líneas con productId, quantity y expectedPrice. El servidor calcula importes con su precio y verifica el precio visto por el cajero.
+- Los productos se bloquean en orden estable dentro de una transacción. Stock, venta, detalles, movimientos y auditoría se confirman juntos.
+- Reintentar requestId con el mismo contenido y actor devuelve la misma venta. Cambiar el contenido de esa clave devuelve conflicto.
+- Anular devuelve existencias una vez y conserva el registro. Archivar productos no borra sus ventas.
+- Nombre, costo y precio de las líneas se capturan al vender. Los costos antiguos desconocidos permanecen nulos.
+- Reportes usan America/Lima, ventas activas y rangos de fechas reales. No rellenan días vacíos con cifras de ejemplo.
 
-El controlador no ejecuta SQL directamente y la vista no accede a SQL Server. El flujo es `View → Controller → Service/Model → Repository → SQL Server`, con la respuesta retornando por el mismo circuito.
+## Endpoints
 
-## Extensión a backend
+| Ruta | Método y uso |
+|---|---|
+| /api/me | GET perfil y rol |
+| /api/products | GET catálogo, POST crear |
+| /api/products/{id} | PUT editar, DELETE archivar |
+| /api/products/{id}/stock | POST ajustar con motivo |
+| /api/sales | GET historial, POST venta idempotente |
+| /api/sales/{id}/cancel | POST anular |
+| /api/suppliers | GET y POST |
+| /api/suppliers/{id} | PUT y DELETE |
+| /api/settings | GET y PUT |
+| /api/members | GET y PUT |
+| /api/movements, /api/audit, /api/backup | GET |
+| /api/health | GET estado del proceso sin información privada |
+| /api/health/ready | GET comprueba disponibilidad de la base |
 
-El modelo de datos contiene las entidades `categories`, `suppliers`, `products`, `sales` y `sale_items`. El modo MVC ya expone los endpoints `/api/products`, `/api/sales` y `/api/health`; el modo demo utiliza `localStorage` solo para permitir una ejecución sin servidor. La validación de permisos y la autenticación deben vivir en los controladores y servicios del backend.
+## Respaldo y recuperación
 
-## Buenas prácticas aplicadas
+Configuración permite descargar JSON versión 2 con las nueve tablas de negocio. No contiene contraseñas ni sesiones de Auth. Una transacción repeatable read produce una copia consistente. Auditoría registra su exportación. No se ofrece restauración sobre la base activa desde el navegador.
 
-- Estado inicial separado de los componentes visuales.
-- Actualizaciones inmutables de productos, ventas y carrito.
-- Cálculos derivados con `useMemo`.
-- Persistencia versionada con manejo de errores.
-- Componentes enfocados y CSS responsive.
+Para recuperar: crear una base aislada; aplicar schema.sql y upgrade_operations.sql; conservar el JSON original; importar tablas en orden categories, suppliers, products, sales, sale_items, settings, members, stock_movements, audit_log con sus claves; verificar cuentas Auth antes de recuperar members; ajustar secuencias; comparar conteos, totales y claves foráneas. La importación JSON requiere un procedimiento técnico específico y no se ha validado aún. Para una recuperación completa del servidor se necesita un respaldo PostgreSQL independiente, incluido Auth cuando corresponda. No se anuncian copias automáticas ni recuperación probada.
+
+## Publicación y límites
+
+Docker compila React y MVC para Render. PORT configura el puerto; ConnectionStrings__BodegaNorte se guarda como secreto; BootstrapAdminEmail identifica la cuenta inicial. CORS permite el origen de GitHub Pages. Supabase Auth requiere redirect URLs con la ruta completa del repositorio y recuperación de contraseña.
+
+Las 18 pruebas locales y builds no sustituyen una prueba del backend publicado. La prueba Java compilada requiere BODEGA_API_TOKEN y una base desechable. La conexión privada, la prueba HTTP y el backend Render siguen pendientes. Watson, compras, impuestos, pagos bancarios y facturación electrónica no están integrados.

@@ -5,13 +5,15 @@ export default defineConfig(({ mode }) => ({
   plugins: [react()],
   base: mode === 'github' ? '/efsr14908-bodega-norte/' : '/',
   build: {
+    manifest: true,
     outDir: mode === 'visualstudio' ? 'backend/BodegaNorte.Api/wwwroot' : 'dist',
     emptyOutDir: true,
-    rollupOptions: {
+    rolldownOptions: {
       output: {
-        entryFileNames: 'assets/app.js',
-        chunkFileNames: 'assets/[name].js',
-        assetFileNames: (assetInfo) => assetInfo.name?.endsWith('.css') ? 'assets/app.css' : 'assets/[name][extname]',
+        entryFileNames: 'assets/[name]-[hash].js',
+        chunkFileNames: 'assets/[name]-[hash].js',
+        assetFileNames: 'assets/[name]-[hash][extname]',
+        codeSplitting: { groups: [{ name: 'vendor', test: /node_modules/ }] },
       },
     },
   },

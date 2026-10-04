@@ -3,9 +3,13 @@ dist/
 output/
 .env.local
 *.log
+*.class
+TestResults/
 backend/**/bin/
 backend/**/obj/
 backend/**/wwwroot/
+backend/**/publish-check/
 .vs/
 .playwright-cli/
 tmp/
+*.iml

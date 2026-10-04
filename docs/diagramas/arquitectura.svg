@@ -6,7 +6,7 @@
   <text x="55" y="86" class="body">Tres capas académicas implementadas con View, Controller y Model.</text>
   <rect x="65" y="145" rx="16" width="280" height="230" class="box accent"/><text x="95" y="190" class="label">VIEW · Vista</text><text x="95" y="230" class="body">React + Vite</text><text x="95" y="258" class="body">Views/Home/Index.cshtml</text><text x="95" y="286" class="body">Inicio · Ventas</text><text x="95" y="314" class="body">Inventario · Reportes</text>
   <rect x="410" y="145" rx="16" width="280" height="230" class="box green"/><text x="440" y="190" class="label">CONTROLLER</text><text x="440" y="230" class="body">HomeController</text><text x="440" y="258" class="body">ProductsController</text><text x="440" y="286" class="body">SalesController</text><text x="440" y="314" class="body">BodegaService · reglas</text>
-  <rect x="755" y="145" rx="16" width="280" height="230" class="box"/><text x="785" y="190" class="label">MODEL · Modelo</text><text x="785" y="230" class="body">Models/Contracts.cs</text><text x="785" y="258" class="body">Data/BodegaRepository.cs</text><text x="785" y="286" class="body">SQL Server LocalDB</text><text x="785" y="314" class="body">Transacciones y stock</text>
+  <rect x="755" y="145" rx="16" width="280" height="230" class="box"/><text x="785" y="190" class="label">MODEL · Modelo</text><text x="785" y="230" class="body">Models/Contracts.cs</text><text x="785" y="258" class="body">Data/BodegaRepository.cs</text><text x="785" y="286" class="body">Supabase PostgreSQL</text><text x="785" y="314" class="body">Npgsql · transacciones</text>
   <path d="M345 260 H400" class="line"/><path d="M690 260 H745" class="line"/>
-  <text x="65" y="440" class="body">Flujo MVC: View → Controller → Model → SQL Server → respuesta a la View.</text>
+  <text x="65" y="440" class="body">Flujo MVC: View → Controller → Model → Supabase PostgreSQL → respuesta a la View.</text>
 </svg>

@@ -3,6 +3,7 @@ using System.Security.Claims;
 using System.Text.Json;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.Extensions.Options;
+using BodegaNorte.Api.Data;
 
 namespace BodegaNorte.Api.Services;
 
@@ -10,17 +11,20 @@ public sealed class SupabaseBearerAuthenticationHandler : AuthenticationHandler<
 {
     private readonly IHttpClientFactory _httpClientFactory;
     private readonly IConfiguration _configuration;
+    private readonly BodegaRepository _repository;
 
     public SupabaseBearerAuthenticationHandler(
         IOptionsMonitor<AuthenticationSchemeOptions> options,
         ILoggerFactory logger,
         System.Text.Encodings.Web.UrlEncoder encoder,
         IHttpClientFactory httpClientFactory,
-        IConfiguration configuration)
+        IConfiguration configuration,
+        BodegaRepository repository)
         : base(options, logger, encoder)
     {
         _httpClientFactory = httpClientFactory;
         _configuration = configuration;
+        _repository = repository;
     }
 
     protected override async Task<AuthenticateResult> HandleAuthenticateAsync()
@@ -62,10 +66,15 @@ public sealed class SupabaseBearerAuthenticationHandler : AuthenticationHandler<
             if (!Guid.TryParse(id, out _))
                 return AuthenticateResult.Fail("Supabase returned an invalid user identity.");
 
+            var confirmed = (user.RootElement.TryGetProperty("email_confirmed_at", out var confirmedAt) && confirmedAt.ValueKind == JsonValueKind.String)
+                || (user.RootElement.TryGetProperty("confirmed_at", out var confirmationValue) && confirmationValue.ValueKind == JsonValueKind.String);
+            var member = await _repository.GetMemberAsync(Guid.Parse(id!), email ?? "", confirmed, Context.RequestAborted);
+
             var claims = new List<Claim>
             {
                 new(ClaimTypes.NameIdentifier, id!),
                 new("sub", id!),
+                new(ClaimTypes.Role, member is { Active: true } ? member.Role : "pending"),
             };
             if (!string.IsNullOrWhiteSpace(email))
             {

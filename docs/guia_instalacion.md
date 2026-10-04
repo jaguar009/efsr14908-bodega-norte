@@ -1,42 +1,39 @@
-# Guía de instalación
+# Instalación — Visual Studio MVC y Supabase
 
 ## Requisitos
 
-- Node.js 20.19 o superior (o Node.js 22.12 o superior).
-- npm 9 o superior.
-- Navegador actualizado.
+Visual Studio con ASP.NET, SDK .NET 8, Node.js 22 y pnpm 11.19.0. Java 17 o posterior es opcional para integración. El repositorio contiene datos de una bodega simulada.
 
-## Instalación
+## Preparar la base
 
-```bash
-cd EFSR14908_Bodega_Norte
-npm install
-npm run dev
+El proyecto actual es Bodega Norte Grupo 10 (pladdberkeewsvomkset), activo y con 12 productos y 6 ventas. La migración upgrade_operations.sql ya fue aplicada. Para instalar una base nueva ejecutar database/schema.sql, database/upgrade_operations.sql y database/seed.sql en ese orden. No volver a sembrar una base operativa como procedimiento de actualización.
+
+## Guardar la conexión privada
+
+1. Supabase Dashboard → proyecto → Connect → Session pooler.
+2. Copiar la cadena y sustituir [YOUR-PASSWORD] por la contraseña PostgreSQL.
+3. En Visual Studio: proyecto BodegaNorte.Api → Manage User Secrets.
+4. Guardar ConnectionStrings:BodegaNorte, Supabase:Url, Supabase:PublishableKey y BootstrapAdminEmail.
+5. Para una URI postgresql:// codificar caracteres reservados de la contraseña. También se admite formato Npgsql Host=...;Port=5432;Database=postgres;Username=...;Password=...;SSL Mode=Require.
+
+El archivo privado local está en %APPDATA%/Microsoft/UserSecrets/BodegaNorte-EFSR14908-VisualStudio/secrets.json. No forma parte del repositorio. El MCP de Codex sirve para administrar Supabase y no reemplaza la conexión del backend.
+
+## Construir y ejecutar
+
+```powershell
+pnpm install --frozen-lockfile
+pnpm run build:visualstudio
+dotnet build backend/BodegaNorte.sln
 ```
 
-Abre la dirección local que muestre Vite.
+Abrir backend/BodegaNorte.sln y ejecutar BodegaNorte.Api con F5. Verificar http://localhost:5248/api/health/ready. Configurar en Supabase Auth las redirect URLs exactas: http://localhost:5248/ y http://localhost:5248/#/reset-password, además de las URLs de Vite que se utilicen. La cuenta confirmada de BootstrapAdminEmail entra como administrador; las demás requieren habilitación.
 
-## Compilación
+## Publicar
 
-```bash
-npm run build
-npm run preview
-```
+Render usa Dockerfile, plan gratuito y el espacio Juan Diego's workspace autorizado. Guardar ConnectionStrings__BodegaNorte, Supabase__Url, Supabase__PublishableKey y BootstrapAdminEmail como variables. Configurar /api/health como health check y verificar /api/health/ready manualmente. Después cambiar .env.github a VITE_API_MODE=supabase y VITE_API_BASE_URL=https://SERVICIO_RENDER/api. Agregar en Supabase Auth https://jaguar009.github.io/efsr14908-bodega-norte/ y su ruta #/reset-password. GitHub Pages solo aloja el frontend.
 
-## Ejecución MVC con Visual Studio y SQL Server local
+No afirmar despliegue completado hasta verificar disponibilidad y acceso de administrador/cajero. El entorno gratuito puede suspenderse por inactividad.
 
-1. Asegura que esté instalado el SDK de .NET 8, Visual Studio con ASP.NET y desarrollo web, y SQL Server LocalDB.
-2. Ejecuta `database/schema.sql` y luego `database/seed.sql` en `(localdb)\\MSSQLLocalDB` o ajusta `backend/BodegaNorte.Api/appsettings.Development.json`.
-3. Ejecuta `pnpm install` y `pnpm run build:visualstudio` para generar la vista React dentro de `backend/BodegaNorte.Api/wwwroot`.
-4. Abre `backend/BodegaNorte.sln` en Visual Studio y ejecuta el proyecto `BodegaNorte.Api` con F5.
-5. Verifica `http://localhost:5248/api/health` y abre la dirección de la aplicación.
+## Comprobaciones
 
-La implementación usa `Views/Home/Index.cshtml` como vista host, los controladores de `Controllers/`, los contratos de `Models/`, `BodegaService` para reglas de negocio y `BodegaRepository` para SQL Server.
-
-## Persistencia de demostración
-
-El modo demo usa `localStorage` con las claves versionadas `bodega-norte:v1:products` y `bodega-norte:v1:sales`. El modo MVC usa SQL Server local mediante los controladores y repositorio del backend; no depende de `localStorage` para guardar productos ni ventas.
-
-## Variables para integración futura
-
-No se requieren variables para la demo. Para Watson Assistant o un backend real, usar un archivo `.env.local` no versionado y nunca escribir credenciales en el código fuente.
+pnpm test ejecuta 18 pruebas locales. Los builds de ambos modos y .NET deben completar sin errores. integration/README.md explica la prueba HTTP Java con token de una cuenta habilitada y una base desechable. No está ejecutada aún contra PostgreSQL.

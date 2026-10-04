@@ -1,66 +1,24 @@
-# Entrega final del proyecto
+# Informe final del proyecto
 
-## Resumen final
+El informe editable solicitado se encuentra en `docs/word/03_Entrega_Final_Informe.docx`. Bodega Norte es un prototipo académico con datos ficticios; el proyecto no se desplegó ni se validó en una bodega real.
 
-Bodega Norte es una aplicación web para digitalizar inventario y ventas de una pequeña bodega. La versión final permite administrar productos, registrar ventas, actualizar existencias, detectar stock bajo, consultar proveedores y exportar información operativa.
+## Componentes
 
-## Componentes entregados
+- Frontend React y Vite, con modo demo en `localStorage`.
+- Backend ASP.NET Core 8 MVC con controladores, servicio y repositorio Npgsql para Supabase PostgreSQL.
+- Esquema y semilla de demostración en el esquema privado `bodega_norte`.
+- Diagramas de arquitectura y modelo de datos, en formatos editables y blanco y negro.
+- Backlog, cronograma, plan de integración continua y matriz de pruebas.
+- Informe, manuales, guía de instalación, guion de sustentación y especificación Watson en Word.
 
-- Aplicación React + Vite en `src/`, servida como View por ASP.NET Core MVC.
-- Controladores MVC, servicio de negocio, modelos y repositorio en `backend/BodegaNorte.Api/`.
-- Datos semilla para una demostración reproducible.
-- Persistencia local versionada para demo y SQL Server LocalDB para el modo MVC.
-- Esquema SQL Server ejecutable en `database/schema.sql`.
-- Arquitectura y modelo de datos en SVG.
-- Plan de pruebas y evidencias documentales.
-- Guía de instalación y manual de usuario.
-- Manual técnico y contrato de integración con Watson Assistant.
+## Verificación
 
-## Verificación funcional
+El proyecto Supabase **Bodega Norte Grupo 10** (`pladdberkeewsvomkset`, región `sa-east-1`) de la nueva cuenta ya tiene el esquema y la semilla de demostración. La consulta remota confirmó 7 categorías, 5 proveedores, 12 productos, 6 ventas y 15 detalles. `.env.visualstudio` ya apunta a este proyecto. La conexión Npgsql de la API desde Visual Studio y la prueba HTTP todavía requieren configurar la contraseña de PostgreSQL en User Secrets; no se declara una prueba de venta sobre la base remota.
 
-El flujo principal validado es:
+## Límites
 
-1. Abrir **Ventas**.
-2. Buscar o seleccionar un producto.
-3. Agregar varias unidades al carrito.
-4. Confirmar el total y elegir Efectivo, Yape, Plin o Tarjeta.
-5. Registrar la venta.
-6. Revisar que el stock disminuya en **Inventario**.
-7. Revisar la actividad en **Inicio** y los totales en **Reportes**.
+El prototipo implementa autenticación, roles y auditoría. Facturación electrónica y compras están fuera del alcance; el despliegue compartido sigue pendiente. Watson Assistant está documentado como integración futura y no está conectado. La fecha de entrega final debe confirmarse debido a diferencias entre el sílabo 2026 y el Anexo 4 Nivel 2.
 
-## Conclusiones
+## Actualización al 04-10-2026
 
-1. La digitalización del catálogo y el registro de ventas reduce la dependencia de cálculos y anotaciones manuales.
-2. El descuento automático de existencias conecta la venta con la reposición y hace visible el riesgo de quiebre de stock.
-3. La arquitectura MVC estricta separa vista, controladores y modelo, y permite mantener el flujo principal mientras se agregan autenticación, auditoría y nuevos módulos.
-
-## Recomendaciones
-
-1. Realizar una prueba piloto con datos reales durante una semana y comparar el inventario físico con el registrado.
-2. En una siguiente versión, incorporar autenticación, copias de seguridad y control de vencimientos.
-3. Confirmar con la bodega las reglas tributarias antes de integrar comprobantes o facturación electrónica.
-
-## Glosario
-
-- **Stock mínimo:** cantidad de referencia que activa una alerta de reposición.
-- **Punto de venta:** módulo donde se seleccionan productos y se registra el cobro.
-- **CRUD:** crear, consultar, actualizar y eliminar registros.
-- **MVC:** patrón que separa vista, controlador y modelo.
-- **LocalStorage:** almacenamiento local del navegador para el modo demo.
-- **API:** interfaz que permite que la aplicación se comunique con un servicio.
-- **Sprint:** periodo corto de trabajo dentro de Scrum.
-
-## Bibliografía y fuentes de trabajo
-
-- IES CIBERTEC. *Anexo 4 - Informe de Proyecto ETI - Plan Nivel 2 para EFSRT III, IV V*.
-- IES CIBERTEC. *Plan de Implementación de EFSRT - ETI 2024*.
-- IES CIBERTEC. *Silabo 2026 04 EFSRT III*.
-- Registro de observación del proceso de venta y reposición de Bodega Norte, por completar con fecha, responsable y evidencia del equipo.
-
-## Anexos
-
-- Capturas del panel, inventario, ventas, reportes y configuración.
-- Exportación CSV de inventario.
-- Matriz de pruebas.
-- Diagramas.
-- Guía de instalación y manual de usuario.
+La versión incorpora roles administrador/cajero, ajustes con motivo, venta idempotente, anulación, detalle y constancia interna, proveedores/configuración persistentes, auditoría y respaldo JSON. Pasaron 18 pruebas locales; la integración HTTP PostgreSQL y el despliegue compartido siguen pendientes. Consultar docs/evidencias/validacion_tecnica_2026-10-04.md. No se certifican asistencia, horas o aceptación de negocio.

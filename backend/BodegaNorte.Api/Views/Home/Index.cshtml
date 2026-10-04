@@ -9,11 +9,11 @@
     <meta name="theme-color" content="#10294b" />
     <meta name="description" content="Sistema de inventario y ventas para Bodega Norte" />
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
-    <link rel="stylesheet" href="/assets/app.css" />
+    @foreach (var css in (string[])ViewData["Styles"]!) { <link rel="stylesheet" href="@css" /> }
     <title>Bodega Norte | Inventario y ventas</title>
 </head>
 <body>
     <div id="root"></div>
-    <script type="module" src="/assets/app.js"></script>
+    <script type="module" src="@ViewData["Script"]"></script>
 </body>
 </html>

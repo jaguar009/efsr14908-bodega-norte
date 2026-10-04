@@ -2,7 +2,7 @@
 
 ## 1. Problema y oportunidad
 
-“Bodega Norte tenía dificultad para conocer su stock real, registrar ventas con rapidez y decidir qué productos reponer. La oportunidad fue digitalizar el catálogo, la venta y las alertas en un único flujo.”
+“El escenario ficticio Bodega Norte plantea dificultad para conocer su stock real, registrar ventas con rapidez y decidir qué productos reponer. La oportunidad fue digitalizar el catálogo, la venta y las alertas en un único flujo.”
 
 ## 2. Solución
 
@@ -20,8 +20,8 @@
 
 ## 4. Diseño técnico
 
-"La solución aplica MVC estrictamente: React y Views/Home/Index.cshtml forman la vista, los controladores ASP.NET Core reciben las operaciones, BodegaService aplica las reglas y BodegaRepository persiste el modelo en SQL Server LocalDB. También existe un modo demo con LocalStorage para ejecutar la interfaz sin servidor."
+"La solución organiza la ejecución de Visual Studio con MVC: React y Views/Home/Index.cshtml forman la vista, los controladores ASP.NET Core reciben las operaciones, BodegaService aplica las reglas y BodegaRepository usa Npgsql para persistir en Supabase PostgreSQL. También existe un modo demo con LocalStorage para ejecutar la interfaz sin servidor."
 
 ## 5. Validación y cierre
 
-“Validamos el catálogo, el stock bajo, el carrito, el cobro, la persistencia, la exportación y el responsive. El sistema cumple el flujo principal de una bodega y queda preparado para autenticación, vencimientos y facturación electrónica.”
+“Pasaron 18 pruebas locales y se revisaron los flujos de demostración del navegador. Se implementaron autenticación, roles, auditoría y respaldo JSON. La integración HTTP PostgreSQL, la recuperación del respaldo, la publicación compartida y la aceptación del equipo permanecen pendientes.”

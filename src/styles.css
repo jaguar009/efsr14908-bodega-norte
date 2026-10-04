@@ -75,3 +75,52 @@ button:disabled { cursor: not-allowed; opacity: .5; }
 .logout-button { padding: 8px 10px; color: #4e6d88; background: transparent; border: 1px solid var(--line); border-radius: 7px; font-size: 10px; font-weight: 700; }
 .logout-button:hover { color: #1a5d8e; border-color: #9fc0d6; }
 @media (max-width: 620px) { .auth-card { padding: 26px 21px; }.auth-heading { margin-top: 29px; }.auth-heading h1 { font-size: 24px; }.logout-button { padding: 7px; font-size: 9px; } }
+
+/* Componentes de operaciones y accesibilidad */
+.input { height:42px; width:100%; min-width:0; padding:0 11px; border:1px solid var(--line,#dce5ed); border-radius:7px; background:var(--surface,#fff); color:var(--ink,#142d50); }
+button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible { outline:3px solid #6aa8d1; outline-offset:3px; }
+.block { display:block; color:var(--muted); font-size:10px; margin-top:5px; overflow-wrap:anywhere; }
+.notice,.error-banner { padding:12px 16px; border-radius:7px; background:#edf6fc; color:#315e7a; font-size:12px; line-height:1.6; }
+.error-banner { background:#fff0ec; color:#9c4235; margin:12px 0; }
+.sync-controls { display:flex; justify-content:space-between; align-items:center; gap:12px; font-size:10px; color:var(--muted); margin:12px 0 20px; }
+.real-chart { height:240px; display:flex; gap:12px; padding:12px 22px 20px; }
+.real-chart-column { flex:1; min-width:0; display:flex; align-items:center; flex-direction:column; gap:8px; font-size:10px; }
+.real-chart-column>span { color:var(--muted); white-space:nowrap; font-size:9px; }
+.real-chart-track { flex:1; width:100%; display:flex; align-items:flex-end; background:var(--bg); border-radius:5px; }
+.real-chart-track i { display:block; width:100%; min-height:0; background:#4c8dca; border-radius:5px 5px 0 0; }
+.period-controls { display:flex; gap:16px; margin-bottom:18px; }
+.period-controls label { display:grid; gap:5px; color:var(--muted); font-size:11px; }
+.payment-bars { padding:0 22px 22px; display:grid; gap:20px; }
+.payment-bars>div { display:grid; grid-template-columns:1fr auto; gap:8px; font-size:12px; }
+.payment-bars span { color:var(--muted); font-size:10px; }
+.payment-bars progress { grid-column:1/-1; width:100%; height:10px; accent-color:#4c8dca; }
+.quantity input { width:65px; height:29px; padding:3px; border:1px solid var(--line); border-radius:4px; color:var(--ink); background:var(--surface); font-size:11px; }
+.form-actions { padding:20px 21px 0; display:flex; justify-content:flex-end; }
+.section-body,.member-form,.section-note,.form-error { margin:15px 21px; font-size:12px; line-height:1.6; }
+.member-form { display:grid; gap:12px; }
+.member-form label { display:grid; gap:6px; color:var(--muted); font-size:11px; }
+.section-note { color:var(--muted); }
+.form-error,.danger-text { color:#a74235; }
+.modal-theme { min-height:0; display:block; }
+.toast.error { background:#933f36; color:#fff; }
+.receipt-content { padding:20px 25px; font-size:12px; overflow-wrap:anywhere; }
+.receipt-content table { width:100%; }
+.receipt-content th,.receipt-content td { padding:9px 5px; }
+.receipt-total { font-size:18px; font-weight:bold; }
+.profile-copy { display:grid; gap:3px; font-size:11px; }
+.profile-copy small { color:var(--muted); font-size:10px; }
+.nav-item span { white-space:normal; }
+.table-scroll { max-width:100%; overflow-x:auto; }
+.main { min-width:0; }
+.search-shell { min-width:0; }
+.topbar-actions { flex-shrink:0; }
+@media(max-width:620px) { .topbar-actions .assistant-button span,.topbar-actions .profile-copy { display:none; }.demo-role { max-width:100px; font-size:10px; }.topbar-actions { gap:7px; }.real-chart { gap:6px; padding-inline:12px; }.real-chart-column>span { font-size:7px; }.period-controls { gap:10px; }.period-controls label { min-width:0; flex:1; }.activity-row time { font-size:9px; }.report-summary strong { font-size:18px; }.settings-menu { grid-template-columns:repeat(2,1fr); }.sidebar { height:100vh; overflow-y:auto; }.payment-bars>div { grid-template-columns:1fr; }.payment-bars progress { grid-column:auto; } }
+@media print {
+  @page { size:A4; margin:15mm; }
+  body { background:white!important; min-width:0; }
+  #root>.app:not(.modal-theme),.toast,.modal-header,.modal-footer { display:none!important; }
+  .modal-theme,.modal-backdrop { display:block!important; position:static!important; padding:0!important; background:white!important; min-height:0!important; }
+  .modal { box-shadow:none!important; max-height:none!important; width:100%!important; overflow:visible!important; color:black!important; background:white!important; }
+  .receipt-content { padding:0; color:black; }
+  .receipt-content th,.receipt-content td { border-bottom:1px solid black; color:black; background:white; }
+}

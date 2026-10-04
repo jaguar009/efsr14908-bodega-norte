@@ -22,6 +22,14 @@ public static class DatabaseConnection
         builder.MaxPoolSize = 10; builder.MinPoolSize = 0; builder.Timeout = 15; builder.CommandTimeout = 30;
         builder.IncludeErrorDetail = false;
         if (builder.SslMode == SslMode.Disable) throw new InvalidOperationException("La conexión a PostgreSQL debe usar SSL.");
+        var host = builder.Host ?? "";
+        if (host.EndsWith(".supabase.co", StringComparison.OrdinalIgnoreCase) ||
+            host.EndsWith(".pooler.supabase.com", StringComparison.OrdinalIgnoreCase))
+        {
+            builder.SslMode = SslMode.VerifyFull;
+            if (string.IsNullOrWhiteSpace(builder.RootCertificate))
+                builder.RootCertificate = Path.Combine(AppContext.BaseDirectory, "certificates", "prod-ca-2021.crt");
+        }
         return builder.ConnectionString;
     }
 }

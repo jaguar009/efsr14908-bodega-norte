@@ -30,7 +30,7 @@ jobs:
           corepack prepare pnpm@11.19.0 --activate
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
-      - name: Build static demo
+      - name: Build frontend for GitHub Pages
         run: pnpm run build:github
       - name: Configure Pages
         uses: actions/configure-pages@v5

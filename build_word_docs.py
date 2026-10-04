@@ -421,7 +421,7 @@ def doc_02():
     para(d, "Este documento describe el estado del código disponible al preparar el paquete, con fecha 4 de octubre de 2026. No certifica que el equipo haya presentado exactamente este avance en la semana 10 ni calcula un porcentaje de ejecución según la rúbrica.")
     table(d, ["Área", "Estado del código", "Límite de la evidencia"], [
         ("Interfaz", "Hay vistas para inicio, venta, productos, inventario, reportes y configuración.", "Pendiente aceptación manual del Grupo 10."),
-        ("Ventas API", "El código valida stock y descuenta unidades dentro de una transacción PostgreSQL.", "Conexión y prueba remota pendientes de configurar."),
+        ("Ventas API", "El código valida stock y descuenta unidades dentro de una transacción PostgreSQL.", "Conexión y disponibilidad remota verificadas; falta la prueba autenticada de venta."),
         ("Base de datos", "Esquema SQL con categorías, proveedores, productos, ventas y líneas.", "Datos de ejemplo; sin uso de una bodega real."),
         ("Reportes", "La interfaz calcula reportes por período y exporta inventario, ventas y movimientos a CSV.", "Descarga pendiente de prueba visual por el equipo."),
         ("Asistente", "La demo local ofrece respuestas de muestra; contrato Watson documentado.", "Servicio Watson no conectado."),
@@ -456,12 +456,12 @@ def doc_02():
     ])
     para(d, "El registro detallado se encuentra en `docs/evidencias/validacion_tecnica_2026-09-28.md`. La prueba HTTP documentada corresponde a la versión histórica SQL Server. El backend Npgsql actual ya compila, pero su conexión Supabase aún requiere la cadena de conexión del proyecto nuevo.")
     h(d, "6. Plan de integración continua")
-    para(d, "El workflow `.github/workflows/ci.yml` compila los dos modos del frontend, compila la solución .NET y verifica que el programa Java compile. El workflow de GitHub Pages publica solo la demo estática. La prueba HTTP de venta con PostgreSQL queda pendiente de ejecutar contra el proyecto Supabase de desarrollo.")
+    para(d, "El workflow `.github/workflows/ci.yml` compila los dos modos del frontend, compila la solución .NET y verifica que el programa Java compile. El workflow de GitHub Pages publica el frontend conectado a la API de Render. La prueba HTTP de venta con PostgreSQL queda pendiente de ejecutar contra el proyecto Supabase de desarrollo.")
     h(d, "7. Acciones antes de una entrega académica")
     bullets(d, ["Revisar los flujos de interfaz y guardar evidencia con ejecutor y fecha reales.", "Confirmar el calendario final del curso; el sílabo 2026 y el Anexo 4 Nivel 2 indican semanas distintas.", "Validar los roles y los criterios de aceptación con el equipo.", "Mantener sin datos personales reales la base de demostración y completar seguridad antes de producción."])
     h(d, "Actualización operativa al 04-10-2026")
     para(d, "Se implementaron Supabase Auth y permisos administrador/cajero, ajustes con motivo y control de versión, venta con identificador de reintento, anulaciones con devolución única de stock, historial y constancia interna, proveedores y configuración persistentes, auditoría y respaldo JSON. Los reportes usan fecha de Lima y detalles de venta; no se inventan costos históricos.")
-    para(d, "Validación técnica: 18 pruebas locales aprobadas; frontend y .NET compilan, con cero errores y advertencias en .NET; Java compila. La revisión de navegador se realizó en modo demo. La conexión privada del backend, integración HTTP PostgreSQL, despliegue Render y aceptación del Grupo 10 están pendientes. La evidencia detallada está en docs/evidencias/validacion_tecnica_2026-10-04.md.")
+    para(d, "Validación técnica: 18 pruebas locales aprobadas y compilaciones correctas. Render está publicado y conectado a Supabase con TLS y certificado validado; /api/health/ready responde HTTP 200 y las rutas privadas rechazan acceso anónimo. GitHub Pages usa la API remota. Falta confirmar la cuenta inicial, probar operaciones autenticadas y registrar aceptación del Grupo 10. Evidencia: docs/evidencias/validacion_tecnica_2026-10-04.md.")
     h(d, "8. Evidencias visuales")
     image(d, "docs/evidencias/EVID_visual_escritorio.png", "Evidencia visual de referencia en escritorio", 6.1)
     image(d, "docs/evidencias/EVID_visual_movil.png", "Evidencia visual de referencia en móvil", 3.2)
@@ -566,7 +566,7 @@ def doc_03():
         ("Integración Watson sin credenciales o servicio configurado", "Alta / Media", "Mantener el contrato documentado y etiquetar la conexión como pendiente."),
     ])
     h(d, "6.6 Viabilidad", 2)
-    para(d, "Técnica: viable como prototipo con React, ASP.NET Core MVC y PostgreSQL en Supabase; la conexión remota del proyecto requiere configuración y validación. Operativa: los flujos son apropiados para demostración, pero no han sido aceptados por usuarios de una bodega real. Económica: no se calculó un costo de implementación ni se propone venta; el desarrollo usa herramientas y datos de demostración. Académica: el producto puede sustentarse con código, esquema, diagramas, manuales y una matriz de pruebas que distingue ejecuciones registradas de validaciones pendientes.")
+    para(d, "Técnica: viable como prototipo con React, ASP.NET Core MVC y PostgreSQL en Supabase; la conexión remota y la disponibilidad del backend están verificadas; las operaciones autenticadas requieren validación. Operativa: los flujos son apropiados para demostración, pero no han sido aceptados por usuarios de una bodega real. Económica: no se calculó un costo de implementación ni se propone venta; el desarrollo usa herramientas y datos de demostración. Académica: el producto puede sustentarse con código, esquema, diagramas, manuales y una matriz de pruebas que distingue ejecuciones registradas de validaciones pendientes.")
     h(d, "6.7 Documentación entregada", 2)
     table(d, ["Documento o recurso", "Contenido"], [
         ("Informe final", "Diagnóstico, objetivos, Canvas, alcance, gestión, producto y anexos."),
@@ -666,11 +666,11 @@ def doc_03():
         "Matriz de pruebas con criterios, estado y espacio para anotar ejecutor y fecha reales.",
         "Cronograma, backlog, plan de integración continua, diagramas editables y guion para la sustentación.",
     ])
-    para(d, "El despliegue de producción requiere credenciales y configuración que no están incluidas. No se incorporan datos de estudiantes, clientes reales, claves ni firmas ficticias.")
+    para(d, "El backend Render está publicado y conectado a Supabase. Las credenciales están guardadas como configuración privada y no están incluidas en el paquete. No se incorporan datos de estudiantes, clientes reales, claves ni firmas ficticias.")
 
     h(d, "11. Conclusiones")
     numbered(d, [
-        "El prototipo organiza los flujos principales de productos, inventario y ventas en una interfaz y un backend local; los datos incluidos son demostrativos.",
+        "El prototipo organiza los flujos principales de productos, inventario y ventas en una interfaz publicada y un backend compartido; los datos incluidos son demostrativos.",
         "El registro transaccional y las reglas de stock cubren el flujo técnico principal, mientras que la aceptación de usuario y la operación con una bodega real todavía requieren evidencia.",
         "El paquete reúne código, SQL, diagramas, manuales y documentación de gestión para que el Grupo 10 pueda revisar, ejecutar y sustentar el alcance con sus limitaciones explícitas.",
     ])
@@ -721,7 +721,7 @@ def doc_03():
 
     h(d, "Actualización operativa al 04-10-2026")
     para(d, "Se implementaron Supabase Auth y permisos administrador/cajero, ajustes con motivo y control de versión, venta con identificador de reintento, anulaciones con devolución única de stock, historial y constancia interna, proveedores y configuración persistentes, auditoría y respaldo JSON. Los reportes usan fecha de Lima y detalles de venta; no se inventan costos históricos.")
-    para(d, "Validación técnica: 18 pruebas locales aprobadas; frontend y .NET compilan, con cero errores y advertencias en .NET; Java compila. La revisión de navegador se realizó en modo demo. La conexión privada del backend, integración HTTP PostgreSQL, despliegue Render y aceptación del Grupo 10 están pendientes. La evidencia detallada está en docs/evidencias/validacion_tecnica_2026-10-04.md.")
+    para(d, "Validación técnica: 18 pruebas locales aprobadas y compilaciones correctas. Render está publicado y conectado a Supabase con TLS y certificado validado; /api/health/ready responde HTTP 200 y las rutas privadas rechazan acceso anónimo. GitHub Pages usa la API remota. Falta confirmar la cuenta inicial, probar operaciones autenticadas y registrar aceptación del Grupo 10. Evidencia: docs/evidencias/validacion_tecnica_2026-10-04.md.")
     save(d, "03_Entrega_Final_Informe.docx")
 
 
@@ -788,7 +788,7 @@ def doc_05():
     numbered(d, ["Proveedores permite crear y editar contactos. Reasigne productos activos antes de eliminar un proveedor.", "Configuración → Usuarios y permisos permite habilitar cuentas confirmadas como cajero o administrador. El cajero consulta y vende; el administrador gestiona catálogo, ajustes, anulaciones y accesos.", "Configuración → Respaldo de datos descarga JSON sin contraseñas. Auditoría conserva operaciones y responsables. La restauración requiere un entorno de recuperación y validación técnica."])
     h(d, "Actualización operativa al 04-10-2026")
     para(d, "Se implementaron Supabase Auth y permisos administrador/cajero, ajustes con motivo y control de versión, venta con identificador de reintento, anulaciones con devolución única de stock, historial y constancia interna, proveedores y configuración persistentes, auditoría y respaldo JSON. Los reportes usan fecha de Lima y detalles de venta; no se inventan costos históricos.")
-    para(d, "Validación técnica: 18 pruebas locales aprobadas; frontend y .NET compilan, con cero errores y advertencias en .NET; Java compila. La revisión de navegador se realizó en modo demo. La conexión privada del backend, integración HTTP PostgreSQL, despliegue Render y aceptación del Grupo 10 están pendientes. La evidencia detallada está en docs/evidencias/validacion_tecnica_2026-10-04.md.")
+    para(d, "Validación técnica: 18 pruebas locales aprobadas y compilaciones correctas. Render está publicado y conectado a Supabase con TLS y certificado validado; /api/health/ready responde HTTP 200 y las rutas privadas rechazan acceso anónimo. GitHub Pages usa la API remota. Falta confirmar la cuenta inicial, probar operaciones autenticadas y registrar aceptación del Grupo 10. Evidencia: docs/evidencias/validacion_tecnica_2026-10-04.md.")
     save(d, "05_Manual_Usuario.docx")
 
 
@@ -806,7 +806,10 @@ def doc_06():
     para(d, "El comando debe finalizar sin errores y crear la carpeta dist. Para preparar la aplicación MVC en Visual Studio, use npm run build:visualstudio; los archivos compilados se generan en backend/BodegaNorte.Api/wwwroot.")
     h(d, "4.1. Ejecución en Visual Studio y Supabase")
     numbered(d, ["Para una base nueva ejecute database/schema.sql, database/upgrade_operations.sql y database/seed.sql, en ese orden. En el proyecto actual la migración ya está aplicada.", "En Visual Studio, abra Manage User Secrets para BodegaNorte.Api y agregue ConnectionStrings:BodegaNorte con los datos del Session pooler y la contraseña, Supabase:Url, Supabase:PublishableKey y BootstrapAdminEmail. Confirme el correo del administrador inicial.", "Desde la raíz ejecute npm install y npm run build:visualstudio.", "Abra backend/BodegaNorte.sln en Visual Studio.", "Seleccione BodegaNorte.Api y presione F5.", "Verifique /api/health/ready; confirme su cuenta e ingrese con un rol habilitado para consultar productos."])
-    para(d, "Formato de la conexión: Host=HOST_DEL_SESSION_POOLER;Port=5432;Database=postgres;Username=USUARIO_DEL_POOLER;Password=TU_CONTRASEÑA;SSL Mode=Require. Reemplace cada campo con los valores del proyecto Supabase; no copie la contraseña en el repositorio.")
+    para(d, "Formato de la conexión: Host=HOST_DEL_SESSION_POOLER;Port=5432;Database=postgres;Username=USUARIO_DEL_POOLER;Password=TU_CONTRASEÑA;SSL Mode=VerifyFull. Reemplace cada campo con los valores del proyecto Supabase; no copie la contraseña en el repositorio.")
+    h(d, "4.2. Publicación verificada", 2)
+    para(d, "Web: https://jaguar009.github.io/efsr14908-bodega-norte/. Backend: https://bodega-norte-grupo10.onrender.com/. La disponibilidad de la base se comprobó en /api/health/ready. El certificado raíz público de Supabase se copia automáticamente a la compilación y publicación.")
+    para(d, "Cree una cuenta con el correo del administrador inicial, confirme el correo e ingrese. Las demás cuentas necesitan que el administrador les asigne un rol. No envíe contraseñas por el chat ni las guarde en el repositorio.")
     h(d, "5. Datos y persistencia")
     para(d, "El modo demo guarda datos en bodega-norte:v2:data y migra datos antiguos sin inventar sus fechas o costos. En el modo MVC, los controladores envían las operaciones a BodegaService y BodegaRepository las guarda en Supabase PostgreSQL dentro de transacciones.")
     table(d, ["Fase", "Persistencia", "Acción requerida"], [
@@ -834,7 +837,7 @@ def doc_06():
 
     h(d, "Actualización operativa al 04-10-2026")
     para(d, "Se implementaron Supabase Auth y permisos administrador/cajero, ajustes con motivo y control de versión, venta con identificador de reintento, anulaciones con devolución única de stock, historial y constancia interna, proveedores y configuración persistentes, auditoría y respaldo JSON. Los reportes usan fecha de Lima y detalles de venta; no se inventan costos históricos.")
-    para(d, "Validación técnica: 18 pruebas locales aprobadas; frontend y .NET compilan, con cero errores y advertencias en .NET; Java compila. La revisión de navegador se realizó en modo demo. La conexión privada del backend, integración HTTP PostgreSQL, despliegue Render y aceptación del Grupo 10 están pendientes. La evidencia detallada está en docs/evidencias/validacion_tecnica_2026-10-04.md.")
+    para(d, "Validación técnica: 18 pruebas locales aprobadas y compilaciones correctas. Render está publicado y conectado a Supabase con TLS y certificado validado; /api/health/ready responde HTTP 200 y las rutas privadas rechazan acceso anónimo. GitHub Pages usa la API remota. Falta confirmar la cuenta inicial, probar operaciones autenticadas y registrar aceptación del Grupo 10. Evidencia: docs/evidencias/validacion_tecnica_2026-10-04.md.")
     save(d, "06_Guia_Instalacion.docx")
 
 
@@ -888,14 +891,14 @@ def doc_07():
 
     h(d, "Actualización operativa al 04-10-2026")
     para(d, "Se implementaron Supabase Auth y permisos administrador/cajero, ajustes con motivo y control de versión, venta con identificador de reintento, anulaciones con devolución única de stock, historial y constancia interna, proveedores y configuración persistentes, auditoría y respaldo JSON. Los reportes usan fecha de Lima y detalles de venta; no se inventan costos históricos.")
-    para(d, "Validación técnica: 18 pruebas locales aprobadas; frontend y .NET compilan, con cero errores y advertencias en .NET; Java compila. La revisión de navegador se realizó en modo demo. La conexión privada del backend, integración HTTP PostgreSQL, despliegue Render y aceptación del Grupo 10 están pendientes. La evidencia detallada está en docs/evidencias/validacion_tecnica_2026-10-04.md.")
+    para(d, "Validación técnica: 18 pruebas locales aprobadas y compilaciones correctas. Render está publicado y conectado a Supabase con TLS y certificado validado; /api/health/ready responde HTTP 200 y las rutas privadas rechazan acceso anónimo. GitHub Pages usa la API remota. Falta confirmar la cuenta inicial, probar operaciones autenticadas y registrar aceptación del Grupo 10. Evidencia: docs/evidencias/validacion_tecnica_2026-10-04.md.")
     save(d, "07_Manual_Tecnico.docx")
 
 
 def doc_08():
     d = Document(); cover(d, "Matriz de pruebas y validación", "Evidencias funcionales, técnicas y de usabilidad")
     h(d, "1. Alcance de la matriz")
-    para(d, "La matriz separa las compilaciones realizadas de las pruebas de integración con Supabase y de la aceptación visual. La prueba SQL Server anterior no valida PostgreSQL. El 04-10-2026 pasaron 18 pruebas locales y se revisaron ventas, cancelación, proveedores, configuración, roles demo y fechas en el navegador. La integración HTTP PostgreSQL y la aceptación del equipo permanecen pendientes.")
+    para(d, "La matriz separa las compilaciones realizadas de las pruebas de integración con Supabase y de la aceptación visual. La prueba SQL Server anterior no valida PostgreSQL. El 04-10-2026 pasaron 18 pruebas locales y se revisaron ventas, cancelación, proveedores, configuración, roles demo y fechas en el navegador. La disponibilidad HTTP de PostgreSQL se verificó; las operaciones autenticadas y la aceptación del equipo permanecen pendientes.")
     h(d, "2. Resultados técnicos")
     table(d, ["ID", "Acción", "Criterio", "Resultado y evidencia"], [
         ("BL-01", "npm run build", "Vite compila la interfaz sin errores.", "Aprobada el 28-09-2026; 16 módulos compilados."),
@@ -924,7 +927,7 @@ def doc_08():
 
     h(d, "Actualización operativa al 04-10-2026")
     para(d, "Se implementaron Supabase Auth y permisos administrador/cajero, ajustes con motivo y control de versión, venta con identificador de reintento, anulaciones con devolución única de stock, historial y constancia interna, proveedores y configuración persistentes, auditoría y respaldo JSON. Los reportes usan fecha de Lima y detalles de venta; no se inventan costos históricos.")
-    para(d, "Validación técnica: 18 pruebas locales aprobadas; frontend y .NET compilan, con cero errores y advertencias en .NET; Java compila. La revisión de navegador se realizó en modo demo. La conexión privada del backend, integración HTTP PostgreSQL, despliegue Render y aceptación del Grupo 10 están pendientes. La evidencia detallada está en docs/evidencias/validacion_tecnica_2026-10-04.md.")
+    para(d, "Validación técnica: 18 pruebas locales aprobadas y compilaciones correctas. Render está publicado y conectado a Supabase con TLS y certificado validado; /api/health/ready responde HTTP 200 y las rutas privadas rechazan acceso anónimo. GitHub Pages usa la API remota. Falta confirmar la cuenta inicial, probar operaciones autenticadas y registrar aceptación del Grupo 10. Evidencia: docs/evidencias/validacion_tecnica_2026-10-04.md.")
     save(d, "08_Matriz_Pruebas.docx")
 
 
@@ -943,7 +946,7 @@ def doc_09():
     h(d, "3. Guion de demostración")
     numbered(d, ["Mostrar el Dashboard y explicar los cuatro indicadores principales.", "Abrir Inventario y aplicar el filtro Bajo para mostrar las alertas.", "Abrir Nueva venta, seleccionar Leche Gloria 1L y Gaseosa Inca Kola, elegir Yape y registrar la venta.", "Volver al inventario para mostrar que el stock se actualizó.", "Abrir Reportes y explicar el resumen y la exportación CSV.", "Abrir Asistente de bodega y consultar Stock bajo; aclarar que la conexión Watson queda preparada para la siguiente fase."])
     h(d, "4. Mensajes clave")
-    bullets(d, ["Bodega Norte es un caso de estudio ficticio y utiliza datos de demostración.", "La versión SQL Server anterior comprobó el registro de una venta, el descuento de una unidad y el rechazo de una cantidad superior al stock; esta evidencia no valida la migración a PostgreSQL.", "La conexión Supabase, la prueba de API sobre PostgreSQL, la aceptación visual, la validación con usuarios reales y el impacto operativo todavía requieren evidencia.", "El modo productivo requiere autenticación, roles, auditoría, respaldo y despliegue seguro; Watson Assistant está especificado, pero no conectado al prototipo."])
+    bullets(d, ["Bodega Norte es un caso de estudio ficticio y utiliza datos de demostración.", "La versión SQL Server anterior comprobó el registro de una venta, el descuento de una unidad y el rechazo de una cantidad superior al stock; esta evidencia no valida la migración a PostgreSQL.", "La conexión Supabase y disponibilidad del backend están verificadas; las operaciones API autenticadas, aceptación visual, validación con usuarios reales e impacto operativo todavía requieren evidencia.", "El modo compartido implementa autenticación, roles, auditoría, respaldo JSON y despliegue TLS; falta validar acceso, operaciones autenticadas y recuperación. Watson Assistant está especificado, pero no conectado al prototipo."])
     h(d, "5. Preguntas previsibles")
     table(d, ["Pregunta", "Respuesta sugerida"], [
         ("¿Por qué localStorage?", "Es una alternativa demo sin servidor; la ejecución en Visual Studio usa MVC y Supabase PostgreSQL."),
@@ -953,13 +956,13 @@ def doc_09():
         ("¿Cómo se probó?", "Se compilaron frontend y backend MVC con Npgsql. La integración Java validó una versión anterior con SQL Server; la prueba HTTP equivalente en Supabase permanece pendiente. Las 18 pruebas locales y los flujos de navegador de demostración se verificaron el 04-10-2026."),
     ])
     h(d, "6. Cierre sugerido")
-    para(d, "La demostración presenta el alcance técnico del prototipo y diferencia las funciones implementadas de las validaciones pendientes. Antes de proponer un despliegue se deben confirmar la fecha del curso, la aceptación del equipo y los requisitos de un usuario real.")
+    para(d, "La demostración presenta el alcance técnico del prototipo y diferencia las funciones implementadas de las validaciones pendientes. El despliegue académico está publicado; se deben confirmar la fecha del curso, la aceptación del equipo y los requisitos de un usuario real antes de afirmar uso operativo.")
     h(d, "7. Datos para completar")
     table(d, ["Dato", "Referencia"], [("Integrantes", "Grupo 10; relación en la portada."), ("Orden de exposición", "Propuesta en la sección 2; el equipo puede ajustarla."), ("Duración", "17 minutos sugeridos, sujeto a indicación de la docente."), ("Fecha y aula", "Según anuncio vigente en el aula virtual.")])
 
     h(d, "Actualización operativa al 04-10-2026")
     para(d, "Se implementaron Supabase Auth y permisos administrador/cajero, ajustes con motivo y control de versión, venta con identificador de reintento, anulaciones con devolución única de stock, historial y constancia interna, proveedores y configuración persistentes, auditoría y respaldo JSON. Los reportes usan fecha de Lima y detalles de venta; no se inventan costos históricos.")
-    para(d, "Validación técnica: 18 pruebas locales aprobadas; frontend y .NET compilan, con cero errores y advertencias en .NET; Java compila. La revisión de navegador se realizó en modo demo. La conexión privada del backend, integración HTTP PostgreSQL, despliegue Render y aceptación del Grupo 10 están pendientes. La evidencia detallada está en docs/evidencias/validacion_tecnica_2026-10-04.md.")
+    para(d, "Validación técnica: 18 pruebas locales aprobadas y compilaciones correctas. Render está publicado y conectado a Supabase con TLS y certificado validado; /api/health/ready responde HTTP 200 y las rutas privadas rechazan acceso anónimo. GitHub Pages usa la API remota. Falta confirmar la cuenta inicial, probar operaciones autenticadas y registrar aceptación del Grupo 10. Evidencia: docs/evidencias/validacion_tecnica_2026-10-04.md.")
     save(d, "09_Guion_Sustentacion.docx")
 
 

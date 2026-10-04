@@ -22,7 +22,15 @@ Bodega Norte centraliza el catálogo de productos, las existencias, las ventas d
 - Configuración de la bodega y modo oscuro.
 - Diseño responsive para escritorio, tablet y celular.
 
-Se implementaron cuentas Supabase Auth, permisos administrador/cajero, auditoría, ajustes de stock, anulaciones, constancias internas y respaldo JSON. Compras, contabilidad, facturación SUNAT y Watson quedan fuera del alcance; el asistente es local. El backend compartido aún requiere la conexión privada de PostgreSQL y validación del despliegue.
+Se implementaron cuentas Supabase Auth, permisos administrador/cajero, auditoría, ajustes de stock, anulaciones, constancias internas y respaldo JSON. Compras, contabilidad, facturación SUNAT y Watson quedan fuera del alcance; el asistente es local. El backend compartido está publicado en Render y conectado a Supabase mediante TLS con validación del certificado y del servidor.
+
+## Web publicada
+
+- Frontend: https://jaguar009.github.io/efsr14908-bodega-norte/
+- Backend MVC: https://bodega-norte-grupo10.onrender.com/
+- Disponibilidad de la base: https://bodega-norte-grupo10.onrender.com/api/health/ready
+
+GitHub Pages usa la API compartida. Crea y confirma una cuenta con el correo configurado en BootstrapAdminEmail para iniciar como administrador. La comprobación de acceso con una cuenta confirmada y las pruebas HTTP de ventas con PostgreSQL permanecen pendientes; el despliegue y la conectividad no equivalen a aceptación del equipo ni de una empresa real.
 
 ## Ejecución rápida en modo demo
 
@@ -150,4 +158,4 @@ La interfaz se implementa con React + Vite y se aloja en `Views/Home/Index.cshtm
 - Proveedores, configuración y roles persistentes; historial y auditoría; CSV y respaldo JSON.
 - Pruebas: `pnpm test`, `pnpm run build:github`, `pnpm run build:visualstudio`, `dotnet build backend/BodegaNorte.sln` y compilación Java.
 - Evidencia actual: `docs/evidencias/validacion_tecnica_2026-10-04.md`.
-- GitHub Pages conserva el modo demo hasta que Render y la autenticación compartida estén verificados.
+- GitHub Pages usa el backend Render. Se verificaron disponibilidad de PostgreSQL, CORS y rechazo de acceso anónimo; falta completar la comprobación del acceso con una cuenta confirmada.

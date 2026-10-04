@@ -14,7 +14,9 @@ El proyecto actual es Bodega Norte Grupo 10 (pladdberkeewsvomkset), activo y con
 2. Copiar la cadena y sustituir [YOUR-PASSWORD] por la contraseña PostgreSQL.
 3. En Visual Studio: proyecto BodegaNorte.Api → Manage User Secrets.
 4. Guardar ConnectionStrings:BodegaNorte, Supabase:Url, Supabase:PublishableKey y BootstrapAdminEmail.
-5. Para una URI postgresql:// codificar caracteres reservados de la contraseña. También se admite formato Npgsql Host=...;Port=5432;Database=postgres;Username=...;Password=...;SSL Mode=Require.
+5. Para una URI postgresql:// codificar caracteres reservados de la contraseña. También se admite formato Npgsql Host=...;Port=5432;Database=postgres;Username=...;Password=...;SSL Mode=VerifyFull.
+
+El backend incluye el certificado raíz público oficial de Supabase en certificates/prod-ca-2021.crt, lo copia a la salida de compilación/publicación y lo usa automáticamente para sus hosts. Se verifican el certificado y el nombre del servidor. No contiene claves privadas. Si se indica otro Root Certificate en la conexión, debe existir en el servidor de ejecución.
 
 El archivo privado local está en %APPDATA%/Microsoft/UserSecrets/BodegaNorte-EFSR14908-VisualStudio/secrets.json. No forma parte del repositorio. El MCP de Codex sirve para administrar Supabase y no reemplaza la conexión del backend.
 
@@ -30,9 +32,9 @@ Abrir backend/BodegaNorte.sln y ejecutar BodegaNorte.Api con F5. Verificar http:
 
 ## Publicar
 
-Render usa Dockerfile, plan gratuito y el espacio Juan Diego's workspace autorizado. Guardar ConnectionStrings__BodegaNorte, Supabase__Url, Supabase__PublishableKey y BootstrapAdminEmail como variables. Configurar /api/health como health check y verificar /api/health/ready manualmente. Después cambiar .env.github a VITE_API_MODE=supabase y VITE_API_BASE_URL=https://SERVICIO_RENDER/api. Agregar en Supabase Auth https://jaguar009.github.io/efsr14908-bodega-norte/ y su ruta #/reset-password. GitHub Pages solo aloja el frontend.
+Render ya usa Dockerfile, plan gratuito y el espacio Juan Diego's workspace autorizado. La conexión privada y las variables Supabase__Url, Supabase__PublishableKey y BootstrapAdminEmail están configuradas. Backend: https://bodega-norte-grupo10.onrender.com/. Se verificó /api/health/ready con HTTP 200. .env.github usa VITE_API_MODE=supabase y VITE_API_BASE_URL=https://bodega-norte-grupo10.onrender.com/api. En Supabase Auth se guardaron la Site URL de Pages y cuatro destinos exactos: las raíces de Pages y Render y sus rutas #/reset-password. GitHub Pages solo aloja el frontend.
 
-No afirmar despliegue completado hasta verificar disponibilidad y acceso de administrador/cajero. El entorno gratuito puede suspenderse por inactividad.
+El servicio y el frontend están publicados. Falta crear/confirmar la cuenta inicial y comprobar el acceso autenticado y los flujos de administrador/cajero. El entorno gratuito puede suspenderse por inactividad.
 
 ## Comprobaciones
 

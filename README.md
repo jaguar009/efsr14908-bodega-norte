@@ -4,7 +4,7 @@ Sistema web de inventario y ventas para una bodega simulada, preparado como proy
 
 ## Equipo
 
-Grupo 10. Coordinador: Gonzalo Yoel Choque Becerra. Integrantes: Adrian Alexander Berrocal Villanueva, Lalo Alessandro Eugenio Montalvo y Juan Diego Romero Peralta. Bodega Norte es un caso ficticio; los productos y ventas incluidos son datos de demostración.
+Grupo 10. Coordinador: Gonsalo Yoel Choque Becerra. Integrantes: Adrian Alexander Berrocal Villanueva, Lalo Alessandro Eugenio Montalvo y Juan Diego Romero Peralta. Bodega Norte es un caso ficticio; los productos y ventas incluidos son datos de demostración.
 
 ## Qué resuelve
 
@@ -22,7 +22,7 @@ Bodega Norte centraliza el catálogo de productos, las existencias, las ventas d
 - Configuración de la bodega y modo oscuro.
 - Diseño responsive para escritorio, tablet y celular.
 
-Se implementaron cuentas Supabase Auth, permisos administrador/cajero, auditoría, ajustes de stock, anulaciones, constancias internas y respaldo JSON. Compras, contabilidad, facturación SUNAT y Watson quedan fuera del alcance; el asistente es local. El backend compartido está publicado en Render y conectado a Supabase mediante TLS con validación del certificado y del servidor.
+Se implementaron cuentas Supabase Auth, permisos administrador/cajero, auditoría, ajustes de stock, anulaciones, constancias internas y respaldo JSON. Compras, contabilidad y facturación SUNAT quedan fuera del alcance. Watson Assistant responde ayuda operativa mediante IBM Assistant builder en Trial gratuito de 30 días; la ayuda local consulta los datos disponibles. El backend compartido está publicado en Render y conectado a Supabase mediante TLS con validación del certificado y del servidor.
 
 ## Web publicada
 
@@ -30,7 +30,7 @@ Se implementaron cuentas Supabase Auth, permisos administrador/cajero, auditorí
 - Backend MVC: https://bodega-norte-grupo10.onrender.com/
 - Disponibilidad de la base: https://bodega-norte-grupo10.onrender.com/api/health/ready
 
-GitHub Pages usa la API compartida. Crea y confirma una cuenta con el correo configurado en BootstrapAdminEmail para iniciar como administrador. La comprobación de acceso con una cuenta confirmada y las pruebas HTTP de ventas con PostgreSQL permanecen pendientes; el despliegue y la conectividad no equivalen a aceptación del equipo ni de una empresa real.
+GitHub Pages usa la API compartida. Crea y confirma una cuenta con el correo configurado en BootstrapAdminEmail para iniciar como administrador. La cuenta inicial está confirmada. Se verificaron las operaciones HTTP y PostgreSQL en un esquema aislado con Auth simulado; las pruebas no acreditan aceptación por el equipo o una empresa real.
 
 ## Ejecución rápida en modo demo
 
@@ -97,11 +97,11 @@ El workflow `.github/workflows/deploy-pages.yml` construye el modo demo y lo pub
 | 02 Avance del proyecto | Semana 10 | Avance funcional mínimo del 50 %, arquitectura, historias, módulos base y pruebas |
 | 03 Entrega final | Semana 13 | Sistema concluido, informe, componentes, recursos, pruebas, manuales y sustentación |
 
-Los informes y manuales editables están en `docs/word/`. Se prepararon en Arial 11, interlineado simple, tamaño A4 y blanco y negro. El informe final sigue la estructura del Anexo 4 Nivel 2 e incluye análisis SEPTE con notas al pie, objetivos SMART, Canvas, alcance, riesgos, viabilidad, gestión, Gantt, producto, recursos, conclusiones, recomendaciones, glosario, bibliografía y anexos.
+Los informes y manuales editables están en `docs/word/`. Se prepararon en Arial 11, interlineado simple, tamaño A4 y texto blanco y negro, con capturas a color. El informe final sigue la estructura del Anexo 4 Nivel 2 e incluye análisis SEPTE con fuentes, objetivos SMART, Canvas, alcance, riesgos, viabilidad, gestión, Gantt, producto, recursos, tres conclusiones, tres recomendaciones, glosario, bibliografía y anexos. `build_final_docs.py` genera los documentos finales; los entregables anteriores conservan su contexto histórico.
 
 El anuncio del Entregable 1 indica del 21 al 27 de septiembre de 2026. El Anexo 4 Nivel 2 ubica el avance en la semana 10 y el final en la 13; el sílabo 2026 ubica la evaluación final en la semana 7. `docs/word/04_Cronograma.docx` conserva la diferencia y deja la fecha final para confirmación en el aula virtual.
 
-El registro del 04-10-2026 distingue 18 pruebas de lógica y demostración local, compilación .NET/Java, revisión funcional del navegador y la integración HTTP PostgreSQL aún pendiente. La aceptación de negocio del equipo sigue pendiente. La distribución de roles proviene del Entregable 1; no se atribuyen tareas individuales que no estén registradas.
+El registro final distingue 25 pruebas de dominio, 17 casos HTTP y PostgreSQL aislado, 11 recorridos de interfaz y 8 consultas IBM reales aprobados. La prueba Java se ejecutó contra la API aislada. La aceptación de negocio del equipo sigue pendiente. La distribución de roles proviene del Entregable 1; no se atribuyen tareas individuales que no estén registradas.
 
 La hoja `docs/entregables/Anexo1A_EFSRT_Grupo10_Avances1y2.xlsx` identifica al Grupo 10 y contiene propuestas de actividades para los avances 1 y 2. Las actividades son propuestas por ratificar; las fechas y horas se dejaron vacías porque no se proporcionaron registros reales. Completar también sede, monitor y códigos cuando el equipo cuente con esos datos.
 

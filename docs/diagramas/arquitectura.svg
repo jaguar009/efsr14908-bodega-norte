@@ -1,12 +1,35 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="1100" height="520" viewBox="0 0 1100 520">
-  <style>text{font-family:Arial,sans-serif;fill:#10294b} .title{font-size:26px;font-weight:700}.label{font-size:18px;font-weight:700}.body{font-size:14px;fill:#506984}.box{fill:#fff;stroke:#dce6ef;stroke-width:2}.accent{fill:#e8f4ff;stroke:#87b6da}.green{fill:#f0f9e7;stroke:#a7d982}.line{stroke:#8aa5bd;stroke-width:3;fill:none;marker-end:url(#arrow)} </style>
-  <defs><marker id="arrow" markerWidth="10" markerHeight="10" refX="7" refY="3" orient="auto"><path d="M0,0 L0,6 L8,3 z" fill="#8aa5bd"/></marker></defs>
-  <rect width="1100" height="520" fill="#f6f8fb"/>
-  <text x="55" y="58" class="title">Arquitectura MVC estricta · Bodega Norte</text>
-  <text x="55" y="86" class="body">Tres capas académicas implementadas con View, Controller y Model.</text>
-  <rect x="65" y="145" rx="16" width="280" height="230" class="box accent"/><text x="95" y="190" class="label">VIEW · Vista</text><text x="95" y="230" class="body">React + Vite</text><text x="95" y="258" class="body">Views/Home/Index.cshtml</text><text x="95" y="286" class="body">Inicio · Ventas</text><text x="95" y="314" class="body">Inventario · Reportes</text>
-  <rect x="410" y="145" rx="16" width="280" height="230" class="box green"/><text x="440" y="190" class="label">CONTROLLER</text><text x="440" y="230" class="body">HomeController</text><text x="440" y="258" class="body">ProductsController</text><text x="440" y="286" class="body">SalesController</text><text x="440" y="314" class="body">BodegaService · reglas</text>
-  <rect x="755" y="145" rx="16" width="280" height="230" class="box"/><text x="785" y="190" class="label">MODEL · Modelo</text><text x="785" y="230" class="body">Models/Contracts.cs</text><text x="785" y="258" class="body">Data/BodegaRepository.cs</text><text x="785" y="286" class="body">Supabase PostgreSQL</text><text x="785" y="314" class="body">Npgsql · transacciones</text>
-  <path d="M345 260 H400" class="line"/><path d="M690 260 H745" class="line"/>
-  <text x="65" y="440" class="body">Flujo MVC: View → Controller → Model → Supabase PostgreSQL → respuesta a la View.</text>
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="690" viewBox="0 0 1200 690"><rect width="100%" height="100%" fill="white"/><defs><marker id="arrow" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto"><path d="M0,0 L10,5 L0,10" fill="black"/></marker></defs>
+<text x="30" y="44" font-family="Arial" font-size="25" font-weight="bold">Arquitectura publicada Bodega Norte</text>
+<rect x="25" y="90" width="330" height="215" fill="white" stroke="black" stroke-width="2"/>
+<line x1="25" y1="134" x2="355" y2="134" stroke="black"/>
+<text x="37" y="121" font-family="Arial" font-size="25" font-weight="bold">Vista React</text>
+<text x="37" y="165" font-family="Arial" font-size="22">GitHub Pages</text>
+<text x="37" y="192" font-family="Arial" font-size="22">Sesión Supabase Auth</text>
+<text x="37" y="219" font-family="Arial" font-size="22">Ventas y consultas</text>
+<text x="37" y="246" font-family="Arial" font-size="22">Ayuda local independiente</text>
+<rect x="435" y="90" width="330" height="215" fill="white" stroke="black" stroke-width="2"/>
+<line x1="435" y1="134" x2="765" y2="134" stroke="black"/>
+<text x="447" y="121" font-family="Arial" font-size="25" font-weight="bold">Backend MVC</text>
+<text x="447" y="165" font-family="Arial" font-size="22">Render y ASP.NET Core 8</text>
+<text x="447" y="192" font-family="Arial" font-size="22">Controladores y servicios</text>
+<text x="447" y="219" font-family="Arial" font-size="22">Roles desde members</text>
+<text x="447" y="246" font-family="Arial" font-size="22">Repositorio Npgsql</text>
+<rect x="845" y="90" width="330" height="215" fill="white" stroke="black" stroke-width="2"/>
+<line x1="845" y1="134" x2="1175" y2="134" stroke="black"/>
+<text x="857" y="121" font-family="Arial" font-size="25" font-weight="bold">Supabase</text>
+<text x="857" y="165" font-family="Arial" font-size="22">PostgreSQL privado</text>
+<text x="857" y="192" font-family="Arial" font-size="22">9 tablas con RLS</text>
+<text x="857" y="219" font-family="Arial" font-size="22">TLS VerifyFull</text>
+<text x="857" y="246" font-family="Arial" font-size="22">Auth valida la identidad</text>
+<rect x="435" y="415" width="740" height="155" fill="white" stroke="black" stroke-width="2"/>
+<line x1="435" y1="459" x2="1175" y2="459" stroke="black"/>
+<text x="447" y="446" font-family="Arial" font-size="25" font-weight="bold">IBM Watson Assistant</text>
+<text x="447" y="490" font-family="Arial" font-size="22">Assistant builder de watsonx Orchestrate</text>
+<text x="447" y="517" font-family="Arial" font-size="22">IAM y API v2 con clave privada en servidor</text>
+<text x="447" y="544" font-family="Arial" font-size="22">8 acciones en español; Trial gratuito de 30 días</text>
+<polyline points="355,190 435,190" fill="none" stroke="black" stroke-width="2" marker-end="url(#arrow)"/>
+<polyline points="765,190 845,190" fill="none" stroke="black" stroke-width="2" marker-end="url(#arrow)"/>
+<polyline points="600,305 600,415" fill="none" stroke="black" stroke-width="2" marker-end="url(#arrow)"/>
+<text x="30" y="645" font-family="Arial" font-size="22">Las respuestas IBM orientan; no ejecutan ventas ni reciben los registros de la base.</text>
+<text x="30" y="672" font-family="Arial" font-size="22">El frontend y la demo no contienen la conexión PostgreSQL ni la clave privada IBM.</text>
 </svg>

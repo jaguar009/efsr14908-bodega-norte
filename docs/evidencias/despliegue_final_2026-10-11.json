@@ -1,0 +1,28 @@
+{
+  "date": "2026-10-11",
+  "frontend": "https://jaguar009.github.io/efsr14908-bodega-norte/",
+  "backend": "https://bodega-norte-grupo10.onrender.com",
+  "checks": [
+    {
+      "status": 200,
+      "cors": [
+        "https://jaguar009.github.io"
+      ],
+      "path": "/api/health/ready"
+    },
+    {
+      "status": 401,
+      "cors": [
+        "https://jaguar009.github.io"
+      ],
+      "path": "/api/products"
+    },
+    {
+      "status": 401,
+      "cors": [
+        "https://jaguar009.github.io"
+      ],
+      "path": "/api/assistant/status"
+    }
+  ]
+}

@@ -24,7 +24,7 @@ LIGHT = "FFFFFF"
 GRAY = "000000"
 TEXT = "000000"
 GROUP = "Grupo 10"
-COORDINATOR = "Gonzalo Yoel Choque Becerra"
+COORDINATOR = "Gonsalo Yoel Choque Becerra"
 TEAM = [
     "Adrian Alexander Berrocal Villanueva",
     "Lalo Alessandro Eugenio Montalvo",
@@ -268,16 +268,18 @@ def table(doc, headers, rows, widths=None):
     return t
 
 
-def image(doc, path, caption=None, width=6.5):
+def image(doc, path, caption=None, width=6.5, color=False, crop_left=0, crop_right=0):
     pth = ROOT / path
     if not pth.exists():
         para(doc, f"Evidencia pendiente de insertar: {path}")
         return
     with Image.open(pth) as source:
-        bw = ImageOps.autocontrast(source.convert("L")).point(lambda value: 255 if value > 190 else 0, mode="1")
+        if crop_left or crop_right:
+            source = source.crop((crop_left, 0, source.width - crop_right, source.height))
+        picture = source.convert("RGB") if color else ImageOps.autocontrast(source.convert("L")).point(lambda value: 255 if value > 190 else 0, mode="1")
         with NamedTemporaryFile(suffix=".png", delete=False) as tmp:
             temporary_image = Path(tmp.name)
-        bw.save(temporary_image, format="PNG")
+        picture.save(temporary_image, format="PNG")
     p = doc.add_paragraph()
     p.alignment = WD_ALIGN_PARAGRAPH.CENTER
     p.add_run().add_picture(str(temporary_image), width=Inches(width))
@@ -454,17 +456,34 @@ def doc_02():
         ("Venta por encima del stock", "Prueba histórica SQL Server; no valida PostgreSQL."),
         ("Interfaz, responsive, CSV y aceptación de usuario", "Pendiente de revisión del Grupo 10."),
     ])
-    para(d, "El registro detallado se encuentra en `docs/evidencias/validacion_tecnica_2026-09-28.md`. La prueba HTTP documentada corresponde a la versión histórica SQL Server. El backend Npgsql actual ya compila, pero su conexión Supabase aún requiere la cadena de conexión del proyecto nuevo.")
+    para(d, "El registro detallado se adjunta como Anexo de evidencias de validación técnica de Bodega Norte, en el archivo Anexo_Evidencias_Tecnicas_Grupo10.docx. Incluye los registros del 28 de septiembre y del 4 de octubre de 2026. La prueba HTTP de venta y stock corresponde a SQL Server. La conexión del backend Npgsql con Supabase se verificó el 4 de octubre; la prueba autenticada de venta y stock en PostgreSQL permanece pendiente.")
     h(d, "6. Plan de integración continua")
     para(d, "El workflow `.github/workflows/ci.yml` compila los dos modos del frontend, compila la solución .NET y verifica que el programa Java compile. El workflow de GitHub Pages publica el frontend conectado a la API de Render. La prueba HTTP de venta con PostgreSQL queda pendiente de ejecutar contra el proyecto Supabase de desarrollo.")
     h(d, "7. Acciones antes de una entrega académica")
     bullets(d, ["Revisar los flujos de interfaz y guardar evidencia con ejecutor y fecha reales.", "Confirmar el calendario final del curso; el sílabo 2026 y el Anexo 4 Nivel 2 indican semanas distintas.", "Validar los roles y los criterios de aceptación con el equipo.", "Mantener sin datos personales reales la base de demostración y completar seguridad antes de producción."])
     h(d, "Actualización operativa al 04-10-2026")
     para(d, "Se implementaron Supabase Auth y permisos administrador/cajero, ajustes con motivo y control de versión, venta con identificador de reintento, anulaciones con devolución única de stock, historial y constancia interna, proveedores y configuración persistentes, auditoría y respaldo JSON. Los reportes usan fecha de Lima y detalles de venta; no se inventan costos históricos.")
-    para(d, "Validación técnica: 18 pruebas locales aprobadas y compilaciones correctas. Render está publicado y conectado a Supabase con TLS y certificado validado; /api/health/ready responde HTTP 200 y las rutas privadas rechazan acceso anónimo. GitHub Pages usa la API remota. Falta confirmar la cuenta inicial, probar operaciones autenticadas y registrar aceptación del Grupo 10. Evidencia: docs/evidencias/validacion_tecnica_2026-10-04.md.")
+    para(d, "Validación técnica: 18 pruebas locales aprobadas y compilaciones correctas. El 4 de octubre de 2026 se verificaron Render, la conexión TLS con Supabase, el rechazo de acceso anónimo y el ingreso de la cuenta inicial como administrador activo. GitHub Pages usa la API remota. Las pruebas de escritura autenticada y la aceptación del Grupo 10 permanecen pendientes. Las nuevas capturas de la sección 8 documentan el modo de demostración local.")
     h(d, "8. Evidencias visuales")
-    image(d, "docs/evidencias/EVID_visual_escritorio.png", "Evidencia visual de referencia en escritorio", 6.1)
-    image(d, "docs/evidencias/EVID_visual_movil.png", "Evidencia visual de referencia en móvil", 3.2)
+    para(d, "La sección reúne seis capturas: las dos referencias de escritorio y móvil del informe original y cuatro vistas complementarias obtenidas el 11 de octubre de 2026. Las capturas nuevas corresponden a la demostración local con datos ficticios; documentan la interfaz y no constituyen aceptación de una bodega real ni una prueba de persistencia en Supabase.")
+    h(d, "8.1 Panel en escritorio", 2)
+    image(d, "docs/evidencias/EVID_visual_escritorio.png", "Captura 1. Referencia visual del panel en escritorio", 6.1, color=True)
+    para(d, "El panel presenta indicadores de ventas, existencias y productos por reponer. Esta imagen conserva la referencia visual incluida en el informe original.")
+    h(d, "8.2 Panel en móvil", 2)
+    image(d, "docs/evidencias/EVID_visual_movil.png", "Captura 2. Referencia visual del panel en móvil", 3.2, color=True)
+    para(d, "La disposición móvil reúne los indicadores y la actividad de ventas en una columna. Se conserva como referencia del diseño responsive.")
+    extra_evidence = [
+        ("8.3 Consulta del inventario", "03_inventario_demo.jpg", "Captura 3. Inventario en la demostración local", "La vista muestra la búsqueda por producto, código, categoría o proveedor; el filtro por disponibilidad; y las columnas de stock, precio, proveedor y estado. Las etiquetas de stock bajo permiten ubicar productos que requieren reposición."),
+        ("8.4 Preparación de una venta", "04_venta_demo.jpg", "Captura 4. Carrito de venta en la demostración local", "El punto de venta reúne el catálogo, las categorías y el carrito. La captura muestra una unidad de Leche Gloria 1L y una unidad de Gaseosa Inca Kola 1.5L, con un total de S/ 13.00. Corresponde a una venta en preparación; no se confirmó el cobro ni se registró una transacción."),
+        ("8.5 Consulta de proveedores", "05_proveedores_demo.jpg", "Captura 5. Proveedores en la demostración local", "Las tarjetas agrupan el nombre del proveedor, el contacto de ejemplo, el teléfono de demostración y la cantidad de productos asociados. Se muestran las opciones de consulta, edición y eliminación, sin registrar cambios en los proveedores."),
+        ("8.6 Consulta de reportes", "06_reportes_demo.jpg", "Captura 6. Reportes en la demostración local", "Los controles Desde y Hasta delimitan el período. La vista presenta ventas, unidades, margen, productos por reponer, ranking y medios de pago. Los valores pertenecen al conjunto de demostración y no representan resultados comerciales reales."),
+    ]
+    for heading, filename, caption, explanation in extra_evidence:
+        d.add_page_break()
+        h(d, heading, 2)
+        para(d, "Captura obtenida el 11 de octubre de 2026 en el modo de demostración local de Bodega Norte.")
+        image(d, "docs/evidencias/avance50_2026-10-11/" + filename, caption, 6.1, color=True, crop_left=250, crop_right=15)
+        para(d, explanation)
 
     save(d, "02_Entregable_2_Avance_50.docx")
 

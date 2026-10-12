@@ -13,4 +13,4 @@ javac -encoding UTF-8 integration/JavaInventoryIntegrationTest.java
 java -cp integration JavaInventoryIntegrationTest http://localhost:5248
 ```
 
-Sin BODEGA_API_TOKEN el programa termina explicando el requisito. No imprime el token. Guardar solo resultados y fecha en docs/evidencias. El programa compiló el 04-10-2026; la prueba HTTP PostgreSQL está pendiente.
+Sin BODEGA_API_TOKEN el programa termina explicando el requisito. No imprime el token. Guardar solo resultados y fecha en docs/evidencias. El programa se compiló y ejecutó contra la API y PostgreSQL aislados en el cierre del 11-10-2026. BodegaNorte.Tools genera la identidad simulada local y registra el resultado sin modificar auth.users.

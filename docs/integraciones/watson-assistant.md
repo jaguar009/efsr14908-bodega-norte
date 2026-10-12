@@ -1,32 +1,9 @@
-# Integración con Watson Assistant
+# Watson Assistant integrado
 
-## Objetivo
+La integración real está en AssistantController y WatsonAssistantService. La instancia de IBM del Grupo 10 usa Assistant builder de watsonx Orchestrate en Sídney, Trial gratuito de 30 días. La versión 1 se publicó en Live.
 
-Incorporar un asistente para responder preguntas operativas frecuentes sin exponer información sensible. La demo actual conserva el flujo principal offline; este documento define el contrato para conectar Watson Assistant cuando el equipo tenga el servicio y las credenciales institucionales.
+Se configuraron ocho acciones en español y 32 ejemplos. El contenido está en integration/watson/bodega_norte_acciones.json y preguntas_frecuentes.json, sin claves. Las ocho consultas reales pasaron; consultar docs/evidencias/validacion_watson_2026-10-11.json y el documento Word 10_Integracion_Watson_Assistant.docx.
 
-## Intenciones sugeridas
+GET /api/assistant/status y POST /api/assistant/message exigen Staff. La entrada se limita a 500 caracteres y 20 consultas por minuto por usuario. La clave solo está en User Secrets o el entorno privado del backend. IAM produce un token temporal. No se envían registros de productos, ventas ni datos personales del perfil.
 
-| Intención | Ejemplos |
-|---|---|
-| `consultar_stock` | “¿Cuánta leche queda?”, “¿Qué productos tienen stock bajo?” |
-| `registrar_venta` | “¿Cómo registro una venta?”, “¿Cómo cobro con Yape?” |
-| `consultar_reporte` | “¿Dónde veo las ventas de hoy?” |
-| `ayuda_producto` | “¿Cómo agrego un producto?” |
-
-## Entidades
-
-- `producto`: nombre o código del producto.
-- `medio_pago`: Efectivo, Yape, Plin o Tarjeta.
-- `periodo`: hoy, semana, mes.
-
-## Contrato de aplicación
-
-```text
-POST /api/assistant/message
-{
-  "message": "¿Qué productos tienen stock bajo?",
-  "context": { "store": "Bodega Norte", "user": "cajera" }
-}
-```
-
-La API debe devolver una respuesta legible y, si corresponde, una lista de productos o una acción sugerida. Las credenciales se guardan en variables de entorno del backend; no se agregan al repositorio.
+IBM orienta sobre el uso; no ejecuta operaciones. La ayuda local consulta stock y ventas. El Trial es temporal y requiere contratar un plan para continuar después de su vencimiento; el proyecto no cambia el plan automáticamente.

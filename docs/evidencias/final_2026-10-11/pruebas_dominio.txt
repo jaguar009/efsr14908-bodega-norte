@@ -1,0 +1,33 @@
+✔ fecha de Lima en el límite UTC (21.5616ms)
+✔ un día sin ventas muestra cero y no valores de muestra (0.7562ms)
+✔ reportes excluyen anulaciones y usan detalles reales (1.1366ms)
+✔ reportes conservan la incertidumbre de registros históricos (1.0899ms)
+✔ carrito rechaza cantidades superiores al stock y fracciones inválidas (1.9973ms)
+✔ productos validan números, nombre y precio (0.5307ms)
+✔ dos reintentos del mismo cobro descuentan una sola vez (5.3457ms)
+✔ no se puede reutilizar una clave con otra cantidad (0.5634ms)
+✔ venta rechazada no modifica stock ni historial (0.7177ms)
+✔ un cambio de precio exige revisar el cobro (0.3102ms)
+✔ anulación devuelve stock una sola vez (0.8193ms)
+✔ anulación conserva stock de productos archivados (0.7035ms)
+✔ crear productos no sobrescribe códigos existentes (0.583ms)
+✔ editar un producto con versión antigua se rechaza (0.4832ms)
+✔ ajuste de stock se registra y no permite saldo negativo (0.6328ms)
+✔ proveedores se guardan, vinculan y no se eliminan con productos activos (0.9876ms)
+✔ configuración persiste y cajero no puede modificarla (0.8584ms)
+✔ exportación CSV neutraliza fórmulas y escapa comillas (0.2993ms)
+✔ CSV neutraliza fórmulas precedidas por espacios y tabulaciones (0.1132ms)
+✔ unidades y totales de las ventas demo coinciden con sus líneas (0.3694ms)
+✔ respaldo demo válido puede recuperarse con auditoría (1.295ms)
+✔ respaldo malformado se rechaza sin cambiar datos (1.2348ms)
+✔ la demo rechaza un respaldo PostgreSQL y referencias rotas (0.5306ms)
+✔ cajero no puede restaurar copias locales (0.2706ms)
+✔ respaldo rechaza campos de interfaz que contienen objetos (1.1089ms)
+ℹ tests 25
+ℹ suites 0
+ℹ pass 25
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 150.8439

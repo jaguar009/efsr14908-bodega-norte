@@ -1,73 +1,66 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="850" height="970" viewBox="0 0 850 970"><rect width="850" height="970" fill="white"/>
-<text x="20" y="42" font-family="Arial" font-size="23" font-weight="700" fill="black">Modelo de datos — Bodega Norte</text>
-<text x="20" y="76" font-family="Arial" font-size="21" font-weight="400" fill="black">Esquema privado bodega_norte: nueve tablas</text>
-<polyline points="705,140 705,180" fill="none" stroke="black" stroke-width="2"/>
-<polyline points="145,360 145,420" fill="none" stroke="black" stroke-width="2"/>
-<polyline points="425,360 425,385 245,385 245,420" fill="none" stroke="black" stroke-width="2"/>
-<polyline points="550,500 580,500" fill="none" stroke="black" stroke-width="2"/>
-<polyline points="270,570 285,570 285,645 705,645 705,600" fill="none" stroke="black" stroke-width="2"/>
-<polyline points="145,600 145,675 425,675 425,700" fill="none" stroke="black" stroke-width="2"/>
-<rect x="580" y="90" width="250" height="50" fill="white" stroke="black" stroke-width="2"/>
-<text x="592" y="124" font-family="Arial" font-size="23" font-weight="700" fill="black">auth.users (externa)</text>
-<polyline points="580,138 830,138" fill="none" stroke="black" stroke-width="2"/>
-<rect x="20" y="180" width="250" height="180" fill="white" stroke="black" stroke-width="2"/>
-<text x="32" y="214" font-family="Arial" font-size="23" font-weight="700" fill="black">categories</text>
-<polyline points="20,228 270,228" fill="none" stroke="black" stroke-width="2"/>
-<text x="32" y="260" font-family="Arial" font-size="21" font-weight="400" fill="black">category_id PK</text>
-<text x="32" y="287" font-family="Arial" font-size="21" font-weight="400" fill="black">name, is_active</text>
-<rect x="300" y="180" width="250" height="180" fill="white" stroke="black" stroke-width="2"/>
-<text x="312" y="214" font-family="Arial" font-size="23" font-weight="700" fill="black">suppliers</text>
-<polyline points="300,228 550,228" fill="none" stroke="black" stroke-width="2"/>
-<text x="312" y="260" font-family="Arial" font-size="21" font-weight="400" fill="black">supplier_id PK</text>
-<text x="312" y="287" font-family="Arial" font-size="21" font-weight="400" fill="black">name, contact_name</text>
-<text x="312" y="314" font-family="Arial" font-size="21" font-weight="400" fill="black">phone, is_active</text>
-<rect x="580" y="180" width="250" height="180" fill="white" stroke="black" stroke-width="2"/>
-<text x="592" y="214" font-family="Arial" font-size="23" font-weight="700" fill="black">members</text>
-<polyline points="580,228 830,228" fill="none" stroke="black" stroke-width="2"/>
-<text x="592" y="260" font-family="Arial" font-size="21" font-weight="400" fill="black">user_id PK/FK Auth</text>
-<text x="592" y="287" font-family="Arial" font-size="21" font-weight="400" fill="black">email UNIQUE</text>
-<text x="592" y="314" font-family="Arial" font-size="21" font-weight="400" fill="black">role, is_active</text>
-<rect x="20" y="420" width="250" height="180" fill="white" stroke="black" stroke-width="2"/>
-<text x="32" y="454" font-family="Arial" font-size="23" font-weight="700" fill="black">products</text>
-<polyline points="20,468 270,468" fill="none" stroke="black" stroke-width="2"/>
-<text x="32" y="500" font-family="Arial" font-size="21" font-weight="400" fill="black">product_id PK</text>
-<text x="32" y="527" font-family="Arial" font-size="21" font-weight="400" fill="black">category_id FK</text>
-<text x="32" y="554" font-family="Arial" font-size="21" font-weight="400" fill="black">supplier_id FK</text>
-<text x="32" y="581" font-family="Arial" font-size="21" font-weight="400" fill="black">stock, cost, version</text>
-<rect x="300" y="420" width="250" height="180" fill="white" stroke="black" stroke-width="2"/>
-<text x="312" y="454" font-family="Arial" font-size="23" font-weight="700" fill="black">sales</text>
-<polyline points="300,468 550,468" fill="none" stroke="black" stroke-width="2"/>
-<text x="312" y="500" font-family="Arial" font-size="21" font-weight="400" fill="black">sale_id PK</text>
-<text x="312" y="527" font-family="Arial" font-size="21" font-weight="400" fill="black">request_id UNIQUE</text>
-<text x="312" y="554" font-family="Arial" font-size="21" font-weight="400" fill="black">total, sold_at</text>
-<text x="312" y="581" font-family="Arial" font-size="21" font-weight="400" fill="black">status, actor_email</text>
-<rect x="580" y="420" width="250" height="180" fill="white" stroke="black" stroke-width="2"/>
-<text x="592" y="454" font-family="Arial" font-size="23" font-weight="700" fill="black">sale_items</text>
-<polyline points="580,468 830,468" fill="none" stroke="black" stroke-width="2"/>
-<text x="592" y="500" font-family="Arial" font-size="21" font-weight="400" fill="black">sale_item_id PK</text>
-<text x="592" y="527" font-family="Arial" font-size="21" font-weight="400" fill="black">sale_id FK</text>
-<text x="592" y="554" font-family="Arial" font-size="21" font-weight="400" fill="black">product_id FK</text>
-<text x="592" y="581" font-family="Arial" font-size="21" font-weight="400" fill="black">quantity, unit_cost</text>
-<rect x="20" y="700" width="250" height="180" fill="white" stroke="black" stroke-width="2"/>
-<text x="32" y="734" font-family="Arial" font-size="23" font-weight="700" fill="black">settings</text>
-<polyline points="20,748 270,748" fill="none" stroke="black" stroke-width="2"/>
-<text x="32" y="780" font-family="Arial" font-size="21" font-weight="400" fill="black">id PK (=1)</text>
-<text x="32" y="807" font-family="Arial" font-size="21" font-weight="400" fill="black">name, ruc, address</text>
-<text x="32" y="834" font-family="Arial" font-size="21" font-weight="400" fill="black">phone, stock_alerts</text>
-<rect x="300" y="700" width="250" height="180" fill="white" stroke="black" stroke-width="2"/>
-<text x="312" y="734" font-family="Arial" font-size="23" font-weight="700" fill="black">stock_movements</text>
-<polyline points="300,748 550,748" fill="none" stroke="black" stroke-width="2"/>
-<text x="312" y="780" font-family="Arial" font-size="21" font-weight="400" fill="black">movement_id PK</text>
-<text x="312" y="807" font-family="Arial" font-size="21" font-weight="400" fill="black">product_id FK</text>
-<text x="312" y="834" font-family="Arial" font-size="21" font-weight="400" fill="black">quantity, balance</text>
-<text x="312" y="861" font-family="Arial" font-size="21" font-weight="400" fill="black">type, reason, actor</text>
-<rect x="580" y="700" width="250" height="180" fill="white" stroke="black" stroke-width="2"/>
-<text x="592" y="734" font-family="Arial" font-size="23" font-weight="700" fill="black">audit_log</text>
-<polyline points="580,748 830,748" fill="none" stroke="black" stroke-width="2"/>
-<text x="592" y="780" font-family="Arial" font-size="21" font-weight="400" fill="black">audit_id PK</text>
-<text x="592" y="807" font-family="Arial" font-size="21" font-weight="400" fill="black">action, entity</text>
-<text x="592" y="834" font-family="Arial" font-size="21" font-weight="400" fill="black">details JSONB</text>
-<text x="592" y="861" font-family="Arial" font-size="21" font-weight="400" fill="black">actor, created_at</text>
-<text x="20" y="924" font-family="Arial" font-size="21" font-weight="400" fill="black">PK: clave primaria. FK: clave foránea. Campos resumidos.</text>
-<text x="20" y="956" font-family="Arial" font-size="21" font-weight="400" fill="black">RLS habilitado; acceso operativo por el backend autorizado.</text>
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="925" viewBox="0 0 1200 925"><rect width="100%" height="100%" fill="white"/><defs><marker id="arrow" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto"><path d="M0,0 L10,5 L0,10" fill="black"/></marker></defs>
+<text x="30" y="44" font-family="Arial" font-size="25" font-weight="bold">Modelo PostgreSQL Bodega Norte</text>
+<rect x="30" y="90" width="330" height="180" fill="white" stroke="black" stroke-width="2"/>
+<line x1="30" y1="134" x2="360" y2="134" stroke="black"/>
+<text x="42" y="121" font-family="Arial" font-size="25" font-weight="bold">categories</text>
+<text x="42" y="165" font-family="Arial" font-size="22">PK category_id</text>
+<text x="42" y="192" font-family="Arial" font-size="22">name</text>
+<rect x="435" y="90" width="330" height="180" fill="white" stroke="black" stroke-width="2"/>
+<line x1="435" y1="134" x2="765" y2="134" stroke="black"/>
+<text x="447" y="121" font-family="Arial" font-size="25" font-weight="bold">products</text>
+<text x="447" y="165" font-family="Arial" font-size="22">PK product_id; code</text>
+<text x="447" y="192" font-family="Arial" font-size="22">FK category_id; supplier_id</text>
+<text x="447" y="219" font-family="Arial" font-size="22">stock; min_stock</text>
+<text x="447" y="246" font-family="Arial" font-size="22">cost; sale_price; version</text>
+<rect x="840" y="90" width="330" height="180" fill="white" stroke="black" stroke-width="2"/>
+<line x1="840" y1="134" x2="1170" y2="134" stroke="black"/>
+<text x="852" y="121" font-family="Arial" font-size="25" font-weight="bold">stock_movements</text>
+<text x="852" y="165" font-family="Arial" font-size="22">PK movement_id</text>
+<text x="852" y="192" font-family="Arial" font-size="22">FK product_id</text>
+<text x="852" y="219" font-family="Arial" font-size="22">quantity; balance; type</text>
+<text x="852" y="246" font-family="Arial" font-size="22">reason; actor_id; created_at</text>
+<rect x="30" y="365" width="330" height="170" fill="white" stroke="black" stroke-width="2"/>
+<line x1="30" y1="409" x2="360" y2="409" stroke="black"/>
+<text x="42" y="396" font-family="Arial" font-size="25" font-weight="bold">suppliers</text>
+<text x="42" y="440" font-family="Arial" font-size="22">PK supplier_id</text>
+<text x="42" y="467" font-family="Arial" font-size="22">name; contact_name; phone</text>
+<rect x="435" y="365" width="330" height="170" fill="white" stroke="black" stroke-width="2"/>
+<line x1="435" y1="409" x2="765" y2="409" stroke="black"/>
+<text x="447" y="396" font-family="Arial" font-size="25" font-weight="bold">sales</text>
+<text x="447" y="440" font-family="Arial" font-size="22">PK sale_id; sale_number</text>
+<text x="447" y="467" font-family="Arial" font-size="22">request_id; sold_at</text>
+<text x="447" y="494" font-family="Arial" font-size="22">total; status; payment_method</text>
+<text x="447" y="521" font-family="Arial" font-size="22">created_by; cancel_reason</text>
+<rect x="840" y="365" width="330" height="170" fill="white" stroke="black" stroke-width="2"/>
+<line x1="840" y1="409" x2="1170" y2="409" stroke="black"/>
+<text x="852" y="396" font-family="Arial" font-size="25" font-weight="bold">sale_items</text>
+<text x="852" y="440" font-family="Arial" font-size="22">PK sale_item_id</text>
+<text x="852" y="467" font-family="Arial" font-size="22">FK sale_id; product_id</text>
+<text x="852" y="494" font-family="Arial" font-size="22">quantity; unit_price</text>
+<text x="852" y="521" font-family="Arial" font-size="22">unit_cost; line_total</text>
+<rect x="30" y="650" width="330" height="170" fill="white" stroke="black" stroke-width="2"/>
+<line x1="30" y1="694" x2="360" y2="694" stroke="black"/>
+<text x="42" y="681" font-family="Arial" font-size="25" font-weight="bold">members</text>
+<text x="42" y="725" font-family="Arial" font-size="22">PK user_id = auth.users.id</text>
+<text x="42" y="752" font-family="Arial" font-size="22">email; role; is_active</text>
+<rect x="435" y="650" width="330" height="170" fill="white" stroke="black" stroke-width="2"/>
+<line x1="435" y1="694" x2="765" y2="694" stroke="black"/>
+<text x="447" y="681" font-family="Arial" font-size="25" font-weight="bold">settings</text>
+<text x="447" y="725" font-family="Arial" font-size="22">PK id (solo valor 1)</text>
+<text x="447" y="752" font-family="Arial" font-size="22">name; ruc; address</text>
+<text x="447" y="779" font-family="Arial" font-size="22">phone; stock_alerts</text>
+<rect x="840" y="650" width="330" height="170" fill="white" stroke="black" stroke-width="2"/>
+<line x1="840" y1="694" x2="1170" y2="694" stroke="black"/>
+<text x="852" y="681" font-family="Arial" font-size="25" font-weight="bold">audit_log</text>
+<text x="852" y="725" font-family="Arial" font-size="22">PK audit_id</text>
+<text x="852" y="752" font-family="Arial" font-size="22">action; entity; entity_id</text>
+<text x="852" y="779" font-family="Arial" font-size="22">actor_id; actor_email</text>
+<text x="852" y="806" font-family="Arial" font-size="22">created_at</text>
+<polyline points="360,155 435,155" fill="none" stroke="black" stroke-width="2" marker-end="url(#arrow)"/>
+<polyline points="360,405 390,405 390,230 435,230" fill="none" stroke="black" stroke-width="2" marker-end="url(#arrow)"/>
+<polyline points="765,155 840,155" fill="none" stroke="black" stroke-width="2" marker-end="url(#arrow)"/>
+<polyline points="765,230 795,230 795,415 840,415" fill="none" stroke="black" stroke-width="2" marker-end="url(#arrow)"/>
+<polyline points="765,470 840,470" fill="none" stroke="black" stroke-width="2" marker-end="url(#arrow)"/>
+<text x="30" y="880" font-family="Arial" font-size="22">Flechas: referencias de clave foránea. Campos principales resumidos.</text>
+<text x="30" y="907" font-family="Arial" font-size="22">members referencia auth.users, tabla externa al esquema privado bodega_norte.</text>
 </svg>

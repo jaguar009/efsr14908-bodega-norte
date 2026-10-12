@@ -1,0 +1,133 @@
+{
+  "date": "2026-10-11",
+  "timeZone": "America/Lima",
+  "url": "http://127.0.0.1:5360/",
+  "mode": "Demostración local aislada",
+  "browser": "Google Chrome con Playwright bundled; Browser skill no disponible",
+  "desktop": {
+    "width": 1365,
+    "height": 900
+  },
+  "mobile": {
+    "width": 390,
+    "height": 844
+  },
+  "allPassed": true,
+  "checks": [
+    {
+      "id": "UI-01",
+      "description": "Inicio carga con catálogo y datos de demostración",
+      "status": "aprobado"
+    },
+    {
+      "id": "UI-02",
+      "description": "Inventario filtra stock y descarga CSV",
+      "status": "aprobado"
+    },
+    {
+      "id": "UI-03",
+      "description": "Producto puede crearse editarse y archivarse",
+      "status": "aprobado"
+    },
+    {
+      "id": "UI-04",
+      "description": "Venta con Yape genera constancia y registra historial",
+      "status": "aprobado"
+    },
+    {
+      "id": "UI-05",
+      "description": "Anulación devuelve existencias y queda trazada",
+      "status": "aprobado"
+    },
+    {
+      "id": "UI-06",
+      "description": "Reportes muestran períodos reales y un día sin ventas da cero",
+      "status": "aprobado"
+    },
+    {
+      "id": "UI-07",
+      "description": "Proveedores y permisos están disponibles al administrador",
+      "status": "aprobado"
+    },
+    {
+      "id": "UI-08",
+      "description": "Respaldo descargado y recuperación validada desde Configuración",
+      "status": "aprobado"
+    },
+    {
+      "id": "UI-09",
+      "description": "Cajero carece de acciones administrativas",
+      "status": "aprobado"
+    },
+    {
+      "id": "UI-10",
+      "description": "Vista móvil y menú sin desbordamiento horizontal",
+      "status": "aprobado"
+    },
+    {
+      "id": "UI-11",
+      "description": "Ayuda local identifica su proveedor y responde stock sin IBM",
+      "status": "aprobado"
+    }
+  ],
+  "errors": [],
+  "warnings": [],
+  "screenshots": [
+    {
+      "file": "01_inicio.png",
+      "caption": "Panel en escritorio con datos de demostración"
+    },
+    {
+      "file": "02_inventario.png",
+      "caption": "Filtro de stock bajo en la demostración local"
+    },
+    {
+      "file": "03_venta.png",
+      "caption": "Preparación de venta de demostración por S/ 13.00"
+    },
+    {
+      "file": "04_constancia.png",
+      "caption": "Constancia interna de la venta de demostración"
+    },
+    {
+      "file": "05_historial.png",
+      "caption": "Venta registrada en el historial de la demostración"
+    },
+    {
+      "file": "06_movimientos.png",
+      "caption": "Movimientos de venta y devolución por anulación en demo"
+    },
+    {
+      "file": "07_reportes.png",
+      "caption": "Reporte calculado sobre ventas activas de demostración"
+    },
+    {
+      "file": "08_proveedores.png",
+      "caption": "Proveedores y contactos ficticios del prototipo"
+    },
+    {
+      "file": "09_permisos.png",
+      "caption": "Permisos de demostración para una cuenta ficticia"
+    },
+    {
+      "file": "10_recuperacion.png",
+      "caption": "Validación del respaldo y confirmación antes de recuperar la demo"
+    },
+    {
+      "file": "11_auditoria.png",
+      "caption": "Auditoría de recuperación de datos en la demostración"
+    },
+    {
+      "file": "12_cajero.png",
+      "caption": "Vista de inventario con permisos simulados de cajero"
+    },
+    {
+      "file": "13_movil.png",
+      "caption": "Panel móvil en viewport de 390 por 844 píxeles"
+    },
+    {
+      "file": "14_ayuda_local.png",
+      "caption": "Ayuda local en demostración; la respuesta identifica su origen"
+    }
+  ]
+}

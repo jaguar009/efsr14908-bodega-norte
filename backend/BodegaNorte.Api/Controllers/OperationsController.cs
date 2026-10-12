@@ -23,7 +23,7 @@ public sealed class OperationsController(BodegaRepository repository) : BodegaCo
     public async Task<IActionResult> Member(MemberInput input, CancellationToken ct) { await repository.SaveMemberAsync(input, Actor, ct); return NoContent(); }
     [HttpGet("backup"), Authorize(Roles = "admin")]
     public async Task<IActionResult> Backup(CancellationToken ct) =>
-        Ok(new { version = 2, exportedAt = DateTimeOffset.UtcNow, project = "Bodega Norte", data = await repository.BackupAsync(Actor, ct) });
+        Ok(new { version = 2, format = "postgresql-v2", exportedAt = DateTimeOffset.UtcNow, project = "Bodega Norte", data = await repository.BackupAsync(Actor, ct) });
 }
 [ApiController, Authorize, Route("api/me")]
 public sealed class ProfileController : BodegaController

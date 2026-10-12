@@ -1,6 +1,6 @@
 import test,{beforeEach} from 'node:test';
 import assert from 'node:assert/strict';
-import { csvText,dayKey,reportFor,shiftDay,updateCart,validateProduct } from '../src/domain.js';
+import { csvText,dayKey,reportFor,shiftDay,updateCart,validateProduct,validateDemoBackup } from '../src/domain.js';
 import { demoApi as api } from '../src/demoApi.js';
 const values=new Map();
 globalThis.localStorage={getItem:key=>values.get(key)||null,setItem:(key,value)=>values.set(key,value),removeItem:key=>values.delete(key)};
@@ -28,3 +28,10 @@ test('ajuste de stock se registra y no permite saldo negativo',async()=>{const p
 test('proveedores se guardan, vinculan y no se eliminan con productos activos',async()=>{await api.saveSupplier({name:'Nuevo',contact:'Contacto',phone:'999'});const supplier=(await api.getSuppliers()).find(s=>s.name==='Nuevo');await api.saveProduct({name:'Prueba',category:'A',unit:'unidad',stock:0,minStock:0,cost:0,price:1,supplier:'Nuevo'});await assert.rejects(api.deleteSupplier(supplier.id));});
 test('configuración persiste y cajero no puede modificarla',async()=>{const settings={...await api.getSettings(),name:'Prueba Bodega'};await api.saveSettings(settings);assert.equal((await api.getSettings()).name,'Prueba Bodega');localStorage.setItem('bodega-norte:demo-role','cashier');await assert.rejects(api.saveSettings(settings));await assert.rejects(api.deleteProduct('P-001'));});
 test('exportación CSV neutraliza fórmulas y escapa comillas',()=>{assert.equal(csvText([['=2+2','a"b',-2]]),'\ufeff"\'=2+2","a""b","-2"');});
+test('CSV neutraliza fórmulas precedidas por espacios y tabulaciones',()=>{assert.equal(csvText([[' \t=2+2']]),'\ufeff"\' \t=2+2"');});
+test('unidades y totales de las ventas demo coinciden con sus líneas',async()=>{for(const s of await api.getSales()){assert.equal(s.items,s.lines.reduce((sum,l)=>sum+l.quantity,0));assert.equal(s.total,Math.round(s.lines.reduce((sum,l)=>sum+l.total,0)*100)/100);}});
+test('respaldo demo válido puede recuperarse con auditoría',async()=>{const backup=await api.backup();await api.deleteProduct('P-001');await api.restore(backup);assert.equal((await api.getProducts()).length,12);assert.equal((await api.getAudit())[0].action,'restore_backup');});
+test('respaldo malformado se rechaza sin cambiar datos',async()=>{const backup=await api.backup(),broken=structuredClone(backup);broken.data.products[0].stock=-1;await assert.rejects(api.restore(broken));assert.deepEqual((await api.backup()).data,backup.data);});
+test('la demo rechaza un respaldo PostgreSQL y referencias rotas',async()=>{const backup=await api.backup();assert.throws(()=>validateDemoBackup({...backup,format:'postgresql-v2'}));const broken=structuredClone(backup);broken.data.sales[0].lines[0].productId='NO-EXISTE';assert.throws(()=>validateDemoBackup(broken));});
+test('cajero no puede restaurar copias locales',async()=>{const backup=await api.backup();localStorage.setItem('bodega-norte:demo-role','cashier');await assert.rejects(api.restore(backup));});
+test('respaldo rechaza campos de interfaz que contienen objetos',async()=>{const sale=await api.createSale(saleInput());await api.cancelSale(sale.id,'Verificación');const backup=await api.backup(),badReason=structuredClone(backup);badReason.data.sales[0].cancelReason={invalid:true};assert.throws(()=>validateDemoBackup(badReason));const badMovement=structuredClone(backup);badMovement.data.movements[0].name={invalid:true};assert.throws(()=>validateDemoBackup(badMovement));});

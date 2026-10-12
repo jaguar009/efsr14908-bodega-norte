@@ -1,0 +1,74 @@
+[
+  {
+    "question": "Cómo registro una venta",
+    "examples": [
+      "Registrar una venta",
+      "Cómo cobro con Yape",
+      "Cómo vendo productos"
+    ],
+    "answer": "Abre Nueva venta, busca los productos y agrégalos al carrito. Ajusta las cantidades, verifica el total y pulsa Cobrar. Elige Efectivo, Yape, Plin o Tarjeta y confirma Registrar venta. El sistema guarda la venta y descuenta el stock una sola vez. La constancia es de uso interno."
+  },
+  {
+    "question": "Cómo agrego un producto",
+    "examples": [
+      "Crear un producto",
+      "Agregar productos al catálogo",
+      "Cómo edito un producto"
+    ],
+    "answer": "Solo el administrador puede crear productos. Abre Productos o Inventario y pulsa Agregar producto. Completa nombre, categoría, unidad, stock inicial, stock mínimo, costo, precio y proveedor opcional. Guarda el producto. Para cambiar existencias de un producto existente, utiliza Ajustar stock y registra el motivo."
+  },
+  {
+    "question": "Cómo ajusto el stock",
+    "examples": [
+      "Registrar una entrada de inventario",
+      "Cómo ingreso mercadería",
+      "Modificar existencias de un producto"
+    ],
+    "answer": "Como administrador, abre Inventario y pulsa Ajustar stock en el producto. Escribe una cantidad positiva para un ingreso o negativa para una salida y registra el motivo. Confirma el ajuste. No se permite un saldo negativo. Si otro usuario cambió el producto, actualiza la información antes de repetir la operación."
+  },
+  {
+    "question": "Cómo anulo una venta",
+    "examples": [
+      "Cancelar una venta registrada",
+      "Devolver stock de una venta anulada",
+      "Cómo cancelo un cobro equivocado"
+    ],
+    "answer": "Como administrador, abre Historial de ventas, localiza la venta y pulsa Anular. Escribe el motivo y confirma. Se conserva el registro con estado Anulada y el stock se devuelve una sola vez. Las ventas anuladas se excluyen de los ingresos activos. El cajero no puede anular ventas."
+  },
+  {
+    "question": "Cómo consulto los reportes",
+    "examples": [
+      "Ver las ventas de un periodo",
+      "Exportar los reportes en CSV",
+      "Cómo veo un reporte de ingresos"
+    ],
+    "answer": "Abre Reportes y selecciona las fechas de inicio y fin. El sistema usa la zona horaria de Lima y suma las ventas activas del periodo. Un rango sin ventas muestra cero. Puedes exportar CSV para analizar los resultados. Las anulaciones se excluyen y el margen de registros históricos sin costo se muestra con su limitación."
+  },
+  {
+    "question": "Cómo creo un respaldo",
+    "examples": [
+      "Descargar la copia de seguridad",
+      "Cómo restauro un respaldo JSON",
+      "Recuperar datos de la bodega"
+    ],
+    "answer": "Solo el administrador puede descargar el respaldo JSON desde Configuración, Respaldo de datos, Descargar respaldo JSON. Guarda la copia en un lugar privado. La demo se restaura en el navegador después de validar el archivo y escribir RESTAURAR. El respaldo PostgreSQL se recupera con BodegaNorte.Tools en un esquema nuevo; las cuentas y contraseñas no se restauran desde el JSON."
+  },
+  {
+    "question": "Qué permisos tiene el cajero",
+    "examples": [
+      "Diferencia entre administrador y cajero",
+      "Cómo habilito usuarios",
+      "Quién puede administrar la bodega"
+    ],
+    "answer": "El cajero puede consultar información y registrar ventas. El administrador gestiona productos, proveedores, ajustes de stock, anulaciones, usuarios, configuración, auditoría y respaldos. El administrador habilita una cuenta ya creada y confirmada desde Configuración, Usuarios y permisos. Los permisos reales se comprueban en el servidor."
+  },
+  {
+    "question": "Qué hago si olvidé mi contraseña",
+    "examples": [
+      "Recuperar la contraseña de mi cuenta",
+      "No puedo iniciar sesión porque olvidé la clave",
+      "Cómo restablezco mi contraseña"
+    ],
+    "answer": "En la pantalla Iniciar sesión pulsa Olvidé mi contraseña. Escribe el correo correcto de tu cuenta y revisa tu bandeja de entrada y spam. Abre el enlace para elegir una contraseña nueva. La contraseña original no se puede consultar en la base de datos. No compartas contraseñas por el chat ni uses la contraseña de PostgreSQL para la web."
+  }
+]

@@ -13,3 +13,4 @@ backend/**/publish-check/
 .playwright-cli/
 tmp/
 *.iml
+__pycache__/

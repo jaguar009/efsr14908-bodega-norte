@@ -51,7 +51,7 @@ public sealed class SupabaseBearerAuthenticationHandler : AuthenticationHandler<
 
         try
         {
-            using var response = await _httpClientFactory.CreateClient().SendAsync(
+            using var response = await _httpClientFactory.CreateClient("SupabaseAuth").SendAsync(
                 request,
                 HttpCompletionOption.ResponseHeadersRead,
                 Context.RequestAborted);
@@ -68,6 +68,7 @@ public sealed class SupabaseBearerAuthenticationHandler : AuthenticationHandler<
 
             var confirmed = (user.RootElement.TryGetProperty("email_confirmed_at", out var confirmedAt) && confirmedAt.ValueKind == JsonValueKind.String)
                 || (user.RootElement.TryGetProperty("confirmed_at", out var confirmationValue) && confirmationValue.ValueKind == JsonValueKind.String);
+            if (!confirmed) return AuthenticateResult.Fail("Confirm your email before accessing the store.");
             var member = await _repository.GetMemberAsync(Guid.Parse(id!), email ?? "", confirmed, Context.RequestAborted);
 
             var claims = new List<Claim>

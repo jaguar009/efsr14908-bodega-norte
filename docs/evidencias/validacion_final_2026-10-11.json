@@ -1,0 +1,100 @@
+{
+  "executedAt": "2026-10-11T23:22:26.8099298-05:00",
+  "environment": "HTTP Kestrel local y PostgreSQL real en esquema desechable",
+  "auth": "Respuesta de Supabase Auth sustituida por fixture local; autorizaci\u00F3n real desde members",
+  "ibm": "Respuesta de IBM sustituida por fixture local; estas pruebas no demuestran conexi\u00F3n con una instancia IBM real",
+  "qaSchema": "bn_qa_7b4ec031de374d54",
+  "recoverySchema": "bodega_recovery_qa_d19ddf868ec3",
+  "cleanedUp": true,
+  "productionUnchanged": true,
+  "productionFingerprintBefore": "74ECE3DB1D26940201797C0F238354DD5B9D8A1DF36DF2D67222847F7869B2DD",
+  "productionFingerprintAfter": "74ECE3DB1D26940201797C0F238354DD5B9D8A1DF36DF2D67222847F7869B2DD",
+  "allPassed": true,
+  "cases": [
+    {
+      "id": "HTTP-01",
+      "description": "Disponibilidad y esquema migrado",
+      "status": "aprobado"
+    },
+    {
+      "id": "HTTP-02",
+      "description": "Readiness rechaza un esquema que no est\u00E1 instalado",
+      "status": "aprobado"
+    },
+    {
+      "id": "AUTH-01",
+      "description": "Acceso an\u00F3nimo e identidades sin confirmar rechazados",
+      "status": "aprobado"
+    },
+    {
+      "id": "AUTH-02",
+      "description": "Rol le\u00EDdo de members e intento de elevar user_metadata rechazado",
+      "status": "aprobado"
+    },
+    {
+      "id": "IBM-01",
+      "description": "Contrato HTTP de Watson sin exponer credenciales ni registros",
+      "status": "aprobado"
+    },
+    {
+      "id": "IBM-02",
+      "description": "Configuraci\u00F3n ausente o URL ajena a IBM no env\u00EDa consultas",
+      "status": "aprobado"
+    },
+    {
+      "id": "IBM-03",
+      "description": "L\u00EDmite de consultas protege la cuota del asistente",
+      "status": "aprobado"
+    },
+    {
+      "id": "DATA-01",
+      "description": "Creaci\u00F3n edici\u00F3n y archivo de producto con auditor\u00EDa",
+      "status": "aprobado"
+    },
+    {
+      "id": "SALE-01",
+      "description": "Venta v\u00E1lida reintento y descuento de stock una vez",
+      "status": "aprobado"
+    },
+    {
+      "id": "SALE-02",
+      "description": "Reintentos concurrentes conservan una \u00FAnica venta",
+      "status": "aprobado"
+    },
+    {
+      "id": "SALE-03",
+      "description": "Dos ventas concurrentes compiten por la \u00FAltima unidad",
+      "status": "aprobado"
+    },
+    {
+      "id": "STOCK-01",
+      "description": "Ajustes concurrentes y versi\u00F3n desactualizada",
+      "status": "aprobado"
+    },
+    {
+      "id": "DATA-02",
+      "description": "Proveedor con productos no puede eliminarse y configuraci\u00F3n persiste",
+      "status": "aprobado"
+    },
+    {
+      "id": "JAVA-01",
+      "description": "Programa Java ejecutado con rol administrador",
+      "status": "aprobado"
+    },
+    {
+      "id": "BACKUP-01",
+      "description": "Exportaci\u00F3n consistente y recuperaci\u00F3n en un esquema nuevo",
+      "status": "aprobado"
+    },
+    {
+      "id": "AUDIT-01",
+      "description": "Ventas ajustes y permisos administrativos dejan trazabilidad",
+      "status": "aprobado"
+    },
+    {
+      "id": "BACKUP-02",
+      "description": "Un respaldo con datos inv\u00E1lidos revierte toda la recuperaci\u00F3n",
+      "status": "aprobado"
+    }
+  ]
+}

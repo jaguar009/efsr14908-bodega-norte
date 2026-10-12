@@ -67,7 +67,12 @@ public sealed class BodegaRepository : IAsyncDisposable
     public async Task<bool> TestConnectionAsync(CancellationToken ct)
     {
         await using var c = await _source.OpenConnectionAsync(ct);
-        return Convert.ToInt32(await Scalar("SELECT 1", c, null, ct)) == 1;
+        var tables = new[] { "categories", "suppliers", "products", "sales", "sale_items", "settings", "members", "stock_movements", "audit_log" };
+        var count = Convert.ToInt32(await Scalar("SELECT count(*) FROM information_schema.tables WHERE table_schema=@schema AND table_name=ANY(@tables)",
+            c, null, ct, ("schema", _schema), ("tables", tables)));
+        if (count != tables.Length) return false;
+        return Convert.ToInt32(await Scalar("SELECT count(*) FROM information_schema.columns WHERE table_schema=@schema AND ((table_name='products' AND column_name='version') OR (table_name='sales' AND column_name='request_id'))",
+            c, null, ct, ("schema", _schema))) == 2;
     }
 
     public async Task<MemberDto?> GetMemberAsync(Guid id, string email, bool confirmed, CancellationToken ct)
@@ -268,10 +273,13 @@ public sealed class BodegaRepository : IAsyncDisposable
                 """, c, tx, ct, r => (Id: r.GetInt32(0), Quantity: r.GetDecimal(1)), ("id", saleRows[0].Id));
             foreach (var line in lines)
             {
-                var balance = Convert.ToDecimal(await Scalar("""
-                    UPDATE bodega_norte.products SET stock=stock+@quantity,version=version+1,updated_at=now()
-                    WHERE product_id=@id RETURNING stock
-                    """, c, tx, ct, ("quantity", line.Quantity), ("id", line.Id)), CultureInfo.InvariantCulture);
+                var current = Convert.ToDecimal(await Scalar("SELECT stock FROM bodega_norte.products WHERE product_id=@id FOR UPDATE", c, tx, ct, ("id", line.Id)), CultureInfo.InvariantCulture);
+                var balance = current + line.Quantity;
+                if (balance > 9999999999.99m) throw new BusinessException("La devolución dejaría un stock fuera del límite. Ajusta las existencias antes de reintentar.", 409);
+                await Execute("""
+                    UPDATE bodega_norte.products SET stock=@balance,version=version+1,updated_at=now()
+                    WHERE product_id=@id
+                    """, c, tx, ct, ("balance", balance), ("id", line.Id));
                 await Movement(line.Id, line.Quantity, balance, "cancellation", reason.Trim(), actor, c, tx, ct);
             }
             await Execute("""

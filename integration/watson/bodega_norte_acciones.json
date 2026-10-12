@@ -1,0 +1,1270 @@
+{
+  "workspace": {
+    "actions": [
+      {
+        "type": "standard",
+        "steps": [
+          {
+            "step": "step_bodega_1",
+            "type": "standard",
+            "output": {
+              "generic": [
+                {
+                  "response_type": "text",
+                  "selection_policy": "sequential",
+                  "values": [
+                    {
+                      "text_expression": {
+                        "concat": [
+                          {
+                            "scalar": "Abre Nueva venta, busca los productos y agrégalos al carrito. Ajusta las cantidades, verifica el total y pulsa Cobrar. Elige Efectivo, Yape, Plin o Tarjeta y confirma Registrar venta. El sistema guarda la venta y descuenta el stock una sola vez. La constancia es de uso interno."
+                          }
+                        ]
+                      }
+                    }
+                  ]
+                }
+              ]
+            },
+            "handlers": [],
+            "resolver": {
+              "type": "end_action"
+            },
+            "variable": "step_bodega_1"
+          }
+        ],
+        "title": "Cómo registro una venta",
+        "action": "action_bodega_1",
+        "boosts": [],
+        "handlers": [],
+        "condition": {
+          "intent": "action_bodega_1_intent"
+        },
+        "variables": [
+          {
+            "title": "Cómo registro una venta",
+            "privacy": {
+              "enabled": false
+            },
+            "variable": "step_bodega_1",
+            "data_type": "any"
+          }
+        ],
+        "launch_mode": "learning",
+        "next_action": "action_bodega_2",
+        "topic_switch": {
+          "allowed_from": true,
+          "allowed_into": true,
+          "never_return": false
+        },
+        "disambiguation_opt_out": false
+      },
+      {
+        "type": "standard",
+        "steps": [
+          {
+            "step": "step_bodega_2",
+            "type": "standard",
+            "output": {
+              "generic": [
+                {
+                  "response_type": "text",
+                  "selection_policy": "sequential",
+                  "values": [
+                    {
+                      "text_expression": {
+                        "concat": [
+                          {
+                            "scalar": "Solo el administrador puede crear productos. Abre Productos o Inventario y pulsa Agregar producto. Completa nombre, categoría, unidad, stock inicial, stock mínimo, costo, precio y proveedor opcional. Guarda el producto. Para cambiar existencias de un producto existente, utiliza Ajustar stock y registra el motivo."
+                          }
+                        ]
+                      }
+                    }
+                  ]
+                }
+              ]
+            },
+            "handlers": [],
+            "resolver": {
+              "type": "end_action"
+            },
+            "variable": "step_bodega_2"
+          }
+        ],
+        "title": "Cómo agrego un producto",
+        "action": "action_bodega_2",
+        "boosts": [],
+        "handlers": [],
+        "condition": {
+          "intent": "action_bodega_2_intent"
+        },
+        "variables": [
+          {
+            "title": "Cómo agrego un producto",
+            "privacy": {
+              "enabled": false
+            },
+            "variable": "step_bodega_2",
+            "data_type": "any"
+          }
+        ],
+        "launch_mode": "learning",
+        "next_action": "action_bodega_3",
+        "topic_switch": {
+          "allowed_from": true,
+          "allowed_into": true,
+          "never_return": false
+        },
+        "disambiguation_opt_out": false
+      },
+      {
+        "type": "standard",
+        "steps": [
+          {
+            "step": "step_bodega_3",
+            "type": "standard",
+            "output": {
+              "generic": [
+                {
+                  "response_type": "text",
+                  "selection_policy": "sequential",
+                  "values": [
+                    {
+                      "text_expression": {
+                        "concat": [
+                          {
+                            "scalar": "Como administrador, abre Inventario y pulsa Ajustar stock en el producto. Escribe una cantidad positiva para un ingreso o negativa para una salida y registra el motivo. Confirma el ajuste. No se permite un saldo negativo. Si otro usuario cambió el producto, actualiza la información antes de repetir la operación."
+                          }
+                        ]
+                      }
+                    }
+                  ]
+                }
+              ]
+            },
+            "handlers": [],
+            "resolver": {
+              "type": "end_action"
+            },
+            "variable": "step_bodega_3"
+          }
+        ],
+        "title": "Cómo ajusto el stock",
+        "action": "action_bodega_3",
+        "boosts": [],
+        "handlers": [],
+        "condition": {
+          "intent": "action_bodega_3_intent"
+        },
+        "variables": [
+          {
+            "title": "Cómo ajusto el stock",
+            "privacy": {
+              "enabled": false
+            },
+            "variable": "step_bodega_3",
+            "data_type": "any"
+          }
+        ],
+        "launch_mode": "learning",
+        "next_action": "action_bodega_4",
+        "topic_switch": {
+          "allowed_from": true,
+          "allowed_into": true,
+          "never_return": false
+        },
+        "disambiguation_opt_out": false
+      },
+      {
+        "type": "standard",
+        "steps": [
+          {
+            "step": "step_bodega_4",
+            "type": "standard",
+            "output": {
+              "generic": [
+                {
+                  "response_type": "text",
+                  "selection_policy": "sequential",
+                  "values": [
+                    {
+                      "text_expression": {
+                        "concat": [
+                          {
+                            "scalar": "Como administrador, abre Historial de ventas, localiza la venta y pulsa Anular. Escribe el motivo y confirma. Se conserva el registro con estado Anulada y el stock se devuelve una sola vez. Las ventas anuladas se excluyen de los ingresos activos. El cajero no puede anular ventas."
+                          }
+                        ]
+                      }
+                    }
+                  ]
+                }
+              ]
+            },
+            "handlers": [],
+            "resolver": {
+              "type": "end_action"
+            },
+            "variable": "step_bodega_4"
+          }
+        ],
+        "title": "Cómo anulo una venta",
+        "action": "action_bodega_4",
+        "boosts": [],
+        "handlers": [],
+        "condition": {
+          "intent": "action_bodega_4_intent"
+        },
+        "variables": [
+          {
+            "title": "Cómo anulo una venta",
+            "privacy": {
+              "enabled": false
+            },
+            "variable": "step_bodega_4",
+            "data_type": "any"
+          }
+        ],
+        "launch_mode": "learning",
+        "next_action": "action_bodega_5",
+        "topic_switch": {
+          "allowed_from": true,
+          "allowed_into": true,
+          "never_return": false
+        },
+        "disambiguation_opt_out": false
+      },
+      {
+        "type": "standard",
+        "steps": [
+          {
+            "step": "step_bodega_5",
+            "type": "standard",
+            "output": {
+              "generic": [
+                {
+                  "response_type": "text",
+                  "selection_policy": "sequential",
+                  "values": [
+                    {
+                      "text_expression": {
+                        "concat": [
+                          {
+                            "scalar": "Abre Reportes y selecciona las fechas de inicio y fin. El sistema usa la zona horaria de Lima y suma las ventas activas del periodo. Un rango sin ventas muestra cero. Puedes exportar CSV para analizar los resultados. Las anulaciones se excluyen y el margen de registros históricos sin costo se muestra con su limitación."
+                          }
+                        ]
+                      }
+                    }
+                  ]
+                }
+              ]
+            },
+            "handlers": [],
+            "resolver": {
+              "type": "end_action"
+            },
+            "variable": "step_bodega_5"
+          }
+        ],
+        "title": "Cómo consulto los reportes",
+        "action": "action_bodega_5",
+        "boosts": [],
+        "handlers": [],
+        "condition": {
+          "intent": "action_bodega_5_intent"
+        },
+        "variables": [
+          {
+            "title": "Cómo consulto los reportes",
+            "privacy": {
+              "enabled": false
+            },
+            "variable": "step_bodega_5",
+            "data_type": "any"
+          }
+        ],
+        "launch_mode": "learning",
+        "next_action": "action_bodega_6",
+        "topic_switch": {
+          "allowed_from": true,
+          "allowed_into": true,
+          "never_return": false
+        },
+        "disambiguation_opt_out": false
+      },
+      {
+        "type": "standard",
+        "steps": [
+          {
+            "step": "step_bodega_6",
+            "type": "standard",
+            "output": {
+              "generic": [
+                {
+                  "response_type": "text",
+                  "selection_policy": "sequential",
+                  "values": [
+                    {
+                      "text_expression": {
+                        "concat": [
+                          {
+                            "scalar": "Solo el administrador puede descargar el respaldo JSON desde Configuración, Respaldo de datos, Descargar respaldo JSON. Guarda la copia en un lugar privado. La demo se restaura en el navegador después de validar el archivo y escribir RESTAURAR. El respaldo PostgreSQL se recupera con BodegaNorte.Tools en un esquema nuevo; las cuentas y contraseñas no se restauran desde el JSON."
+                          }
+                        ]
+                      }
+                    }
+                  ]
+                }
+              ]
+            },
+            "handlers": [],
+            "resolver": {
+              "type": "end_action"
+            },
+            "variable": "step_bodega_6"
+          }
+        ],
+        "title": "Cómo creo un respaldo",
+        "action": "action_bodega_6",
+        "boosts": [],
+        "handlers": [],
+        "condition": {
+          "intent": "action_bodega_6_intent"
+        },
+        "variables": [
+          {
+            "title": "Cómo creo un respaldo",
+            "privacy": {
+              "enabled": false
+            },
+            "variable": "step_bodega_6",
+            "data_type": "any"
+          }
+        ],
+        "launch_mode": "learning",
+        "next_action": "action_bodega_7",
+        "topic_switch": {
+          "allowed_from": true,
+          "allowed_into": true,
+          "never_return": false
+        },
+        "disambiguation_opt_out": false
+      },
+      {
+        "type": "standard",
+        "steps": [
+          {
+            "step": "step_bodega_7",
+            "type": "standard",
+            "output": {
+              "generic": [
+                {
+                  "response_type": "text",
+                  "selection_policy": "sequential",
+                  "values": [
+                    {
+                      "text_expression": {
+                        "concat": [
+                          {
+                            "scalar": "El cajero puede consultar información y registrar ventas. El administrador gestiona productos, proveedores, ajustes de stock, anulaciones, usuarios, configuración, auditoría y respaldos. El administrador habilita una cuenta ya creada y confirmada desde Configuración, Usuarios y permisos. Los permisos reales se comprueban en el servidor."
+                          }
+                        ]
+                      }
+                    }
+                  ]
+                }
+              ]
+            },
+            "handlers": [],
+            "resolver": {
+              "type": "end_action"
+            },
+            "variable": "step_bodega_7"
+          }
+        ],
+        "title": "Qué permisos tiene el cajero",
+        "action": "action_bodega_7",
+        "boosts": [],
+        "handlers": [],
+        "condition": {
+          "intent": "action_bodega_7_intent"
+        },
+        "variables": [
+          {
+            "title": "Qué permisos tiene el cajero",
+            "privacy": {
+              "enabled": false
+            },
+            "variable": "step_bodega_7",
+            "data_type": "any"
+          }
+        ],
+        "launch_mode": "learning",
+        "next_action": "action_bodega_8",
+        "topic_switch": {
+          "allowed_from": true,
+          "allowed_into": true,
+          "never_return": false
+        },
+        "disambiguation_opt_out": false
+      },
+      {
+        "type": "standard",
+        "steps": [
+          {
+            "step": "step_bodega_8",
+            "type": "standard",
+            "output": {
+              "generic": [
+                {
+                  "response_type": "text",
+                  "selection_policy": "sequential",
+                  "values": [
+                    {
+                      "text_expression": {
+                        "concat": [
+                          {
+                            "scalar": "En la pantalla Iniciar sesión pulsa Olvidé mi contraseña. Escribe el correo correcto de tu cuenta y revisa tu bandeja de entrada y spam. Abre el enlace para elegir una contraseña nueva. La contraseña original no se puede consultar en la base de datos. No compartas contraseñas por el chat ni uses la contraseña de PostgreSQL para la web."
+                          }
+                        ]
+                      }
+                    }
+                  ]
+                }
+              ]
+            },
+            "handlers": [],
+            "resolver": {
+              "type": "end_action"
+            },
+            "variable": "step_bodega_8"
+          }
+        ],
+        "title": "Qué hago si olvidé mi contraseña",
+        "action": "action_bodega_8",
+        "boosts": [],
+        "handlers": [],
+        "condition": {
+          "intent": "action_bodega_8_intent"
+        },
+        "variables": [
+          {
+            "title": "Qué hago si olvidé mi contraseña",
+            "privacy": {
+              "enabled": false
+            },
+            "variable": "step_bodega_8",
+            "data_type": "any"
+          }
+        ],
+        "launch_mode": "learning",
+        "next_action": "fallback",
+        "topic_switch": {
+          "allowed_from": true,
+          "allowed_into": true,
+          "never_return": false
+        },
+        "disambiguation_opt_out": false
+      },
+      {
+        "type": "standard",
+        "steps": [
+          {
+            "step": "step_001",
+            "type": "standard",
+            "output": {
+              "generic": [
+                {
+                  "values": [
+                    {
+                      "text": "Lo siento, me parece que no le entiendo. Por favor, replantee su pregunta."
+                    }
+                  ],
+                  "response_type": "text",
+                  "selection_policy": "sequential"
+                }
+              ]
+            },
+            "handlers": [],
+            "resolver": {
+              "type": "end_action"
+            },
+            "variable": "step_001",
+            "condition": {
+              "lte": [
+                {
+                  "system_variable": "no_action_matches_count"
+                },
+                {
+                  "scalar": 3
+                }
+              ]
+            },
+            "next_step": "step_002"
+          },
+          {
+            "step": "step_002",
+            "type": "standard",
+            "output": {
+              "generic": [
+                {
+                  "values": [
+                    {
+                      "text": ""
+                    }
+                  ],
+                  "response_type": "text",
+                  "selection_policy": "sequential"
+                }
+              ]
+            },
+            "handlers": [],
+            "resolver": {
+              "type": "invoke_another_action_and_end",
+              "invoke_action": {
+                "action": "fallback",
+                "policy": "default",
+                "parameters": null,
+                "result_variable": "step_002_result_1",
+                "ignore_end_action_steps": false
+              }
+            },
+            "variable": "step_002",
+            "condition": {
+              "gt": [
+                {
+                  "system_variable": "no_action_matches_count"
+                },
+                {
+                  "scalar": 3
+                }
+              ]
+            }
+          }
+        ],
+        "title": "No matches",
+        "action": "anything_else",
+        "boosts": [],
+        "handlers": [],
+        "condition": {
+          "expression": "anything_else"
+        },
+        "variables": [
+          {
+            "title": "Me temo que no entiendo lo que está preguntando. Por favor, vuel",
+            "variable": "step_001",
+            "data_type": "any"
+          },
+          {
+            "variable": "step_002",
+            "data_type": "any"
+          },
+          {
+            "variable": "step_002_result_1",
+            "data_type": "any"
+          }
+        ],
+        "disambiguation_opt_out": true
+      },
+      {
+        "type": "standard",
+        "steps": [
+          {
+            "step": "digression_failure",
+            "type": "standard",
+            "output": {
+              "generic": [
+                {
+                  "values": [
+                    {
+                      "text": "Lo siento, no he podido confirmar si desea volver al tema anterior, déjeme conectar con un agente."
+                    }
+                  ],
+                  "response_type": "text",
+                  "selection_policy": "sequential"
+                }
+              ]
+            },
+            "handlers": [],
+            "resolver": {
+              "type": "connect_to_agent",
+              "response": {
+                "transfer_info": {
+                  "target": {}
+                },
+                "agent_available": {
+                  "message": "Déjeme ponerle en contacto con un agente que esté disponible. "
+                },
+                "agent_unavailable": {
+                  "message": "No hay agentes disponibles en este momento. Cuando haya uno disponible, le pondré en contacto. "
+                },
+                "message_to_human_agent": ""
+              }
+            },
+            "variable": "digression_failure",
+            "condition": {
+              "eq": [
+                {
+                  "system_variable": "fallback_reason"
+                },
+                {
+                  "scalar": "Failed to confirm topic return"
+                }
+              ]
+            },
+            "next_step": "step_001"
+          },
+          {
+            "step": "step_001",
+            "type": "standard",
+            "output": {
+              "generic": [
+                {
+                  "values": [
+                    {
+                      "text": "Lo siento pero no lo entiendo. Puedo ponerle en contacto con un agente. "
+                    }
+                  ],
+                  "response_type": "text",
+                  "selection_policy": "sequential"
+                }
+              ]
+            },
+            "handlers": [],
+            "resolver": {
+              "type": "connect_to_agent",
+              "response": {
+                "transfer_info": {
+                  "target": {}
+                },
+                "agent_available": {
+                  "message": "Déjeme ponerle en contacto con un agente que esté disponible. "
+                },
+                "agent_unavailable": {
+                  "message": "No hay agentes disponibles en este momento. Cuando haya uno disponible, le pondré en contacto. "
+                },
+                "message_to_human_agent": ""
+              }
+            },
+            "variable": "step_001",
+            "condition": {
+              "eq": [
+                {
+                  "system_variable": "fallback_reason"
+                },
+                {
+                  "scalar": "Step validation failed"
+                }
+              ]
+            },
+            "next_step": "step_002"
+          },
+          {
+            "step": "step_002",
+            "type": "standard",
+            "output": {
+              "generic": [
+                {
+                  "values": [
+                    {
+                      "text": "Siento no haberle podido ayudar. Le pondré en contacto con un agente ahora mismo. "
+                    }
+                  ],
+                  "response_type": "text",
+                  "selection_policy": "sequential"
+                }
+              ]
+            },
+            "handlers": [],
+            "resolver": {
+              "type": "connect_to_agent",
+              "response": {
+                "transfer_info": {
+                  "target": {}
+                },
+                "agent_available": {
+                  "message": "Déjeme ponerle en contacto con un agente que esté disponible. "
+                },
+                "agent_unavailable": {
+                  "message": "No hay agentes disponibles en este momento. Cuando haya uno disponible, le pondré en contacto. "
+                },
+                "message_to_human_agent": ""
+              }
+            },
+            "variable": "step_002",
+            "condition": {
+              "eq": [
+                {
+                  "system_variable": "fallback_reason"
+                },
+                {
+                  "scalar": "Agent requested"
+                }
+              ]
+            },
+            "next_step": "step_003"
+          },
+          {
+            "step": "step_003",
+            "type": "standard",
+            "output": {
+              "generic": [
+                {
+                  "values": [
+                    {
+                      "text": "Siento no poder entender lo que me está diciendo, déjeme ponerle en contacto con un agente. "
+                    }
+                  ],
+                  "response_type": "text",
+                  "selection_policy": "sequential"
+                }
+              ]
+            },
+            "handlers": [],
+            "resolver": {
+              "type": "connect_to_agent",
+              "response": {
+                "transfer_info": {
+                  "target": {}
+                },
+                "agent_available": {
+                  "message": "Déjeme ponerle en contacto con un agente que esté disponible. "
+                },
+                "agent_unavailable": {
+                  "message": "No hay agentes disponibles en este momento. Cuando haya uno disponible, le pondré en contacto. "
+                },
+                "message_to_human_agent": ""
+              }
+            },
+            "variable": "step_003",
+            "condition": {
+              "eq": [
+                {
+                  "system_variable": "fallback_reason"
+                },
+                {
+                  "scalar": "No action matches"
+                }
+              ]
+            },
+            "next_step": "step_004"
+          },
+          {
+            "step": "step_004",
+            "type": "standard",
+            "output": {
+              "generic": [
+                {
+                  "values": [
+                    {
+                      "text": "Parece que esta conversación la gestionaría mejor un agente humano. Permítame ponerle en contacto con uno de nuestros agentes."
+                    }
+                  ],
+                  "response_type": "text",
+                  "selection_policy": "sequential"
+                }
+              ]
+            },
+            "handlers": [],
+            "resolver": {
+              "type": "connect_to_agent",
+              "response": {
+                "transfer_info": {
+                  "target": {}
+                },
+                "agent_available": {
+                  "message": "Déjeme ponerle en contacto con un agente que esté disponible."
+                },
+                "agent_unavailable": {
+                  "message": "No hay agentes disponibles en este momento. Cuando haya uno disponible, le pondré en contacto."
+                },
+                "message_to_human_agent": ""
+              }
+            },
+            "variable": "step_004",
+            "condition": {
+              "eq": [
+                {
+                  "system_variable": "fallback_reason"
+                },
+                {
+                  "scalar": "Danger word detected"
+                }
+              ]
+            },
+            "next_step": "step_005"
+          },
+          {
+            "step": "step_005",
+            "type": "standard",
+            "output": {
+              "generic": [
+                {
+                  "values": [
+                    {
+                      "text": "Parece que esta conversación la gestionaría mejor un agente humano. Permítame ponerle en contacto con uno de nuestros agentes."
+                    }
+                  ],
+                  "response_type": "text",
+                  "selection_policy": "sequential"
+                }
+              ]
+            },
+            "handlers": [],
+            "resolver": {
+              "type": "connect_to_agent",
+              "response": {
+                "transfer_info": {
+                  "target": {}
+                },
+                "agent_available": {
+                  "message": "Déjeme ponerle en contacto con un agente que esté disponible."
+                },
+                "agent_unavailable": {
+                  "message": "No hay agentes disponibles en este momento. Cuando haya uno disponible, le pondré en contacto."
+                },
+                "message_to_human_agent": ""
+              }
+            },
+            "variable": "step_005",
+            "condition": {
+              "eq": [
+                {
+                  "system_variable": "fallback_reason"
+                },
+                {
+                  "scalar": "Profanity detected"
+                }
+              ]
+            }
+          }
+        ],
+        "title": "Fallback",
+        "action": "fallback",
+        "boosts": [],
+        "handlers": [],
+        "condition": {
+          "intent": "fallback_connect_to_agent"
+        },
+        "variables": [
+          {
+            "title": "La vuelta al tema ha fallado",
+            "variable": "digression_failure",
+            "data_type": "any"
+          },
+          {
+            "title": "Lo siento pero no lo entiendo. Puedo ponerle en contacto con un ",
+            "variable": "step_001",
+            "data_type": "any"
+          },
+          {
+            "title": "Siento no haberle podido ayudar. Le pondré en contacto con un ag",
+            "variable": "step_002",
+            "data_type": "any"
+          },
+          {
+            "title": "Siento no poder entender lo que me está diciendo, déjeme ponerle",
+            "variable": "step_003",
+            "data_type": "any"
+          },
+          {
+            "title": "Parece que esta conversación la gestionaría mejor",
+            "variable": "step_004",
+            "data_type": "any"
+          },
+          {
+            "title": "Palabrotas - Parece que esta conversación",
+            "variable": "step_005",
+            "data_type": "any"
+          }
+        ],
+        "next_action": "run_always",
+        "disambiguation_opt_out": true
+      },
+      {
+        "type": "standard",
+        "steps": [
+          {
+            "step": "danger_word_detected",
+            "type": "standard",
+            "title": "Connect to agent",
+            "handlers": [],
+            "resolver": {
+              "type": "fallback"
+            },
+            "variable": "danger_word_detected_variable",
+            "condition": {
+              "entity": "danger_words"
+            },
+            "next_step": "profanity_detected"
+          },
+          {
+            "step": "profanity_detected",
+            "type": "standard",
+            "title": "Show warning",
+            "output": {
+              "generic": [
+                {
+                  "values": [
+                    {
+                      "text_expression": {
+                        "concat": [
+                          {
+                            "scalar": "Utilice el idioma adecuado cuando interactúe con el asistente."
+                          }
+                        ]
+                      }
+                    }
+                  ],
+                  "response_type": "text",
+                  "selection_policy": "sequential"
+                }
+              ]
+            },
+            "handlers": [
+              {
+                "type": "max_hits",
+                "handler": "max_hits_handler",
+                "resolver": {
+                  "type": "fallback"
+                }
+              }
+            ],
+            "max_hits": 2,
+            "resolver": {
+              "type": "end_action"
+            },
+            "variable": "profanity_detected_variable",
+            "condition": {
+              "entity": "profane_words"
+            }
+          }
+        ],
+        "title": "Trigger word detected",
+        "action": "run_always",
+        "boosts": [],
+        "handlers": [],
+        "variables": [
+          {
+            "title": "Profanity detected",
+            "variable": "danger_word_detected_variable",
+            "data_type": "any"
+          },
+          {
+            "title": "Profane word detected",
+            "variable": "profanity_detected_variable",
+            "data_type": "any"
+          }
+        ],
+        "next_action": "anything_else"
+      },
+      {
+        "type": "standard",
+        "steps": [
+          {
+            "step": "step_001",
+            "type": "standard",
+            "output": {
+              "generic": [
+                {
+                  "values": [
+                    {
+                      "text": "Soy el asistente de Bodega Norte. Puedo explicar ventas, productos, ajustes, anulaciones, reportes, respaldos, permisos y recuperación de contraseña. No ejecuto operaciones ni conozco datos personales."
+                    }
+                  ],
+                  "response_type": "text",
+                  "selection_policy": "sequential"
+                }
+              ]
+            },
+            "handlers": [],
+            "resolver": {
+              "type": "end_action"
+            },
+            "variable": "step_001"
+          }
+        ],
+        "title": "Greet customer",
+        "action": "welcome",
+        "boosts": [],
+        "handlers": [],
+        "condition": {
+          "expression": "welcome"
+        },
+        "variables": [
+          {
+            "variable": "step_001",
+            "data_type": "any"
+          }
+        ],
+        "next_action": "action_bodega_1",
+        "disambiguation_opt_out": true
+      }
+    ],
+    "intents": [
+      {
+        "intent": "action_bodega_1_intent",
+        "examples": [
+          {
+            "text": "Cómo registro una venta"
+          },
+          {
+            "text": "Registrar una venta"
+          },
+          {
+            "text": "Cómo cobro con Yape"
+          },
+          {
+            "text": "Cómo vendo productos"
+          }
+        ]
+      },
+      {
+        "intent": "action_bodega_2_intent",
+        "examples": [
+          {
+            "text": "Cómo agrego un producto"
+          },
+          {
+            "text": "Crear un producto"
+          },
+          {
+            "text": "Agregar productos al catálogo"
+          },
+          {
+            "text": "Cómo edito un producto"
+          }
+        ]
+      },
+      {
+        "intent": "action_bodega_3_intent",
+        "examples": [
+          {
+            "text": "Cómo ajusto el stock"
+          },
+          {
+            "text": "Registrar una entrada de inventario"
+          },
+          {
+            "text": "Cómo ingreso mercadería"
+          },
+          {
+            "text": "Modificar existencias de un producto"
+          }
+        ]
+      },
+      {
+        "intent": "action_bodega_4_intent",
+        "examples": [
+          {
+            "text": "Cómo anulo una venta"
+          },
+          {
+            "text": "Cancelar una venta registrada"
+          },
+          {
+            "text": "Devolver stock de una venta anulada"
+          },
+          {
+            "text": "Cómo cancelo un cobro equivocado"
+          }
+        ]
+      },
+      {
+        "intent": "action_bodega_5_intent",
+        "examples": [
+          {
+            "text": "Cómo consulto los reportes"
+          },
+          {
+            "text": "Ver las ventas de un periodo"
+          },
+          {
+            "text": "Exportar los reportes en CSV"
+          },
+          {
+            "text": "Cómo veo un reporte de ingresos"
+          }
+        ]
+      },
+      {
+        "intent": "action_bodega_6_intent",
+        "examples": [
+          {
+            "text": "Cómo creo un respaldo"
+          },
+          {
+            "text": "Descargar la copia de seguridad"
+          },
+          {
+            "text": "Cómo restauro un respaldo JSON"
+          },
+          {
+            "text": "Recuperar datos de la bodega"
+          }
+        ]
+      },
+      {
+        "intent": "action_bodega_7_intent",
+        "examples": [
+          {
+            "text": "Qué permisos tiene el cajero"
+          },
+          {
+            "text": "Diferencia entre administrador y cajero"
+          },
+          {
+            "text": "Cómo habilito usuarios"
+          },
+          {
+            "text": "Quién puede administrar la bodega"
+          }
+        ]
+      },
+      {
+        "intent": "action_bodega_8_intent",
+        "examples": [
+          {
+            "text": "Qué hago si olvidé mi contraseña"
+          },
+          {
+            "text": "Recuperar la contraseña de mi cuenta"
+          },
+          {
+            "text": "No puedo iniciar sesión porque olvidé la clave"
+          },
+          {
+            "text": "Cómo restablezco mi contraseña"
+          }
+        ]
+      }
+    ],
+    "entities": [
+      {
+        "entity": "danger_words",
+        "values": [],
+        "fuzzy_match": false
+      },
+      {
+        "entity": "profane_words",
+        "values": [],
+        "fuzzy_match": false
+      },
+      {
+        "entity": "sys-yes-no",
+        "values": []
+      }
+    ],
+    "metadata": {
+      "api_version": {
+        "major_version": "v2",
+        "minor_version": "2024-08-25"
+      }
+    },
+    "variables": [],
+    "data_types": [],
+    "collections": [],
+    "counterexamples": [],
+    "system_settings": {
+      "variable": {
+        "format": {
+          "time": {
+            "pattern": "short"
+          },
+          "currency": {
+            "fraction_digits": 2
+          }
+        }
+      },
+      "auto_learn": {
+        "apply": true
+      },
+      "topic_switch": {
+        "enabled": true,
+        "messages": {
+          "enable_confirmation": true,
+          "confirmation_failure": {
+            "generic": [
+              {
+                "values": [
+                  {
+                    "text_expression": {
+                      "concat": [
+                        {
+                          "scalar": "Lo siento, no lo había entendido, por favor, confírmelo."
+                        }
+                      ]
+                    }
+                  }
+                ],
+                "response_type": "text",
+                "selection_policy": "sequential"
+              }
+            ]
+          },
+          "confirmation_request": {
+            "generic": [
+              {
+                "values": [
+                  {
+                    "text_expression": {
+                      "concat": [
+                        {
+                          "scalar": "Desea continuar con el tema anterior: "
+                        },
+                        {
+                          "system_variable": "digressed_from"
+                        },
+                        {
+                          "scalar": "?"
+                        }
+                      ]
+                    }
+                  }
+                ],
+                "response_type": "text",
+                "selection_policy": "sequential"
+              },
+              {
+                "options": [
+                  {
+                    "label": "Sí",
+                    "value": {
+                      "input": {
+                        "text": "Sí"
+                      }
+                    }
+                  },
+                  {
+                    "label": "No",
+                    "value": {
+                      "input": {
+                        "text": "No"
+                      }
+                    }
+                  }
+                ],
+                "response_type": "option",
+                "repeat_on_reprompt": true
+              }
+            ]
+          }
+        },
+        "max_tries": 3
+      },
+      "disambiguation": {
+        "prompt": "Lo que usted quería decir es:",
+        "enabled": true,
+        "randomize": true,
+        "max_suggestions": 5,
+        "suggestion_text_policy": "title",
+        "none_of_the_above_prompt": "Ninguna de las anteriores",
+        "use_connect_to_support_prompt": "conectar con soporte",
+        "single_answer_clarification_prompt": "Algo más"
+      },
+      "search_routing": {
+        "target": "conversational_search"
+      }
+    },
+    "learning_opt_out": true
+  }
+}

@@ -1,5 +1,5 @@
 import { initialProducts, initialSales, suppliers } from './seed.js';
-import { round, uid, validateProduct, validateSettings } from './domain.js';
+import { round, uid, validateProduct, validateSettings, validateDemoBackup } from './domain.js';
 
 const KEY = 'bodega-norte:v2:data';
 const actor = () => ({ email: 'administrador@demo.local', role: localStorage.getItem('bodega-norte:demo-role') || 'admin' });
@@ -15,7 +15,15 @@ const seedLines = [
 function parse(key) { try { return JSON.parse(localStorage.getItem(key)); } catch { return null; } }
 function read() {
   const saved = parse(KEY);
-  if (saved) return { archivedProducts: [], ...saved };
+  if (saved) {
+    const data = { archivedProducts: [], ...saved };
+    // Detail lines are the source of truth for known demonstration sales.
+    for (const sale of data.sales) if (sale.lines?.length) {
+      sale.items = round(sale.lines.reduce((sum,line)=>sum+line.quantity,0));
+      sale.total = round(sale.lines.reduce((sum,line)=>sum+line.total,0));
+    }
+    return data;
+  }
   const oldProducts = parse('bodega-norte:v1:products'), oldSales = parse('bodega-norte:v1:sales');
   const products = (oldProducts || initialProducts).map(p => ({ ...p, version: 1, updated: null }));
   const sales = oldSales ? oldSales.map(s => ({ ...s, id: s.id.replace(/^#/, ''), soldAt: null, lines: [], status: 'active', createdBy: 'Datos locales anteriores' })) :
@@ -24,6 +32,10 @@ function read() {
       return { productId: id, name: p.name, quantity, unitPrice: p.price, unitCost: p.cost, total: round(p.price * quantity) };
     }) }));
   const data = { products, archivedProducts: [], sales, suppliers: suppliers.map((s, index) => ({ ...s, id: index + 1 })), settings: defaults, movements: [], audit: [], members: [{ userId: 'demo', email: 'administrador@demo.local', role: 'admin', active: true }] };
+  for (const sale of data.sales) {
+    sale.items = round(sale.lines.reduce((sum,line)=>sum+line.quantity,0));
+    sale.total = round(sale.lines.reduce((sum,line)=>sum+line.total,0));
+  }
   localStorage.setItem(KEY, JSON.stringify(data)); return data;
 }
 function audit(data, action, entity, entityId) { data.audit.unshift({ id: uid(), action, entity, entityId, actor: actor().email, createdAt: new Date().toISOString() }); }
@@ -92,6 +104,7 @@ export const demoApi = {
     if (!sale.lines?.length) throw new Error('Esta venta anterior no tiene detalle; no se puede restaurar su stock automáticamente.');
     const catalog = [...data.products,...data.archivedProducts];
     if (sale.lines.some(l => !catalog.some(p => p.id === l.productId))) throw new Error('Falta un producto del historial.');
+    if (sale.lines.some(line=>round(catalog.find(p=>p.id===line.productId).stock+line.quantity)>9999999999.99)) throw new Error('La devolución dejaría un stock fuera del límite. Ajusta las existencias antes de reintentar.');
     for (const line of sale.lines) { const p = catalog.find(p=>p.id===line.productId); p.stock = round(p.stock+line.quantity); p.version++; movement(data,p,line.quantity,'cancellation',reason); }
     sale.status = 'cancelled'; sale.cancelReason = reason; audit(data,'cancel','sale',id); return sale;
   }),
@@ -105,5 +118,10 @@ export const demoApi = {
   deleteSupplier: id => mutate(data => { admin(); const s = data.suppliers.find(s => s.id === id); if (!s) throw new Error('El proveedor no existe.'); if (data.products.some(p => p.supplier === s.name)) throw new Error('Reasigna sus productos antes de eliminar el proveedor.'); data.suppliers = data.suppliers.filter(s => s.id !== id); audit(data,'delete','supplier',String(id)); }),
   saveSettings: settings => mutate(data => { admin(); validateSettings(settings); data.settings = { ...settings }; audit(data,'update','settings','1'); }),
   saveMember: input => mutate(data => { admin(); if (!input.email.includes('@')) throw new Error('Correo inválido.'); if (input.email === actor().email) throw new Error('No puedes cambiar tus propios permisos.'); const old=data.members.find(m => m.email===input.email); if(old) Object.assign(old,input); else data.members.push({ ...input,userId:uid() }); audit(data,'permissions','member',input.email); }),
-  backup: async () => { admin(); return { version:2,project:'Bodega Norte',exportedAt:new Date().toISOString(),data:read() }; },
+  backup: async () => { admin(); return { version:2,format:'demo-v2',project:'Bodega Norte',exportedAt:new Date().toISOString(),data:read() }; },
+  restore: async backup => {
+    admin(); const data=validateDemoBackup(backup);
+    const commit=()=>{audit(data,'restore_backup','database','demo');localStorage.setItem(KEY,JSON.stringify(data));};
+    return navigator.locks?navigator.locks.request('bodega-norte-data',commit):commit();
+  },
 };

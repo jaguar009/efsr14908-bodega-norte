@@ -1,0 +1,56 @@
+{
+  "executedAt": "2026-10-11T23:22:55.1532963-05:00",
+  "environment": "Instancia IBM real en plan Trial; API Assistant builder v2",
+  "mode": "Ayuda operativa en espa\u00F1ol; no se env\u00EDan registros de ventas ni productos",
+  "allPassed": true,
+  "cases": [
+    {
+      "question": "C\u00F3mo registro una venta",
+      "response": "Abre Nueva venta, busca los productos y agr\u00E9galos al carrito. Ajusta las cantidades, verifica el total y pulsa Cobrar. Elige Efectivo, Yape, Plin o Tarjeta y confirma Registrar venta. El sistema guarda la venta y descuenta el stock una sola vez. La constancia es de uso interno.",
+      "provider": "watson",
+      "status": "aprobado"
+    },
+    {
+      "question": "C\u00F3mo agrego un producto",
+      "response": "Solo el administrador puede crear productos. Abre Productos o Inventario y pulsa Agregar producto. Completa nombre, categor\u00EDa, unidad, stock inicial, stock m\u00EDnimo, costo, precio y proveedor opcional. Guarda el producto. Para cambiar existencias de un producto existente, utiliza Ajustar stock y registra el motivo.",
+      "provider": "watson",
+      "status": "aprobado"
+    },
+    {
+      "question": "C\u00F3mo ajusto el stock",
+      "response": "Como administrador, abre Inventario y pulsa Ajustar stock en el producto. Escribe una cantidad positiva para un ingreso o negativa para una salida y registra el motivo. Confirma el ajuste. No se permite un saldo negativo. Si otro usuario cambi\u00F3 el producto, actualiza la informaci\u00F3n antes de repetir la operaci\u00F3n.",
+      "provider": "watson",
+      "status": "aprobado"
+    },
+    {
+      "question": "C\u00F3mo anulo una venta",
+      "response": "Como administrador, abre Historial de ventas, localiza la venta y pulsa Anular. Escribe el motivo y confirma. Se conserva el registro con estado Anulada y el stock se devuelve una sola vez. Las ventas anuladas se excluyen de los ingresos activos. El cajero no puede anular ventas.",
+      "provider": "watson",
+      "status": "aprobado"
+    },
+    {
+      "question": "C\u00F3mo consulto los reportes",
+      "response": "Abre Reportes y selecciona las fechas de inicio y fin. El sistema usa la zona horaria de Lima y suma las ventas activas del periodo. Un rango sin ventas muestra cero. Puedes exportar CSV para analizar los resultados. Las anulaciones se excluyen y el margen de registros hist\u00F3ricos sin costo se muestra con su limitaci\u00F3n.",
+      "provider": "watson",
+      "status": "aprobado"
+    },
+    {
+      "question": "C\u00F3mo creo un respaldo",
+      "response": "Solo el administrador puede descargar el respaldo JSON desde Configuraci\u00F3n, Respaldo de datos, Descargar respaldo JSON. Guarda la copia en un lugar privado. La demo se restaura en el navegador despu\u00E9s de validar el archivo y escribir RESTAURAR. El respaldo PostgreSQL se recupera con BodegaNorte.Tools en un esquema nuevo; las cuentas y contrase\u00F1as no se restauran desde el JSON.",
+      "provider": "watson",
+      "status": "aprobado"
+    },
+    {
+      "question": "Qu\u00E9 permisos tiene el cajero",
+      "response": "El cajero puede consultar informaci\u00F3n y registrar ventas. El administrador gestiona productos, proveedores, ajustes de stock, anulaciones, usuarios, configuraci\u00F3n, auditor\u00EDa y respaldos. El administrador habilita una cuenta ya creada y confirmada desde Configuraci\u00F3n, Usuarios y permisos. Los permisos reales se comprueban en el servidor.",
+      "provider": "watson",
+      "status": "aprobado"
+    },
+    {
+      "question": "Qu\u00E9 hago si olvid\u00E9 mi contrase\u00F1a",
+      "response": "En la pantalla Iniciar sesi\u00F3n pulsa Olvid\u00E9 mi contrase\u00F1a. Escribe el correo correcto de tu cuenta y revisa tu bandeja de entrada y spam. Abre el enlace para elegir una contrase\u00F1a nueva. La contrase\u00F1a original no se puede consultar en la base de datos. No compartas contrase\u00F1as por el chat ni uses la contrase\u00F1a de PostgreSQL para la web.",
+      "provider": "watson",
+      "status": "aprobado"
+    }
+  ]
+}

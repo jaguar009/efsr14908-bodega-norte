@@ -36,5 +36,7 @@ const remote = {
   deleteSupplier: id => request('/suppliers/' + id,{method:'DELETE'}),
   saveSettings: input => request('/settings',json('PUT',input)), saveMember: input => request('/members',json('PUT',input)),
   backup: () => request('/backup'),
+  assistantStatus: () => request('/assistant/status'),
+  assistantMessage: message => request('/assistant/message',json('POST',{message})),
 };
 export const inventoryApi = isSupabaseMode ? remote : demoApi;

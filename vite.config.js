@@ -4,6 +4,9 @@ import react from '@vitejs/plugin-react';
 export default defineConfig(({ mode }) => ({
   plugins: [react()],
   base: mode === 'github' ? '/efsr14908-bodega-norte/' : '/',
+  server: {
+    watch: { ignored: ['**/output/**', '**/tmp/**', '**/docs/**', '**/backend/**/bin/**', '**/backend/**/obj/**', '**/backend/**/wwwroot/**'] },
+  },
   build: {
     manifest: true,
     outDir: mode === 'visualstudio' ? 'backend/BodegaNorte.Api/wwwroot' : 'dist',
